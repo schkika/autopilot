@@ -1,0 +1,74 @@
+{% extends 'main/base_main_form.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block placeform %}
+<div class="main-form">
+    <h2 class="text-2xl mb-3 text-slate-700 dark:text-white">Otvorite nov predmet</h2>
+      <form method="POST" class="flex flex-col justify-start gap-4">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="non-field-errors">
+            {% for err in form.non_field_errors %}
+            <p class="text-red-500">{{ err }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    
+        {% if message %}
+          <p class="text-red-500">{{ message }}</p>
+        {% endif %}
+
+        <div>
+          <h6 class="input-label">Izaberite tip posla</h6>
+          <div>
+            {% if form.tip_posla.errors %}
+              {% render_field form.tip_posla|add_class:"input-error" %}
+            {% else %}
+              {% if user.has_full_access or user.can_open_subject %}
+                {% render_field form.tip_posla|add_class:"input-standard" %}
+              {% else %}
+                {% render_field form.tip_posla|attr:"disabled"|add_class:"input-standard" %}
+              {% endif %}
+            {% endif %}
+
+            {% for error in form.tip_posla.errors %}
+              <div class="text-red-500">{{error}}</div>
+            {% endfor %}
+          </div>
+        </div>
+  
+        <button class="form-button" type="submit">Otvorite</button>
+      </form>
+  
+  </div>
+{% endblock placeform %}
+
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const selectList = document.getElementById('id_tip_posla')
+  selectList.setAttribute("size", selectList.options.length -1)
+  Array.from(selectList).forEach(option => {
+    if (option.value.trim() === "" || option.text.trim() === "") {
+      selectList.remove(option)
+    }
+    option.removeAttribute('title');
+    option.style.removeProperty('text-overflow');
+    option.style.removeProperty('overflow');
+    option.style.removeProperty('white-space');
+
+    // Check if the option's scroll width is greater than its client width
+    if (option.scrollWidth > option.clientWidth) {
+      // Apply ellipsis if the option overflows
+      option.style.whiteSpace = 'nowrap';
+      option.style.overflow = 'hidden';
+      option.style.textOverflow = 'ellipsis';
+      // Set tooltip with the full text
+      option.title = option.innerText;
+    }
+  })
+})
+</script>
+{% endblock script %}

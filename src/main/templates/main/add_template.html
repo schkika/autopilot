@@ -1,0 +1,24 @@
+{% extends 'main/index.html' %}
+
+{% block mainpanel %}
+<div class="w-full p-2 flex flex-col justify-start items-center md:w-[768px] md:mx-auto"> 
+    <a href="{% url 'editor' id=1 pk=pk %}" class="form-button my-2 w-full text-center"><p>elaborat geodetskih radova</p></a><br>
+    <a href="{% url 'editor' id=2 pk=pk %}" class="form-button my-2 w-full text-center"><p>izjava odgovornog lica u geodetskoj organizaciji</p></a><br>
+    <a href="{% url 'editor' id=3 pk=pk %}" class="form-button my-2 w-full text-center"><p>potvrda o izvrsenom geodetskom merenju vodova</p></a><br>
+    <a href="{% url 'editor' id=4 pk=pk %}" class="form-button my-2 w-full text-center"><p>zahtev za upis promene u katastru vodova</p></a><br>
+    <a href="{% url 'editor' id=5 pk=pk %}" class="form-button my-2 w-full text-center"><p>zapisnik o izvrsenom uvidjaju</p></a><br>
+    <a href="{% url 'editor' id=6 pk=pk %}" class="form-button my-2 w-full text-center"><p>podaci o objektima</p></a><br>
+    <a href="{% url 'editor' id=7 pk=pk %}" class="form-button my-2 w-full text-center"><p>izjava o prihvatanju izvrsenja geodetskih radova na terenu</p></a><br>
+    <a href="{% url 'editor' id=8 pk=pk %}" class="form-button my-2 w-full text-center"><p>skica odrzavanja katastra nepokretnosti</p></a><br>
+    <a href="{% url 'editor' id=9 pk=pk %}" class="form-button my-2 w-full text-center"><p>izvestaj o kontroli postignute tacnosti polozaja granicnih tacaka</p></a><br>
+    <a href="{% url 'editor' id=10 pk=pk %}" class="form-button my-2 w-full text-center"><p>naslovna strana</p></a><br>
+    <a href="{% url 'editor' id=11 pk=pk %}" class="form-button my-2 w-full text-center"><p>tehnicki izvestaj</p></a><br>
+    <a href="{% url 'editor' id=12 pk=pk %}" class="form-button my-2 w-full text-center"><p>tehnicki izvestaj snimanja</p></a><br>
+    <a href="{% url 'editor' id=13 pk=pk %}" class="form-button my-2 w-full text-center"><p>zapisnik transformacije grider</p></a><br>
+    <a href="{% url 'editor' id=14 pk=pk %}" class="form-button my-2 w-full text-center"><p>RTK osrednjavanje</p></a><br>
+    <a href="{% url 'editor' id=15 pk=pk %}" class="form-button my-2 w-full text-center"><p>TO 25</p></a><br>
+    <a href="{% url 'editor' id=16 pk=pk %}" class="form-button my-2 w-full text-center"><p>glavni sadrzaj</p></a><br>
+    <a href="{% url 'editor' id=17 pk=pk %}" class="form-button my-2 w-full text-center"><p>tahimetrijski zapisnik</p></a><br>
+
+</div>
+{% endblock mainpanel %}

@@ -1,0 +1,157 @@
+{% extends 'main/base_main_form.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block placeform %}
+<div class="main-form">
+  <div class="flex items-center my-3">
+    <img src="{% url 'accounts:profile-images' user_id=instance.id %}" alt="User" class="h-12 w-12 rounded-full" />
+    <h2 class="text-xl mb-3 text-slate-600 dark:text-white ml-4">Izmenite podatke zaposlenog</h2>
+  </div>
+    <form method="POST" class="flex flex-col justify-start gap-4">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="non-field-errors">
+      {% for err in form.non_field_errors %}
+        <p class="text-red-500">{{ err }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+
+  {% if form.first_name.errors %}
+    {% render_field form.first_name|add_class:"input-error" placeholder="Ime" %}
+  {% else %}
+    {% render_field form.first_name|add_class:"input-standard" placeholder="Ime" %}
+  {% endif %}
+ 
+  {% for error in form.first_name.errors %}
+    <div class="text-red-500">{{error}}</div>
+  {% endfor %}
+
+
+
+  {% if form.last_name.errors %}
+    {% render_field form.last_name|add_class:"input-error" placeholder="Prezime" %}
+  {% else %}
+    {% render_field form.last_name|add_class:"input-standard" placeholder="Prezime" %}
+  {% endif %}
+ 
+  {% for error in form.last_name.errors %}
+    <div class="text-red-500">{{error}}</div>
+  {% endfor %}
+
+
+  {% if form.email.errors %}
+  {% render_field form.email|add_class:"input-error" placeholder="Email Adresa" %}
+  {% else %}
+    {% render_field form.email|add_class:"input-standard" placeholder="Email Adresa" %}
+  {% endif %}
+
+  {% for error in form.email.errors %}
+    <div class="text-red-500">{{error}}</div>
+  {% endfor %}
+
+  {% if form.licence_number.errors %}
+  {% render_field form.licence_number|add_class:"input-error" placeholder="Broj licence" %}
+  {% else %}
+    {% render_field form.licence_number|add_class:"input-standard" placeholder="Broj licence" %}
+  {% endif %}
+
+  {% for error in form.licence_number.errors %}
+    <div class="text-red-500">{{error}}</div>
+  {% endfor %}
+
+  {% if form.education.errors %}
+  {% render_field form.education|add_class:"input-error" placeholder="Obrazovanje" %}
+  {% else %}
+    {% render_field form.education|add_class:"input-standard" placeholder="Obrazovanje" %}
+  {% endif %}
+
+  {% for error in form.education.errors %}
+    <div class="text-red-500">{{error}}</div>
+  {% endfor %}
+
+  {% if form.telefon_number.errors %}
+  {% render_field form.telefon_number|add_class:"input-error" placeholder="Broj telefona" %}
+  {% else %}
+    {% render_field form.telefon_number|add_class:"input-standard" placeholder="Broj telefona" %}
+  {% endif %}
+
+  {% for error in form.telefon_number.errors %}
+    <div class="text-red-500">{{error}}</div>
+  {% endfor %}
+
+
+  {% if not instance.has_full_access %}
+
+  <div class="flex justify-between">
+
+    <div class="flex justify-start">
+      <h6 class="text-md text-slate-600 dark:text-white font-light mr-4">Otvara predmete</h6>
+      {% if form.can_open_subject.errors %}
+      {% render_field form.can_open_subject %}
+      {% else %}
+      {% render_field form.can_open_subject %}
+      {% endif %}
+
+      {% for error in form.can_open_subject.errors %}
+        <div class="text-red-500">{{error}}</div>
+      {% endfor %}
+    </div>
+
+    <div class="flex justify-end">
+      <h6 class="text-md text-slate-600 dark:text-white font-light mr-4">Dodaje korisnike</h6>
+      {% if form.can_add_user.errors %}
+      {% render_field form.can_add_user %}
+      {% else %}
+      {% render_field form.can_add_user %}
+      {% endif %}
+
+      {% for error in form.can_add_user.errors %}
+        <div class="text-red-500">{{error}}</div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <div class="flex justify-between">
+
+    <div class="flex justify-start">
+      <h6 class="text-md text-slate-600 dark:text-white font-light mr-4">Dodaje saradnike</h6>
+      {% if form.can_add_assosiate.errors %}
+      {% render_field form.can_add_assosiate %}
+      {% else %}
+      {% render_field form.can_add_assosiate %}
+      {% endif %}
+
+      {% for error in form.can_add_assosiate.errors %}
+        <div class="text-red-500">{{error}}</div>
+      {% endfor %}
+    </div>
+
+    <div class="flex justify-end">
+      <h6 class="text-md text-slate-600 dark:text-white font-light mr-4">Dodaje stranke</h6>
+      {% if form.can_add_client.errors %}
+      {% render_field form.can_add_client %}
+      {% else %}
+      {% render_field form.can_add_client %}
+      {% endif %}
+
+      {% for error in form.can_add_client.errors %}
+        <div class="text-red-500">{{error}}</div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  {% endif %}
+
+      <button class="form-button" type="submit">Snimi promene</button>
+    </form>
+
+</div>
+
+{% endblock placeform %}

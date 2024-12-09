@@ -1,0 +1,142 @@
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;" id="document" data-orientation="portrait">
+  <!-- zaglavlje -->
+  <p class="text-right">Прилог 15</p>
+  <div class="h-8"></div>
+  <div class="w-1/1 flex justify-between items-center">
+      <div class="w-1/3">
+          <p>РЕПУБЛИКА СРБИЈА</p>
+          <p class="flex whitespace-nowrap">ОПШТИНА&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.municipality|title }}"))</script></span></p>
+          <p class="flex whitespace-nowrap">КО&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" contenteditable="true" style="border-bottom: 1px solid #000;"><script>document.write(lat2cyr("{{ subject.cadastral_municipality|title }}"))</script></span></p>
+      </div>
+
+
+      <div class="w-2/5">
+        <p class="flex whitespace-nowrap">Предмет број:&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true">
+            {% if subject.cadastral_number %}
+                {{ subject.cadastral_number }}
+            {% endif %}
+        </span></p>
+        <div class="w-full flex justify-start items-center ">
+            <p class="flex text-center">Датум:&nbsp;</p>
+            <div id="datePickerContainer" style="border-bottom: 1px solid black;" class="relative w-full ">
+                <input type="text" class="date-picker" id="dateInput" value="{{ subject.delivery_date | date:'d.m.Y.' }}" readonly />
+                <div id="calendar" class="hidden absolute top-[100%] left-0 w-[209px] bg-white z-10">                   
+                </div>
+              </div>
+           
+        </div>
+
+        <p class="flex whitespace-nowrap">Место:&nbsp;<span id="mesto" class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true">
+            {% if subject.company.department %}
+                <script>document.write(lat2cyr("{{ subject.company.department }}"))</script>
+            {% else %}
+                <script>document.write(lat2cyr("{{ subject.company.city }}"))</script>
+            {% endif %}
+        </span></p>
+        
+      </div>
+  </div>
+  <div class="h-4"></div> 
+  <div class="h-12"></div> <!-- divider -->
+  <!-- naslov -->
+  <div class="w-1/1">
+      <p class="font-bold text-center" style="font-size: 20pt; letter-spacing: 0.2px;">ЕЛАБОРАТ ГЕОДЕТСКИХ РАДОВА</p>
+  </div>
+  <div class="h-8"></div> <!-- divider -->
+  <div class="flex w-1/1 flex-col items-center">
+      <p class="flex w-5/6 py-4 text-center"><span class="flex-grow whitespace-nowrap overflow-hidden " style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.service_type }}"))</script></span></p>
+      <p style="font-size: 10pt;">(врста геодетских радова и локација)</p>
+  </div>
+  <div class="h-6"></div> <!-- divider -->
+
+  <div class="h-4"></div> 
+
+  <div class="h-6"></div> <!-- divider -->
+  <div class="w-1/1">
+      <p class="text-center font-bold" style="font-size: 14pt;">Садржај:</p>
+  </div>
+  <div class="h-4"></div> <!-- divider -->
+  <!-- tabela -->
+  <div class="w-1/1">
+      <table id="sadrzaj" width="100%" cellspacing="0" cellpadding="0" style="border: 1px solid #000; border-collapse: collapse;">
+          <!-- <tr class="h-4"> -->
+              <th style="border: 1px solid #000; padding:3px;">Редни број</th>
+              <th style="border: 1px solid #000; padding:3px;">Назив документа и број прилога</th>
+          <!-- </tr> -->
+          {% for doc in subject.elaborat_set.last.elaboratsubjectdocument_set.all %}
+            {% if doc.document.content == 'b' %}
+            <tr class="h-4">
+                <td style="border: 1px solid #000;" class="row-num text-center">
+                    <!-- <p class="w-1/1  flex whitespace-nowrap p-[3px]"><span class="flex-grow whitespace-nowrap overflow-hidden text-center" contenteditable="true"></span></p> -->
+                </td>
+                <td style="border: 1px solid #000;">
+                    <p class="w-1/1 flex whitespace-nowrap pl-1"><span class="flex-grow whitespace-nowrap overflow-hidden text-left" contenteditable="true"><script>document.write(lat2cyr("{{ doc.document }}"))</script></span></p>                
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+      </table>
+  </div>
+  <div class="h-8"></div> <!-- divider -->
+  <!-- potpisi i pecati, 2 kolone -->
+  <div class="w-1/1 flex justify-between gap-4">
+      <div class="w-1/2 flex flex-col items-center">
+          <div class="h-4"></div>
+          <p class="font-bold text-center">Елаборат израдио:</p>
+          <div class="h-4"></div>
+          <p class="flex w-5/6 text-center"><span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true">{{ user.company.full_name }}, <script>document.write(lat2cyr("{{ subject.company.city }}"))</script></span></p>
+          <p style="font-size: 10pt;">(назив извођача радова и седиште)</p>
+          <div class="h-4"></div>
+          <p class="flex w-5/6 text-center">&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"></span></p>
+          <p style="font-size: 10pt;">(потпис овлашћеног лица)</p>
+          <div class="h-4"></div>
+      </div>
+      <div class="w-1/2 flex flex-col items-center">
+          <div class="h-4"></div>
+          <p class="font-bold text-center">Одговорно лице:</p>
+          <div class="h-4"></div>
+          <p class="flex w-5/6 text-center"><span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></span></p>
+          <p style="font-size: 10pt;">(име и презиме)</p>
+          <p class="flex w-5/6 text-center"><span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true">{{ subject.responsible_worker.licence_number }}</span></p>
+          <p style="font-size: 10pt;">(број геодетске лиценце)</p>
+
+          <p class="flex w-5/6 text-center pt-[20px]"><span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"></span></p>
+          <p style="font-size: 10pt;">(потпис)</p>
+         
+      </div>
+  </div>
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 800px; left: 130px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="130" ypos="800">
+<img id="potpis-ovlasceni" style="position: absolute; top: 790px; left: 120px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="120" ypos="790">
+<img id="pecat-odgovorni" style="position: absolute; top: 820px; left: 490px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="490" ypos="820">
+<img id="potpis-odgovorni" style="position: absolute; top: 840px; left: 510px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="510" ypos="840">
+<script>
+    // Dobijamo sve ćelije sa klasom 'row-num'
+    let celije = document.querySelectorAll('.row-num');
+
+    // Postavljamo redni broj za svaku ćeliju
+    for (let i = 0; i < celije.length; i++) {
+    celije[i].innerText = `${i + 1}.`;  // Postavljamo redni broj počevši od 1
+    //console.log(i);
+    }
+</script>
+<script>
+    sadrzaj = document.getElementById("sadrzaj")
+    console.log(sadrzaj.rows.length)
+
+
+
+    for(let i=sadrzaj.rows.length; i<11; i++) {
+        tableRow = document.createElement("tr")
+        for(let j=0; j<2; j++){
+            tableCell = document.createElement("td")
+            tableCell.style.border = "1px solid black"
+            tableCell.style.textAlign = "center"
+            tableRow.appendChild(tableCell)
+        }
+        tableRow.style.border = "1px solid black"
+        tableRow.classList.add("h-5")
+        sadrzaj.appendChild(tableRow)
+    }
+    
+</script>

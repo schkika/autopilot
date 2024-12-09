@@ -1,0 +1,1240 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block link %}
+{{ block.super }}
+{% endblock link %}
+
+{% block leftnavlink %}
+<div class="h-full p-4 mt-5">
+    <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+        </svg>       
+        <p class="py-2 ml-2"><a href="{% url 'main:subject' pk=subject.id %}">Nazad na predmet</a></p>
+    </div>   
+    <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+        </svg>       
+        <p class="py-2 ml-2"><a href="{% url 'main:elaborat' pk=subject.id %}">Nazad na elaborat</a></p>
+    </div>       
+</div>
+{% endblock leftnavlink %}
+
+{% block mainpanel %}
+<div class="w-full h-full flex justify-start items-start md:pl-8 lg:pl-0 overflow-x-auto overflow-y-auto">
+    <div id="toolbar" class="w-[32] h-full bg-slate-200 flex flex-col justify-start items-start z-[1]">
+        <button class="p-1 hover:bg-slate-50" onclick="insertStamp('pecat-ovlasceni')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Ubaci pečat ovlašćenog lica">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="M624 475.968V640h144a128 128 0 0 1 128 128H128a128 128 0 0 1 128-128h144V475.968a192 192 0 1 1 224 0zM128 896v-64h768v64H128z"/></svg>
+        </button>
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <button class="p-1 hover:bg-slate-50" onclick="insertStamp('pecat-odgovorni')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Ubaci pečat odgovornog lica">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="M624 475.968V640h144a128 128 0 0 1 128 128H128a128 128 0 0 1 128-128h144V475.968a192 192 0 1 1 224 0zM128 896v-64h768v64H128z"/></svg>
+        </button>
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <button class="p-1 hover:bg-slate-50" onclick="insertStamp('potpis-ovlasceni')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Ubaci potpis ovlašćenog lica">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M14.075 11.725q1.825-1.35 2.85-2.962T17.95 5.55q0-.8-.263-1.175T16.976 4Q15.8 4 14.9 5.988t-.9 4.487q0 .35.013.663t.062.587ZM3 21v-2h2v2H3Zm4 0v-2h2v2H7Zm4 0v-2h2v2h-2Zm4 0v-2h2v2h-2Zm4 0v-2h2v2h-2ZM3.4 17L2 15.6L3.6 14L2 12.4L3.4 11L5 12.6L6.6 11L8 12.4L6.4 14L8 15.6L6.6 17L5 15.4L3.4 17Zm12.05-1q-.75 0-1.375-.288T13 14.776q-.625.35-1.288.625t-1.362.55l-.7-1.875q.7-.25 1.338-.537t1.237-.613q-.125-.55-.187-1.2t-.063-1.4q0-3.6 1.425-5.962T16.975 2q1.3 0 2.125.963t.825 2.687q0 2.15-1.363 4.25t-3.787 3.775q.175.175.363.263t.387.087q.65 0 1.513-.825t1.562-2.175l1.825.85q-.175.425-.275 1.025t.025 1.05q.25-.125.588-.425t.687-.75L23.025 14q-.65.9-1.5 1.45T19.95 16q-.525 0-.938-.313t-.687-.962q-.7.625-1.425.95T15.45 16Z"/></svg>
+        </button>
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <button class="p-1 hover:bg-slate-50" onclick="insertStamp('potpis-odgovorni')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Ubaci potpis odgovornog lica">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M14.075 11.725q1.825-1.35 2.85-2.962T17.95 5.55q0-.8-.263-1.175T16.976 4Q15.8 4 14.9 5.988t-.9 4.487q0 .35.013.663t.062.587ZM3 21v-2h2v2H3Zm4 0v-2h2v2H7Zm4 0v-2h2v2h-2Zm4 0v-2h2v2h-2Zm4 0v-2h2v2h-2ZM3.4 17L2 15.6L3.6 14L2 12.4L3.4 11L5 12.6L6.6 11L8 12.4L6.4 14L8 15.6L6.6 17L5 15.4L3.4 17Zm12.05-1q-.75 0-1.375-.288T13 14.776q-.625.35-1.288.625t-1.362.55l-.7-1.875q.7-.25 1.338-.537t1.237-.613q-.125-.55-.187-1.2t-.063-1.4q0-3.6 1.425-5.962T16.975 2q1.3 0 2.125.963t.825 2.687q0 2.15-1.363 4.25t-3.787 3.775q.175.175.363.263t.387.087q.65 0 1.513-.825t1.562-2.175l1.825.85q-.175.425-.275 1.025t.025 1.05q.25-.125.588-.425t.687-.75L23.025 14q-.65.9-1.5 1.45T19.95 16q-.525 0-.938-.313t-.687-.962q-.7.625-1.425.95T15.45 16Z"/></svg>
+        </button>
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <button class="p-1 hover:bg-slate-50" onclick="deleteStamps()" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Obriši sve pečate na stranici">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
+        </button>
+        <div class="w-full h-8" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <button id="btnDownload" class="p-1 hover:bg-slate-50" onclick="downloadPDF()" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Pečatiraj i preuzmi">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11l-5 5Zm-6 4q-.825 0-1.413-.588T4 18v-3h2v3h12v-3h2v3q0 .825-.588 1.413T18 20H6Z"/></svg>
+        </button>
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+        <button id="btnSend" class="p-1 hover:bg-slate-50" onclick="sendToServer()" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Pečatiraj i snimi">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 7v12q0 .825-.588 1.413T19 21H5q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h12l4 4Zm-2 .85L16.15 5H5v14h14V7.85ZM12 18q1.25 0 2.125-.875T15 15q0-1.25-.875-2.125T12 12q-1.25 0-2.125.875T9 15q0 1.25.875 2.125T12 18Zm-6-8h9V6H6v4ZM5 7.85V19V5v2.85Z"/></svg>
+        </button>
+        <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+
+    </div>
+    <div id="editor" class="relative w-full h-full flex flex-col justify-start items-start md:items-center md:p-4 gap-4 overflow-y-auto overflow-x-auto">
+        {% if assemble %}
+        <button class="fixed right-10 top-2/4" onclick="sendToServerandContinue()">
+            <img src="{% static 'img/next2.png' %}">
+        </button>
+        {% endif %}
+    </div>
+</div>
+{% endblock mainpanel %}
+
+{% block script %}
+<!-- pocetak javascripta -->
+<script src="https://unpkg.com/pdf-lib@1.4.0/dist/pdf-lib.min.js"></script>
+<!-- <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+/* inicijalizacija varijabli */
+const awsName = "{{ aws }}"
+const folder = "{{ folder }}"
+const pk = "{{ pk }}"
+const companyId = "{{ company_id }}"
+const responsibleUser = "zaposleni-{{ subject.responsible_worker.id }}"
+let blobDownload;
+/* Inicijalizacija IndexedDB */
+const openRequest = indexedDB.open("PdfDatabase", 1);
+openRequest.onupgradeneeded = function(event) {
+const db = event.target.result;
+const store = db.createObjectStore("PdfStore", { keyPath: "id" });
+};
+openRequest.onsuccess = function(event) {
+console.log("Database opened successfully.");
+};
+/* ucitavanje PDF-a koji nije elaborat */
+async function loadPDF() {
+    let pdfjsLib = window['pdfjs-dist/build/pdf'];
+    // pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    let csrfToken = getCookie('csrftoken');
+    let bucket = `autopilot-kancelarija-${companyId}`;
+    let data = ""
+    if(folder=="Root"){
+        data = `Predmet-${pk}/${awsName}`
+    }else{
+        data = `Predmet-${pk}/${folder}/${awsName}`
+    }
+    localStorage.setItem('page', 1);
+    try {
+        const response = await fetch ('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+
+            const loadingTask = pdfjsLib.getDocument(blobUrl);
+            const pdf = await loadingTask.promise;
+
+            const numPages = pdf.numPages;
+
+            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+
+                const scale = 1;
+                const viewport = page.getViewport({ scale: scale });
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport,
+                };
+                const renderTask = page.render(renderContext);
+                await renderTask.promise;
+
+                const pageDiv = document.createElement("div");
+                pageDiv.id = `page-${pageNum}`;
+                pageDiv.appendChild(canvas);
+                pageDiv.classList.add('page');
+                pageDiv.classList.add('relative');
+
+                document.getElementById("editor").appendChild(pageDiv);
+                buttonAddStamp(pageNum);
+            }
+        } else {
+            console.error('Request failed with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+}
+/* kreiranje  */
+function buttonAddStamp(pageNum){
+    const button = document.createElement('button');
+    button.classList.add('form-button');
+}
+/* citanje cookie-ja */
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+        }
+        }
+    }
+    return cookieValue;
+}
+/* dodavanje pecata na stranicu koja je u fokusu */
+async function insertStamp(naziv){
+    let page = localStorage.getItem('page');
+    const editor = document.getElementById("page-"+page);
+    const pecat = document.createElement("img");
+    pecat.id = naziv;
+    pecat.setAttribute('data-stamp-name', naziv);
+    pecat.style.outline = "1px solid red";
+
+    let csrfToken = getCookie('csrftoken');
+    let bucket ="";
+    let data = "";
+    switch (naziv) {
+        case "pecat-ovlasceni":
+            bucket = `autopilot-kancelarija-${companyId}`;
+            data = "OpstiDokumenti/pecat.png";
+            break;
+        case "pecat-odgovorni": 
+            bucket = `autopilot-kancelarija-${companyId}`;
+            data = `${responsibleUser}/pecat.png`;
+            break;
+        case "potpis-ovlasceni":
+            bucket = `autopilot-kancelarija-${companyId}`;
+            data = "OpstiDokumenti/potpis.png";
+            break;
+        case "potpis-odgovorni":
+            bucket = `autopilot-kancelarija-${companyId}`;
+            data = `${responsibleUser}/potpis.png`;
+            break;
+    };
+    try {
+        const response = await fetch ('/main/return-aws-png', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        });
+        if (response.ok) {
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const image = new Image();
+            image.src = blobUrl;
+            image.onload = () => {
+                // Originalne dimenzije slike
+                const originalWidth = image.width;
+                const originalHeight = image.height;
+
+                // Smanjuje dimenzije na 75%
+                const newWidth = originalWidth * 0.75;
+                const newHeight = originalHeight * 0.75;
+
+                // Kreira novi canvas element
+                const canvas = document.createElement('canvas');
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                const ctx = canvas.getContext('2d');
+
+                // Crtanje smanjene slike na canvas
+                ctx.drawImage(image, 0, 0, newWidth, newHeight);
+
+                // Konvertovanje canvasa u blob
+                canvas.toBlob((newBlob) => {
+                    const newBlobUrl = URL.createObjectURL(newBlob);
+                    pecat.src = newBlobUrl;
+                });
+            };
+        } else {
+            console.error('Request failed with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+
+    pecat.style.position = "absolute";
+    pecat.style.top = "300px";
+    pecat.style.left = "300px";
+    pecat.style.cursor = "move";
+    pecat.setAttribute('draggable', true);
+    pecat.setAttribute('xPos', 300);
+    pecat.setAttribute('yPos', 300);
+    pecat.setAttribute('onmousedown', 'handleMouseDown(this, event)');
+    pecat.setAttribute('ontouchstart', 'handleMouseDown(this, event)');
+    editor.appendChild(pecat);
+
+}
+/* brisanje pecata na stranici koja je u fokusu */
+function deleteStamps(){
+    const page = localStorage.getItem('page');
+    const pageDiv = document.getElementById('page-'+page);
+    const imgNodes = pageDiv.querySelectorAll('img');
+
+    imgNodes.forEach(img => {
+        img.remove();
+    });
+}
+/* slanje obicnih pdf-ova na server na klik */
+async function sendToServer(){
+    const { PDFDocument } = PDFLib;
+    const editor = document.getElementById('editor');
+    const pages = editor.querySelectorAll('.page');
+    let coords =[];
+    pages.forEach(page => {
+        let arr = [];
+        let images = page.querySelectorAll('img');
+        images.forEach(image => {
+            let innerArr = [];
+
+            innerArr.push(image.id);
+            innerArr.push(parseInt(image.getAttribute('xPos'), 10));
+            innerArr.push(parseInt(image.getAttribute('yPos'), 10));
+
+            arr.push(innerArr);
+        });
+
+        coords.push(arr);
+
+    });
+
+    let csrfToken = getCookie('csrftoken');
+    let bucket = `autopilot-kancelarija-${companyId}`;
+    let data = ""
+    if(folder=="Root"){
+        data = `Predmet-${pk}/${awsName}`
+    }else{
+        data = `Predmet-${pk}/${folder}/${awsName}`
+    }
+    localStorage.setItem('page', 1);
+    try {
+        const response = await fetch ('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const arrayBuffer = event.target.result;
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+                const pages = pdfDoc.getPages();
+                // console.log(pages);
+
+                await addStampImages(pdfDoc, coords);
+            };
+
+            reader.readAsArrayBuffer(pdfBlob);
+
+        } else {
+            console.error('Request failed with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+    
+}
+/* */
+async function sendToServerandContinue(){
+    const { PDFDocument } = PDFLib;
+    const editor = document.getElementById('editor');
+    const pages = editor.querySelectorAll('.page');
+    let coords =[];
+    pages.forEach(page => {
+        let arr = [];
+        let images = page.querySelectorAll('img');
+        images.forEach(image => {
+            let innerArr = [];
+
+            innerArr.push(image.id);
+            innerArr.push(parseInt(image.getAttribute('xPos'), 10));
+            innerArr.push(parseInt(image.getAttribute('yPos'), 10));
+
+            arr.push(innerArr);
+        });
+
+        coords.push(arr);
+
+    });
+
+    let csrfToken = getCookie('csrftoken');
+    let bucket = `autopilot-kancelarija-${companyId}`;
+    let data = ""
+    if(folder=="Root"){
+        data = `Predmet-${pk}/${awsName}`
+    }else{
+        data = `Predmet-${pk}/${folder}/${awsName}`
+    }
+    localStorage.setItem('page', 1);
+    try {
+        const response = await fetch ('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const arrayBuffer = event.target.result;
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+                const pages = pdfDoc.getPages();
+                // console.log(pages);
+
+                await addStampImagesandContinue(pdfDoc, coords);
+            };
+
+            reader.readAsArrayBuffer(pdfBlob);
+
+        } else {
+            console.error('Request failed with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+    
+}
+async function addStampImagesandContinue(pdfDoc, stamps){
+    for (let index = 0; index < stamps.length; index++) {
+        let pageNo = index + 1;
+        const pageStamps = stamps[index];
+        
+        const stampPromises = pageStamps.map(async (stamp) => {
+            let [id, xPos, yPos] = stamp;
+
+            
+            const arrayBuffer = await new Promise(resolve => {
+                getImageDataAsArrayBuffer(id, resolve);
+            });
+
+            console.log(arrayBuffer);
+            
+            const img = await pdfDoc.embedPng(arrayBuffer);
+            const pages = pdfDoc.getPages();
+            
+            const page = pages[pageNo - 1] || pages[0];
+                                    
+            const pageWidth = page.getWidth();
+            const pageHeight = page.getHeight();
+
+            const dpi = 72;
+            const widthInPixels = pageWidth * dpi / 72 ;
+            const heightInPixels = pageHeight * dpi / 72;
+            
+            console.log(widthInPixels, heightInPixels);
+            
+            let imgElement = document.getElementById(id);
+            let imgWidth = imgElement.width;
+            let imgHeight = imgElement.height;
+
+            console.log(id, xPos, yPos, imgWidth, imgHeight);
+            
+            page.drawImage(img, {
+                // x: xPos,
+                // y: 841 - yPos,
+                x: xPos,
+                y: pageHeight - yPos - imgHeight,
+                width: imgWidth,
+                height: imgHeight
+            });
+        });
+        
+        await Promise.all(stampPromises);
+    }
+    
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    console.log(blob);
+
+    sendToRouteandContinue(blob);
+
+}
+async function sendToRouteandContinue(blob){
+    let csrfToken = getCookie('csrftoken');
+    const url = "/main/edit-elaborat";
+    const formData = new FormData();
+    const subjectID = "{{subject.id}}";
+    const assemble = "{{assemble}}";
+    
+    formData.append('pdf', blob);
+    formData.append('subjectID', subjectID);
+    formData.append('aws_name', awsName);
+    formData.append('assemble', assemble);
+
+    try {
+        const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: formData
+        });
+
+        if (response.ok) {
+            console.log('Uspešno poslat Blob na server');
+            response.json().then(function(data){
+                console.log(data);
+                if(!data.end){
+                    if(data.template_number){
+                        // pozivamo obican editor
+                        console.log('obican editor');
+                        const templateNumber = data.template_number;
+                        const pk = data.pk;
+                        const assemble = data.assemble;
+    
+                        window.location.href = `/editor/${templateNumber}/${pk}/${assemble}`;
+                    } else {
+                        // pozivamo pdf-editor
+                        console.log('pozovi pdf editor');
+                        const pk = data.pk;
+                        const awsName = data.aws_name;
+                        const folder = data.folder;
+                        const assemble = data.assemble;
+    
+                        window.location.href = `/main/pdf-editor/${pk}/${awsName}/${folder}/${assemble}`;
+                    }
+                } else {
+                    // Swal.fire({
+                    //     title: 'Elaborat završen!',
+                    //     text: 'Kliknite na ZAVRŠI da biste ga sastavili.',
+                    //     icon: 'success',
+                    //     confirmButtonText: 'ZAVRŠI'
+                    // });
+                    window.location.href = `/main/elaborat/${pk}/end`;
+                }
+            });
+
+            // const subjectId = "{{subject.id}}";
+            // window.location.href = `/main/elaborat/${subjectId}`
+        } else {
+            console.log('Greška prilikom slanja Blob-a na server', response);
+        }
+    } catch (error) {
+        console.log('Došlo je do greške', error);
+    }
+}
+
+/* funkcija za ubacivanje pecata na svaku stranicu pdf-a */
+async function addStampImages(pdfDoc, stamps){
+    for (let index = 0; index < stamps.length; index++) {
+        let pageNo = index + 1;
+        const pageStamps = stamps[index];
+        
+        const stampPromises = pageStamps.map(async (stamp) => {
+            let [id, xPos, yPos] = stamp;
+
+            
+            const arrayBuffer = await new Promise(resolve => {
+                getImageDataAsArrayBuffer(id, resolve);
+            });
+
+            console.log(arrayBuffer);
+            
+            const img = await pdfDoc.embedPng(arrayBuffer);
+            const pages = pdfDoc.getPages();
+            
+            const page = pages[pageNo - 1] || pages[0];
+                                    
+            const pageWidth = page.getWidth();
+            const pageHeight = page.getHeight();
+
+            const dpi = 72;
+            const widthInPixels = pageWidth * dpi / 72 ;
+            const heightInPixels = pageHeight * dpi / 72;
+            
+            console.log(widthInPixels, heightInPixels);
+            
+            let imgElement = document.getElementById(id);
+            let imgWidth = imgElement.width;
+            let imgHeight = imgElement.height;
+
+            console.log(id, xPos, yPos, imgWidth, imgHeight);
+            
+            page.drawImage(img, {
+                // x: xPos,
+                // y: 841 - yPos,
+                x: xPos,
+                y: pageHeight - yPos - imgHeight,
+                width: imgWidth,
+                height: imgHeight
+            });
+        });
+        
+        await Promise.all(stampPromises);
+    }
+    
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    console.log(blob);
+
+    sendToRoute(blob);
+
+}
+/* slanje elaborata na server na klik */
+async function sendElaborateToServer() {
+    const { PDFDocument } = PDFLib;
+    const editor = document.getElementById('editor');
+    const pages = editor.querySelectorAll('.page');
+    let coords = [];
+
+    pages.forEach(page => {
+        let arr = [];
+        let images = page.querySelectorAll('img');
+        images.forEach(image => {
+            let innerArr = [];
+
+            innerArr.push(image.id);
+            innerArr.push(parseInt(image.getAttribute('xPos'), 10));
+            innerArr.push(parseInt(image.getAttribute('yPos'), 10));
+
+            arr.push(innerArr);
+        });
+
+        coords.push(arr);
+    });
+
+    try {
+        // Učitaj blob iz IndexedDB
+        const blob = await retrievePdfBlobFromDB();
+
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+        const reader = new FileReader();
+
+        reader.onload = async function(event) {
+            const arrayBuffer = event.target.result;
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+
+            await addStampImagesToElaborate(pdfDoc, coords);
+        };
+
+        reader.readAsArrayBuffer(pdfBlob);
+
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+
+    async function retrievePdfBlobFromDB() {
+        return new Promise((resolve, reject) => {
+            const db = openRequest.result;
+            const transaction = db.transaction("PdfStore", "readonly");
+            const store = transaction.objectStore("PdfStore");
+    
+            const request = store.get(1); // ovde je 1 ID objekta koji tražimo
+            request.onsuccess = function(event) {
+                if (event.target.result) {
+                    resolve(event.target.result.pdfBlob);
+                } else {
+                    reject(new Error("PDF does not exist in the database."));
+                }
+            };
+            request.onerror = function(event) {
+                reject(new Error("An error occurred while retrieving the PDF."));
+            };
+        });
+    }
+}
+/* funkcija za ubacivanje pecata na svaku stranicu elaborata */
+async function addStampImagesToElaborate(pdfDoc, stamps){
+    console.log("addStampimagesToElaborate()");
+    for (let index = 0; index < stamps.length; index++) {
+        let pageNo = index + 1;
+        const pageStamps = stamps[index];
+        
+        const stampPromises = pageStamps.map(async (stamp) => {
+            let [id, xPos, yPos] = stamp;
+
+            
+            const arrayBuffer = await new Promise(resolve => {
+                getImageDataAsArrayBuffer(id, resolve);
+            });
+
+            console.log(arrayBuffer);
+            
+            const img = await pdfDoc.embedPng(arrayBuffer);
+            const pages = pdfDoc.getPages();
+            
+            const page = pages[pageNo - 1] || pages[0];
+                                    
+            const pageWidth = page.getWidth();
+            const pageHeight = page.getHeight();
+
+            const dpi = 72;
+            const widthInPixels = pageWidth * dpi / 72;
+            const heightInPixels = pageHeight * dpi / 72;
+            
+            console.log(widthInPixels, heightInPixels);
+            
+            let imgElement = document.getElementById(id);
+            let imgWidth = imgElement.width;
+            let imgHeight = imgElement.height;
+
+            console.log(id, xPos, yPos, imgWidth, imgHeight);
+            
+            page.drawImage(img, {
+                // x: xPos,
+                // y: 841 - yPos,
+                x: xPos,
+                y: pageHeight - yPos - imgHeight,
+                width: imgWidth,
+                height: imgHeight
+            });
+        });
+        
+        await Promise.all(stampPromises);
+    }
+    
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    console.log(blob);
+
+    sendElaborateToRoute(blob);
+
+}
+/* preuzimanje pdf-a */
+async function downloadPDF() {
+    const { PDFDocument } = PDFLib;
+    const editor = document.getElementById('editor');
+    const pages = editor.querySelectorAll('.page');
+    let coords =[];
+    pages.forEach(page => {
+        let arr = [];
+        let images = page.querySelectorAll('img');
+        images.forEach(image => {
+            let innerArr = [];
+
+            innerArr.push(image.id);
+            innerArr.push(parseInt(image.getAttribute('xPos'), 10));
+            innerArr.push(parseInt(image.getAttribute('yPos'), 10));
+
+            arr.push(innerArr);
+        });
+
+        coords.push(arr);
+
+    });
+
+    let csrfToken = getCookie('csrftoken');
+    let bucket = `autopilot-kancelarija-${companyId}`;
+    let data = ""
+    if(folder=="Root"){
+        data = `Predmet-${pk}/${awsName}`
+    }else{
+        data = `Predmet-${pk}/${folder}/${awsName}`
+    }
+
+    try {
+        const response = await fetch('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+            const reader = new FileReader();
+
+            reader.onload = async function(event) {
+                const arrayBuffer = event.target.result;
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+
+                // Dodaj pečate na PDF
+                await addStampImagesForDownload(pdfDoc, coords);
+
+                // Sačuvaj modifikovani PDF kao blob
+                const pdfBytes = await pdfDoc.save();
+                const modifiedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                // Preuzmi modifikovani PDF
+                downloadBlob(modifiedBlob, awsName);
+            };
+
+            reader.readAsArrayBuffer(pdfBlob);
+
+        } else {
+            console.error('Request failed with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+
+    function downloadBlob(blob, filename) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+/* pecatiranje i preuzimanje elaborata */
+async function downloadElaboratePDF() {
+    const { PDFDocument } = PDFLib;
+    const editor = document.getElementById('editor');
+    const pages = editor.querySelectorAll('.page');
+    let coords = [];
+  
+    pages.forEach(page => {
+        let arr = [];
+        let images = page.querySelectorAll('img');
+        images.forEach(image => {
+            let innerArr = [];
+
+            innerArr.push(image.id);
+            innerArr.push(parseInt(image.getAttribute('xPos'), 10));
+            innerArr.push(parseInt(image.getAttribute('yPos'), 10));
+
+            arr.push(innerArr);
+        });
+
+        coords.push(arr);
+    });
+
+    try {
+        // Učitaj blob iz IndexedDB
+        const blob = await retrievePdfBlobFromDB();
+
+        // Napravi blob kao PDF
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+        const reader = new FileReader();
+
+        reader.onload = async function(event) {
+            const arrayBuffer = event.target.result;
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+
+            // Dodaj pečate na PDF
+            await addStampImagesForDownload(pdfDoc, coords);
+
+            // Sačuvaj modifikovani PDF kao blob
+            const pdfBytes = await pdfDoc.save();
+            const modifiedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            // Preuzmi modifikovani PDF
+            downloadBlob(modifiedBlob, awsName);
+        };
+
+        reader.readAsArrayBuffer(pdfBlob);
+
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+
+    function downloadBlob(blob, filename) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    async function retrievePdfBlobFromDB() {
+        return new Promise((resolve, reject) => {
+            const db = openRequest.result;
+            const transaction = db.transaction("PdfStore", "readonly");
+            const store = transaction.objectStore("PdfStore");
+    
+            const request = store.get(1); // ovde je 1 ID objekta koji tražimo
+            request.onsuccess = function(event) {
+                if (event.target.result) {
+                    resolve(event.target.result.pdfBlob);
+                } else {
+                    reject(new Error("PDF does not exist in the database."));
+                }
+            };
+            request.onerror = function(event) {
+                reject(new Error("An error occurred while retrieving the PDF."));
+            };
+        });
+    }
+}
+/* dodavanje pecata na pdf za preuzimanje */
+async function addStampImagesForDownload(pdfDoc, stamps){
+    for (let index = 0; index < stamps.length; index++) {
+        let pageNo = index + 1;
+        const pageStamps = stamps[index];
+        
+        const stampPromises = pageStamps.map(async (stamp) => {
+            let [id, xPos, yPos] = stamp;
+
+            
+            const arrayBuffer = await new Promise(resolve => {
+                getImageDataAsArrayBuffer(id, resolve);
+            });
+
+            console.log(arrayBuffer);
+            
+            const img = await pdfDoc.embedPng(arrayBuffer);
+            const pages = pdfDoc.getPages();
+            
+            const page = pages[pageNo - 1] || pages[0];
+                                    
+            const pageWidth = page.getWidth();
+            const pageHeight = page.getHeight();
+
+            const dpi = 72;
+            const widthInPixels = pageWidth * dpi / 72;
+            const heightInPixels = pageHeight * dpi / 72;
+            
+            console.log(widthInPixels, heightInPixels);
+            
+            let imgElement = document.getElementById(id);
+            let imgWidth = imgElement.width;
+            let imgHeight = imgElement.height;
+
+            console.log(id, xPos, yPos, imgWidth, imgHeight);
+            
+            page.drawImage(img, {
+                // x: xPos,
+                // y: 841 - yPos,
+                x: xPos,
+                y: pageHeight - yPos - imgHeight,
+                width: imgWidth,
+                height: imgHeight
+            });
+        });
+        
+        await Promise.all(stampPromises);
+    }
+    
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    console.log(blob);
+
+}
+/* slanje obicnih pdf fajlova na rutu */
+async function sendToRoute(blob){
+    let csrfToken = getCookie('csrftoken');
+    const url = "/main/upload-grider-elaborat-document";
+    const formData = new FormData();
+    const subjectID = "{{subject.id}}";
+    
+    formData.append('file', blob);
+    formData.append('subjectID', subjectID);
+    formData.append('aws_name', awsName);
+
+    try {
+        const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: formData
+        });
+
+        if (response.ok) {
+            console.log('Uspešno poslat Blob na server');
+            const subjectId = "{{subject.id}}";
+            window.location.href = `/main/elaborat/${subjectId}`
+        } else {
+            console.log('Greška prilikom slanja Blob-a na server', response);
+        }
+    } catch (error) {
+        console.log('Došlo je do greške', error);
+    }
+}
+/* slanje elaborata sa pecatima na rutu */
+async function sendElaborateToRoute(blob){
+    let csrfToken = getCookie('csrftoken');
+    const url = "/main/upload-completed-elaborat";
+    const formData = new FormData();
+    const subjectID = "{{subject.id}}";
+    
+    formData.append('file', blob);
+    formData.append('pk', subjectID);
+    // formData.append('aws_name', awsName);
+
+    console.log("sendElaborateToRoute()");
+    try {
+        const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: formData
+        });
+
+        if (response.ok) {
+            console.log('Uspešno poslat Blob na server');
+            const subjectId = "{{subject.id}}";
+            window.location.href = `/main/elaborat/${subjectId}`
+        } else {
+            console.log('Greška prilikom slanja Blob-a na server', response);
+        }
+    } catch (error) {
+        console.log('Došlo je do greške', error);
+    }
+}
+/* pretvaranje slike u arrayBuffer */
+function getImageDataAsArrayBuffer(id, callback) {
+    let imgElement = document.getElementById(id);
+    // Iscrtavanje img u canvas
+    const canvas = document.createElement("canvas");
+    canvas.width = imgElement.width;
+    canvas.height = imgElement.height;
+    
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(imgElement, 0, 0);
+
+    // Konvertovanje canvasa u blob
+    canvas.toBlob(blob => {
+        // konvertuj blob u arrayBuffer
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(blob);
+        reader.onload = () => {
+        const arrayBuffer = reader.result;
+        callback(arrayBuffer);
+        };
+    });
+}
+/* citanje dimenzija slike iz bloba */
+function getImageDimensions(arrayBuffer) {
+  return new Promise((resolve, reject) => {
+    const blob = new Blob([new Uint8Array(arrayBuffer)], { type: 'image/png' });
+    const img = new Image();
+    img.src = URL.createObjectURL(blob);
+    img.onload = function() {
+      resolve({ width: this.width, height: this.height });
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = function() {
+      reject(new Error('Nemoguće izvući dimenzije slike'));
+    };
+  });
+}
+/* pomeranje slike (pecata) na zeljeno mesto */
+function handleMouseDown(element, event){
+    event.preventDefault();
+
+    let page = localStorage.getItem('page');
+    const editor = document.getElementById(`page-${page}`);
+
+    function moveAt(pos){           
+        element.style.left = pos.x + 'px';
+        element.style.top = pos.y + 'px';
+        element.setAttribute('xPos', pos.x);
+        element.setAttribute('yPos', pos.y);
+    }
+
+    function getEventPosition(e){
+        if(e.touches){
+            return getPos(element, e.touches[0]);
+        } else {
+            return getPos(element, e);
+        }
+    }
+
+    function onMouseMove(e){
+        var pos = getEventPosition(e);
+        moveAt(pos);
+    }
+
+    function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('touchmove', onMouseMove);
+        document.removeEventListener('touchend', onMouseUp);
+
+        const editor = document.getElementById("page-"+page);
+        // const spans = editor.getElementsByTagName('span');
+        // for(let i = 0; i < spans.length; i++){
+        //     spans[i].setAttribute('contenteditable', 'true');
+        // }
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchmove', onMouseMove);
+    document.addEventListener('touchend', onMouseUp);
+
+}
+/* racunanje pozicije */
+function getPos(element, event){
+    const page = parseInt(localStorage.getItem('page'));
+    const pecat = element;
+    const elNav = document.querySelector("nav"); /* navigacija */
+    const elEdit = document.getElementById('editor'); /* editor */
+    const elPage = pecat.parentNode; /* stranica */
+    // const elEditWrap = elEdit.parentNode; /* editor parent */
+    // const elBack = elEditWrap.parentNode; /* el3 parent */ 
+    const elToolbar = document.getElementById("toolbar");
+    const elHeader = document.querySelector("header");
+   
+    if(isMobileDevice()){
+        var x = event.pageX + elEdit.scrollLeft - elToolbar.offsetWidth - pecat.offsetWidth/2;
+        var y = event.pageY + elEdit.scrollTop - elHeader.offsetHeight - pecat.offsetHeight/2 - (page-1) * elPage.offsetHeight - (page-1)*16;
+    } else {
+        var x = event.pageX - elNav.offsetWidth - elToolbar.offsetWidth - (elEdit.offsetWidth - elPage.offsetWidth)/2 - pecat.offsetWidth/2;
+        var y = event.pageY - elHeader.offsetHeight - (pecat.offsetHeight/2) - ((page-1) * elPage.offsetHeight) - ((page-1)*16) + elEdit.scrollTop ;
+        // var y = event.pageY + elEdit.scrollTop - elHeader.offsetHeight - (pecat.offsetHeight/2) - ((page-1) * elPage.offsetHeight) - ((page-1)*16);
+    }
+    const position = {
+        x: x,
+        y: y
+    };
+    console.log(`Page: ${page}\n`,`Mouse X: ${event.pageX}\n`, `Mouse Y: ${event.pageY}\n`, `${position.x}\n`, `${position.y}\n`, `Page width: ${elPage.offsetWidth}\n`, `Page height: ${elPage.offsetHeight}\n`, `ScrollTop: ${elEdit.scrollTop}`);
+    return position;
+}
+/* provera da li je mobilni uredjaj */
+function isMobileDevice(){ // funcija za proveravanje da li se gleda preko mobilnog uredjaja
+    return 'ontouchstart' in window || navigator.maxTouchPoints;
+}
+/* kontrola nad pomeranjem */
+function handleDragStart(e){
+    e.preventDefault();
+    return false;
+}
+/* Uzimanje bloba iz IndexedDB */
+function retrieveAndShowPdf() {
+    const db = openRequest.result;
+    const transaction = db.transaction("PdfStore", "readonly");
+    const store = transaction.objectStore("PdfStore");
+
+    const request = store.get(1);
+    request.onsuccess = function(event) {
+        const data = event.target.result;
+        if (data) {
+        const blob = data.pdfBlob;
+        loadBlob(blob);
+        } else {
+        console.log("PDF not found.");
+        }
+    };
+    request.onerror = function(event) {
+        console.log("Failed to retrieve PDF.", event.target.error);
+    };
+}
+/* citanje bloba */
+async function loadBlob(blob){
+    const blobUrl = URL.createObjectURL(blob);
+
+    const loadingTask = pdfjsLib.getDocument(blobUrl);
+    const pdf = await loadingTask.promise;
+
+    const numPages = pdf.numPages;
+
+    for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+
+        const scale = 1;
+        const viewport = page.getViewport({ scale: scale });
+
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+        };
+        const renderTask = page.render(renderContext);
+        await renderTask.promise;
+
+        const pageDiv = document.createElement("div");
+        pageDiv.id = `page-${pageNum}`;
+        pageDiv.appendChild(canvas);
+        pageDiv.classList.add('page');
+        pageDiv.classList.add('relative');
+
+        document.getElementById("editor").appendChild(pageDiv);
+        buttonAddStamp(pageNum);
+    }
+}
+/* Funkcija za proveru da li PDF postoji */
+async function checkIfPdfExists() {
+    return new Promise((resolve, reject) => {
+        const openRequest = indexedDB.open("PdfDatabase", 1);
+        openRequest.onupgradeneeded = function(event) {
+            const db = event.target.result;
+            const store = db.createObjectStore("PdfStore", { keyPath: "id" });
+        };
+        openRequest.onsuccess = function(event) {
+            console.log("Database opened successfully.");
+            const db = openRequest.result;
+            const transaction = db.transaction("PdfStore", "readonly");
+            const store = transaction.objectStore("PdfStore");
+            
+            const request = store.get(1); // ovde je 1 ID objekta koji tražimo
+            request.onsuccess = function(event) {
+            if (request.result) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+            };
+            request.onerror = function(event) {
+            reject(new Error("An error occurred while checking for PDF."));
+            };
+        };
+    });
+}
+/* postavljanje save buttona da bude za elaborat */
+async function setButtonsToElaborate(){
+    const btnSend = document.getElementById("btnSend");
+    const btnDownload = document.getElementById("btnDownload");
+    await checkIfPdfExists()
+    .then(exists => {
+        if(exists){
+            btnSend.setAttribute('onclick', 'sendElaborateToServer()');
+            btnDownload.setAttribute('onclick', 'downloadElaboratePDF()');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    })
+}
+/* DOMContentLoaded event listener / startovanje funkcija tek nakon sto je cela stranica ucitana */
+document.addEventListener('DOMContentLoaded', () => {
+    checkIfPdfExists()
+    .then(exists => {
+        if (exists) {
+        console.log("PDF exists in the database.");
+        retrieveAndShowPdf();
+        setButtonsToElaborate();
+        } else {
+        console.log("PDF does not exist in the database.");
+        loadPDF();
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+    // loadPDF();
+    
+    const editor = document.getElementById('editor');
+    editor.addEventListener('scroll', function() {
+        const pages = document.querySelectorAll('.page'); 
+        let focusedPageNum = -1;
+        
+        pages.forEach((page, index) => {
+            const rect = page.getBoundingClientRect();
+            // console.log(rect, editor.offsetHeight);
+            if (rect.top <= editor.offsetHeight/2) {
+                focusedPageNum = index + 1; 
+            }
+        });
+        
+        if (focusedPageNum !== -1) {
+            // console.log(`Page ${focusedPageNum} is in focus.`);
+            localStorage.setItem('page', focusedPageNum);
+        }
+    });
+
+});
+/* kraj javascripta */
+</script>
+{% endblock script %}

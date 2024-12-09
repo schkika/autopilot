@@ -1,0 +1,630 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block link %}
+<!-- <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script> -->
+{{ block.super }}
+<script src="https://unpkg.com/pdf-lib@1.4.0/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>   
+    function setFixedHeight(el){ // funkcija za fiksiranje visine elementa
+
+        const element = document.getElementById(el);
+        const elHeight = element.offsetHeight;
+        element.style.height = elHeight + "px";
+        element.classList.add('overflow-y-auto');
+
+    }
+</script>
+{% endblock link %}
+
+{% block leftnavlink %}
+<div class="h-full p-4 mt-5">
+    <p class="py-2"><a href="{% url 'main:edit-subject' pk=subject.id %}">Parametri predmeta</a></p>
+    <p class="py-2"><a href="{% url 'main:subject' pk=subject.id %}">Nazad na predmet</a></p>
+    <p class="py-2"><a href="{% url 'main:subjects' %}">Svi predmeti</a></p>
+    <p class="py-2"><a href="{% url 'main:reset-elaborat' pk=subject.id %}">Resetuj elaborat</a></p>
+</div>
+{% endblock leftnavlink %}
+
+{% block mainpanel %}
+<div class="h-full flex flex-col p-4">
+    <div class="head-card text-2xl">Elaborat za predmet {{ subject.id }}, {{ subject.service_type }}</div>
+    <div class=" mt-3 grow grid gap-3 grid-cols-1 md:grid-cols-2">
+        <div id="file-card" class="card flex flex-col">
+            <script>setFixedHeight("file-card");</script>
+            <div class="grow">
+                <ul id="lista">
+                    {% for dokument in dokumenti %}
+                        {% if dokument.uploaded %}
+                        <li class="cursor-pointer filelink bg-primary mb-1.5 px-2 rounded-sm text-white" data-order="{{ dokument.order }}" data-link-name="Predmet-{{subject.id}}/Elaborati/Elaborat1/{{ dokument.document.aws_name }}">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    {{ dokument.document }}<span style="color: rgb(17, 155, 17);">&nbsp;✔</span>
+                                </div>
+                                <div>
+                                    {% if dokument.document.root %}
+                                        {% if dokument in root_docs_done %}
+                                        <a href="{% url 'main:pdf-editor' pk=subject.id aws=dokument.document.aws_name folder='Root' %}" class="text-blue-400 dark:text-blue-300">Pečatiraj</a>
+                                        {% else %}
+                                        <p class="text-gray-400">fajl ne postoji</p>
+                                        {% endif %}
+                                    {% elif dokument.document.template_number %}
+                                    <a href="{% url 'editor' id=dokument.document.template_number pk=subject.id %}" class="text-blue-400 dark:text-blue-300">Uredi</a>
+                                    {% elif dokument.document.grider %}
+                                        {% if dokument in grider_docs_done %}
+                                        <a href="{% url 'main:pdf-editor' pk=subject.id aws=dokument.document.aws_name folder='Grider' %}" class="text-blue-400 dark:text-blue-300">Pečatiraj</a>
+                                        {% else %}
+                                        <p class="text-gray-400">nije odradjena transformacija</p>
+                                        {% endif %}
+                                    {% elif dokument.document.cad %}
+                                        {% if dokument in cad_docs_done %}
+                                        <a href="{% url 'main:pdf-editor' pk=subject.id aws=dokument.document.aws_name folder='CAD' %}" class="text-blue-400 dark:text-blue-300">Pečatiraj</a>
+                                        {% else %}
+                                        <p class="text-gray-400">fajl ne postoji</p>
+                                        {% endif %}
+                                    {% else %}
+                                        <a href="#"></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li data-order="{{ dokument.order }}" class="bg-primary mb-1.5 px-2 rounded-sm text-white">
+                            <div class="flex justify-between">
+                                {{ dokument.document }}
+                                {% if dokument.document.root %}
+                                    {% if dokument in root_docs_done %}
+                                    <a href="{% url 'main:pdf-editor' pk=subject.id aws=dokument.document.aws_name folder='Root' %}" class="text-blue-400 dark:text-blue-300">Pečatiraj</a>
+                                    {% else %}
+                                    <p class="text-gray-400">fajl ne postoji</p>
+                                    {% endif %}
+                                {% elif dokument.document.template_number %}
+                                    <a href="{% url 'editor' id=dokument.document.template_number pk=subject.id %}" class="text-blue-400 dark:text-blue-300">Uredi</a>
+                                {% elif dokument.document.grider %}
+                                    {% if dokument in grider_docs_done %}
+                                    <a href="{% url 'main:pdf-editor' pk=subject.id aws=dokument.document.aws_name folder='Grider' %}" class="text-blue-300">Pečatiraj</a>
+                                    {% else %}
+                                    <p class="text-gray-400">nije odradjena transformacija</p>
+                                    {% endif %}
+                                {% elif dokument.document.cad %}
+                                    {% if dokument in cad_docs_done %}
+                                    <a href="{% url 'main:pdf-editor' pk=subject.id aws=dokument.document.aws_name folder='CAD' %}" class="text-blue-300">Pečatiraj</a>
+                                    {% else %}
+                                    <p class="text-gray-400">fajl ne postoji</p>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <ul class="mt-4">
+                    {% for elaborat in elaborat_pdf %}
+                        <li>
+                            <div class="flex justify-between items-center">
+                                <p class="cursor-pointer elaborat-filelink"  data-link-name="Predmet-{{subject.id}}/Elaborati/Elaborat1/elaborat.pdf">{{ elaborat|title }}</p>
+                                <button class="form-button" onclick="fullPreview()">Preuzmi</button>
+                            </div>                           
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="w-full flex justify-between items-center gap-4">
+                <!-- <p>Izaberite ulazne podatke</p>
+                <input class="h-8 !mb-0" type="file" id="file-upload" accept=".png, .pdf">
+                <button class="form-button" onclick="fileUpload()">Učitaj</button> -->
+                <div class="w-full flex justify-end items-center">
+                    <button id="edit-elaborate" onclick="startElaborat()" class="form-button disabled:bg-gray-500 mb-2" disabled>Edituj elaborat</button>
+                </div>
+            </div>
+            <div class="w-full flex justify-between items-center gap-4">
+                <!-- <p>Izaberite ulazne podatke</p>
+                <input class="h-8 !mb-0" type="file" id="file-upload" accept=".png, .pdf">
+                <button class="form-button" onclick="fileUpload()">Učitaj</button> -->
+                <div class="w-full flex justify-end items-center">
+                    <!-- <button id="send-elaborate" class="form-button disabled:bg-gray-500" onclick="sendElaborateToRoute()" disabled>Sastavi elaborat</button> -->
+                    <button id="send-elaborate" class="form-button disabled:bg-gray-500" onclick="sendElaborateToPDFEditor()" disabled>Sastavi elaborat</button>
+                </div>
+            </div>
+        </div>
+        <div id="card-preview" class="card">
+            <script>setFixedHeight("card-preview");</script>
+            <div id="preview" class="w-full h-full flex flex-col justify-start items-center gap-2">
+                <img id="previewImage" alt="Preview">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock mainpanel %}
+
+{% block script %}
+<script>
+const { PDFDocument } = PDFLib;
+let csrfToken = getCookie('csrftoken');
+const inputFile = document.getElementById('file-upload')
+let fileLinks = document.querySelectorAll('.filelink')
+// elaborat link
+let elaboratFileLink = document.querySelector('.elaborat-filelink')
+if(elaboratFileLink){
+    let str = elaboratFileLink.innerText.trim()
+    let lastIndex = str.lastIndexOf('/')
+    elaboratFileLink.innerText = elaboratFileLink.innerText.slice(lastIndex + 1)
+    elaboratFileLink.addEventListener('click', ()=> {
+        retrivePdfFromAWS(elaboratFileLink.dataset.linkName)
+    })
+}
+// other pdf-s
+Array.from(fileLinks).forEach((fileLink) => {
+    // let str = fileLink.innerText.trim()
+    // let lastIndex = str.lastIndexOf('/')
+    // fileLink.innerText = fileLink.innerText.slice(lastIndex + 1)
+    fileLink.addEventListener('click', () => {
+        if (fileLink.dataset.linkName.includes('pdf')) {
+            retrivePdfFromAWS(fileLink.dataset.linkName)
+        }
+        if (fileLink.dataset.linkName.includes('png')) {
+            retrivePngFromAWS(fileLink.dataset.linkName)
+        }
+    })
+})
+
+let bucket = 'autopilot-kancelarija-'+'{{subject.company.id}}'
+
+    // Inicijalizacija IndexedDB
+    const openRequest = indexedDB.open("PdfDatabase", 1);
+
+    openRequest.onupgradeneeded = function(event) {
+        const db = event.target.result;
+        const store = db.createObjectStore("PdfStore", { keyPath: "id" });
+    };
+
+    openRequest.onsuccess = function(event) {
+        console.log("Database opened successfully.");
+    };
+
+async function previewPDF(blob) {
+    let canvasContainer = document.getElementById('preview');
+    let containerWidth = canvasContainer.clientWidth;
+    let containerHeight = canvasContainer.clientHeight;
+    let pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    let url = URL.createObjectURL(blob);
+    let loadingTask = pdfjsLib.getDocument(url);
+    let pdf = await loadingTask.promise;
+    let numOfPages = pdf.numPages;
+    canvasContainer.innerHTML = "";
+    for(var i = 1; i <= numOfPages; i++) {
+        pdf.getPage(i).then(function(page) {
+        renderPage(page);
+        });
+    }
+}
+
+function renderPage(page) {
+    let canvasContainer = document.getElementById('preview');
+    let containerWidth = canvasContainer.clientWidth;
+    let containerHeight = canvasContainer.clientHeight;
+    var viewport = page.getViewport({ scale: 1 });
+    let pageWidth = viewport.width;
+    let pageHeight = viewport.height;
+    let scale = Math.min(containerWidth / pageWidth, containerHeight / pageHeight);
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+
+    canvas.className = 'pdf-page';
+    canvas.height = viewport.height * scale;
+    canvas.width = viewport.width * scale;
+
+    let docView = page.getViewport({ scale: scale });
+
+    canvasContainer.appendChild(canvas);
+
+    var renderContext = {
+        canvasContext: ctx,
+        viewport: docView
+    };
+    page.render(renderContext);
+}
+
+async function retrivePdfFromAWS(data) {
+    try {
+        const response = await fetch ('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        })
+        if (response.ok) {
+            const result = await response
+            const blob = await result.blob()
+            const blobText = await blob.text()
+            await previewPDF(blob)
+        } else {
+            console.error('Request failed with status:', response.status)
+        }
+    } catch (error) {
+        console.error('Request failed:', error)
+    }
+}
+
+async function retrivePngFromAWS(data) {
+    try {
+        const response = await fetch ('/main/return-aws-png', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        })
+        if (response.ok) {
+            const result = await response
+            const blob = await result.blob()
+            const blobUrl = URL.createObjectURL(blob);
+            imageContainer = document.getElementById('preview')
+            imageContainer.innerHTML = ''
+            let imagePreview = document.createElement('img')
+            imagePreview.id = 'previewImage';
+            imageContainer.appendChild(imagePreview)
+            document.getElementById('previewImage').src = blobUrl;
+        } else {
+            console.error('Request failed with status:', response.status)
+        }
+    } catch (error) {
+        console.error('Request failed:', error)
+    }
+}
+
+// async function fileUpload(){
+//     pk="{{user.id}}"
+//     const file = inputFile.files[0]
+//     const sizeLimit = 5 * 1024 * 1024;
+//     if(file.size > sizeLimit){
+//         alert('Velicina fajla mora biti maksimalno 5MB!');
+//         return;
+//     }
+//     const fileType = file.name.split('.').pop().toLowerCase();
+//     if(fileType !== 'pdf' && fileType !== 'png'){
+//         alert('Ovaj tip datoteke ' + fileType + ' nije podrzan!' + 'podrzani su pdf i png tipovi');
+//         return;
+//     }
+//     if (file) {
+//         const formData = new FormData();
+//         formData.append("file", file);
+//         formData.append("pk", pk);
+//         // formData.append("fileType", fileType);
+
+//         try {
+//             const response = await fetch('/accounts/add-user-files-aws/'+pk, {
+//                 method: "POST",
+//                 headers: {
+//                 'X-CSRFToken': csrfToken
+//                 },
+//                 body: formData
+//             });
+
+//             if (response.ok) {
+//                 console.log("File uploaded successfully.");
+//                 location.reload()
+//             } else {
+//                 console.error("Error uploading file.");
+//             }
+//         } catch (error) {
+//             console.error("Error:", error);
+//         }
+//     }
+// }
+
+function getCookie(name) {
+var cookieValue = null;
+if (document.cookie && document.cookie !== '') {
+    let cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+    }
+    }
+}
+return cookieValue;
+}
+/* sklapanje i slanje elaborata u pdf editor */
+async function sendElaborateToPDFEditor(){
+    const dataArray = [];
+    const pdfDoc = await PDFDocument.create();
+
+    // Uzimanje linkova iz liste
+    fileLinks.forEach(fileLink => {
+        let arr = [];
+        let dataOrder = fileLink.getAttribute('data-order');
+        let dataLinkName = fileLink.getAttribute('data-link-name');
+        arr.push(dataOrder, dataLinkName);
+        dataArray.push(arr);
+    });
+
+    console.log('test 1');
+
+    // Učitamo sve PDF-ove paralelno
+    const allPDFs = await Promise.all(dataArray.map(item => loadFinishedPDF(item[1])));
+
+    console.log('test 2');
+
+    // Spojimo ih zajedno
+    for (const pdf of allPDFs) {
+        const pages = pdf.getPages();
+        const indices = Array.from(Array(pages.length).keys());
+        const newPages = await pdfDoc.copyPages(pdf, indices);
+        newPages.forEach(page => pdfDoc.addPage(page));
+    }
+
+    // Sačuvajmo konačni PDF
+    const pdfBytes = await pdfDoc.save();
+
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    console.log(blob);
+
+    addPdfToDB(blob);
+    console.log("Blob dodat u bazu!");
+
+    const pk = "{{ subject.id }}";
+
+    window.location.href = `/main/pdf-editor/${pk}/elaborat/elaborat`;
+
+}
+/* pravljenje bloba od pdf-a */
+function addPdfToDB(blob) {
+  const db = openRequest.result;
+  const transaction = db.transaction("PdfStore", "readwrite");
+  const store = transaction.objectStore("PdfStore");
+
+  const request = store.put({ id: 1, pdfBlob: blob }); // Using put to update if exists
+  request.onsuccess = function() {
+    console.log("PDF successfully stored.");
+  };
+  request.onerror = function(event) {
+    console.log("Failed to store PDF.", event.target.error);
+  };
+}
+/* sklapanje elaborata i slanje na rutu */
+async function sendElaborateToRoute(){
+    const dataArray = [];
+    const pdfDoc = await PDFDocument.create();
+
+    // Uzimanje linkova iz liste
+    fileLinks.forEach(fileLink => {
+        let arr = [];
+        let dataOrder = fileLink.getAttribute('data-order');
+        let dataLinkName = fileLink.getAttribute('data-link-name');
+        arr.push(dataOrder, dataLinkName);
+        dataArray.push(arr);
+    });
+
+    console.log('test 1');
+
+    // Učitamo sve PDF-ove paralelno
+    const allPDFs = await Promise.all(dataArray.map(item => loadFinishedPDF(item[1])));
+
+    console.log('test 2');
+
+    // Spojimo ih zajedno
+    for (const pdf of allPDFs) {
+        const pages = pdf.getPages();
+        const indices = Array.from(Array(pages.length).keys());
+        const newPages = await pdfDoc.copyPages(pdf, indices);
+        newPages.forEach(page => pdfDoc.addPage(page));
+    }
+
+    // Sačuvajmo konačni PDF
+    const pdfBytes = await pdfDoc.save();
+
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    console.log(blob);
+    
+    let csrfToken = getCookie('csrftoken');
+    const url = "/main/upload-completed-elaborat";
+    const pk = "{{ subject.id }}";
+    const formData = new FormData();
+    
+    formData.append('file', blob);
+    formData.append('pk', pk);
+
+    // try {
+    //     const response = await fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'X-CSRFToken': csrfToken
+    //     },
+    //     body: formData
+    //     });
+
+    //     if (response.ok) {
+    //         console.log('Uspešno poslat Blob na server');
+    //         window.location.href = `/main/elaborat/${pk}`
+    //     } else {
+    //         console.log('Greška prilikom slanja Blob-a na server', response);
+    //     }
+    // } catch (error) {
+    //     console.log('Došlo je do greške', error);
+    // }
+
+    Swal.fire({
+        title: 'Potvrda sastavljanja.',
+        text: "Da li želite da sastavite elaborat?",
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Da',
+        cancelButtonText: 'Ne',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            // Ako korisnik potvrdi, prikažemo loader
+            Swal.fire({
+                title: 'Sastavljanje.',
+                text: 'Molimo sačekajte...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Zatvaramo loader i preusmeravamo korisnika
+                    Swal.close();
+                    window.location.href = `/main/elaborat/${pk}`;
+                } else {
+                    Swal.fire('Greška', 'Došlo je do greške prilikom slanja podataka.', 'error');
+                }
+            } catch (error) {
+                Swal.fire('Greška', 'Došlo je do greške prilikom slanja podataka.', 'error');
+            }
+        }
+    });
+
+}
+
+async function loadFinishedPDF(data){
+    try {
+        const response = await fetch ('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        });
+        if (response.ok) {
+            const blob = await response.blob();
+            const arrayBuffer = await blob.arrayBuffer();
+
+            return await PDFDocument.load(arrayBuffer);
+
+        } else {
+            console.error('Request failed with status:', response.status);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+}
+
+async function fullPreview(){
+    let csrfToken = getCookie('csrftoken');
+    const url = "/main/elaborat-full-preview";
+    const pk = "{{ subject.id }}";
+    const formData = new FormData();
+    formData.append('pk', pk)
+    try {
+        const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: formData
+        });
+
+        if (response.ok) {
+            console.log('Uspešno primljen Blob sa servera');
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, '_blank');
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.log('Greška prilikom primanja Blob-a sa servera', response);
+        }
+    } catch (error) {
+        console.log('Došlo je do greške', error);
+    }
+}
+
+// Funkcija za brisanje PDF-a iz IndexedDB
+async function deletePdfFromDB() {
+    const openRequest = indexedDB.open("PdfDatabase", 1);
+    openRequest.onupgradeneeded = function(event) {
+        const db = event.target.result;
+        const store = db.createObjectStore("PdfStore", { keyPath: "id" });
+    };
+    openRequest.onsuccess = function(event) {
+        console.log("Database opened successfully.");
+        const db = openRequest.result;
+        const transaction = db.transaction("PdfStore", "readwrite");
+        const store = transaction.objectStore("PdfStore");
+
+        const deleteRequest = store.delete(1); // ovde je 1 ID objekta koji želimo da obrišemo
+        
+        deleteRequest.onsuccess = function() {
+            console.log("PDF successfully deleted.");
+        };
+        
+        deleteRequest.onerror = function(event) {
+            console.log("Failed to delete PDF.", event.target.error);
+        };
+    };
+}
+
+let list = document.getElementById("lista").getElementsByTagName("li");
+
+/* kod koji se izvrsava po ucitavanju stranice */
+document.addEventListener("DOMContentLoaded", function() {
+    let editBtn = document.getElementById("edit-elaborate")
+    let button = document.getElementById("send-elaborate");
+    let allHaveDataLinkName = true;
+    const end = "{{end}}";
+
+    let hrefList = document.querySelectorAll("#lista li a")
+
+    for(let i = 0; i < list.length; i++) {
+        if(!list[i].hasAttribute("data-link-name")) {
+        allHaveDataLinkName = false;
+        break;
+        }
+    }
+
+    if(allHaveDataLinkName) {
+        button.removeAttribute("disabled");
+    }
+
+    if(list.length == hrefList.length){
+        editBtn.removeAttribute("disabled")
+    }
+
+
+    deletePdfFromDB().then(() => {
+        console.log("Uspesno obrisano iz baze!");
+    }).catch(error => {
+        console.error("Neuspesno brisanje iz baze!", error);
+    });
+
+    if(end){
+        sendElaborateToRoute();
+    }
+
+});
+
+
+
+//console.log(typeof(startNode))
+function startElaborat(){
+    let allLinks = document.querySelectorAll("#lista li")
+    let startNode = 0
+    for(startNode; startNode < allLinks.length; startNode++) {
+        if(!list[startNode].hasAttribute("data-link-name")) {
+            break;
+        }
+    }
+    let url = allLinks[startNode++].querySelector('a').href
+    window.location.href = url + '/' + startNode
+}
+
+</script>
+{% endblock script %}

@@ -1,0 +1,73 @@
+{% extends 'main/base_main_form.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block placeform %}
+<div class="main-form">
+    <h2 class="text-xl mb-3 text-slate-600 dark:text-white">Dodajte objekat na parcelu {{ lotNumber }}</h2><hr><br>
+      <form method="POST" class="flex flex-col justify-start gap-4">
+        {% csrf_token %}
+        {% if form.number.errors %}
+          {% render_field form.number|add_class:"input-error" placeholder="Broj objekta" %}
+          {% else %}
+              {% render_field form.number|add_class:"input-standard" placeholder="Broj objekta" %}
+          {% endif %}
+          
+          {% for error in form.number.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.purpose.errors %}
+          {% render_field form.purpose|add_class:"input-error" placeholder="Namena objekta" %}
+          {% else %}
+              {% render_field form.purpose|add_class:"input-standard" placeholder="Namena objekta" %}
+          {% endif %}
+          
+          {% for error in form.purpose.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.storey.errors %}
+          {% render_field form.storey|add_class:"input-error" placeholder="Spratnost" %}
+          {% else %}
+              {% render_field form.storey|add_class:"input-standard" placeholder="Spratnost" %}
+          {% endif %}
+          
+          {% for error in form.storey.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.name.errors %}
+          {% render_field form.name|add_class:"input-error" placeholder="Naziv objekta" %}
+          {% else %}
+              {% render_field form.name|add_class:"input-standard" placeholder="Naziv objekta" %}
+          {% endif %}
+          
+          {% for error in form.name.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.address.errors %}
+          {% render_field form.address|add_class:"input-error" placeholder="Adresa" %}
+          {% else %}
+              {% render_field form.address|add_class:"input-standard" placeholder="Adresa" %}
+          {% endif %}
+          
+          {% for error in form.address.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.owner.errors %}
+          {% render_field form.owner|add_class:"input-error" placeholder="Imalac prava" %}
+          {% else %}
+              {% render_field form.owner|add_class:"input-standard" placeholder="Imalac prava" %}
+          {% endif %}
+          
+          {% for error in form.owner.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+          <button class="form-button" type="submit">Dodajte</button>
+      </form>
+</div>
+{% endblock placeform %}

@@ -1,0 +1,23 @@
+{%load static%}
+
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+    id="document" data-orientation="portrait">
+
+    <h2 class="text-center font-bold">САДРЖАЈ :</h2>
+    <p class="pt-20 font-bold">&nbsp;&nbsp;&nbsp;А. Документација обрађивача елабората</p><br>
+    <ol class="list-decimal">
+        {% for doc in docs %}
+            {% if doc.document.content == 'a' %}
+                <li class="py-2"><script>document.write(lat2cyr("{{ doc.document }}"))</script></li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+    <p class="pt-8 font-bold">&nbsp;&nbsp;&nbsp;Б. Геодетски радови у току изградње објекaта</p><br>
+    <ol class="list-decimal">
+        {% for doc in docs %}
+            {% if doc.document.content == 'b' %}
+                <li class="py-2"><script>document.write(lat2cyr("{{ doc.document }}"))</script></li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+</div>

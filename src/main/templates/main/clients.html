@@ -1,0 +1,53 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block searchbar %}
+<div class="search-wrapper">
+    <div class="w-6 h-6 my-auto ml-1 dark:stroke-slate-500">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-auto dark:stroke-slate-500">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>        
+    </div>     
+    <input type="search" id="searchbox" class="search-bar w-full">
+</div>
+{% endblock searchbar %}
+
+{% block mainpanel %}
+
+<div class="head-card">
+    <p class="text-lg">Stranke kancelarije {{ user.company }}</p>
+</div>
+
+<div class="main-card-grid">
+    {% for client in clients %}
+        {% if not client.email %}
+        <a href="{% url 'accounts:edit-client' pk=client.id %}">
+        {% endif %}                    
+            <div class="card">
+                <div>
+                    <p>{{ client.first_name }} {{ client.last_name }}</p>
+                    {% if client.city %}   
+                        <p>{{ client.city }}</p>
+                    {% endif %}
+                    {% if client.address %}
+                        <p>{{ client.address }}</p>
+                    {% endif %}
+                        <p>{{ client.contact }}</p>
+                    {% if client.email %}
+                        <p class="text-blue-400">{{ client.email }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% if not client.email %}
+        </a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% if user.has_full_access or user.can_add_client %}
+    <a href="{% url 'accounts:register-client' %}" class="form-button ml-5">Dodaj stranku</a>
+{% endif %}
+{% endblock mainpanel %}
+
+{% block script %}
+<script src="{% static 'js/navbar-search.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,40 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block searchbar %}
+<div class="search-wrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-auto dark:stroke-slate-500">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>             
+    <input type="search" id="searchbox" class="search-bar">
+</div>
+{% endblock searchbar %}
+
+{% block mainpanel %}
+
+<div class="text-slate-700 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 py-4">
+    {% for company in companies %}
+            <div class="card">
+                <div>
+                    <p class="text-lg text-primary">{{ company.full_name }}</p>
+                    <p>Mesto:&nbsp;{{ company.city }}</p>
+                    <p>Zaposlenih:&nbsp;{{ company.customuser_set.all.count }}</p>
+                    {% if company.client_set.all.count > 0 %}
+                        <p>Registrovanih stranaka:&nbsp;{{ company.client_set.all.count }}</p>
+                    {% endif %}
+                    {% if company.foundation_date %}
+                        <p>Osnovana:&nbsp;{{ company.foundation_date }}</p>
+                    {% endif %}
+                </div>
+            </div>
+    {% endfor %}
+    <!-- <div class="w-60 h-60 bg-maincolor"></div>
+    <div class="w-60 h-60 bg-focuscolor"></div>
+    <div class="w-60 h-60 bg-sbcolor"></div> -->
+</div>
+
+{% endblock mainpanel %}
+
+{% block script %}
+<script src="{% static 'js/navbar-search.js' %}"></script>
+{% endblock script %}

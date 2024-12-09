@@ -1,0 +1,63 @@
+{% extends "base-home.html" %}
+{%load static%}
+{% block content %}
+    <link
+        href="https://assets.website-files.com/642ff57720446d8617727a32/css/404-page-animation-using-gsap.webflow.16008fd9e.css"
+        rel="stylesheet" type="text/css" />
+    <div class="page-wrapper">
+        <div class="css w-embed">
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+
+                .header-container {
+                    pointer-events: none;
+                }
+            </style>
+        </div>
+        <div class="container">
+            <div class="header-container">
+                <div class="header text-white">
+                    <div class="header_text">4</div>
+                    <div class="header_text">0</div>
+                    <div class="header_text">4</div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer_text">Seems you are lost, go back home.</div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        gsap.from(".navbar", 1.6, {
+            opacity: 0,
+            y: 60,
+            ease: Expo.easeInOut,
+            delay: 2.4,
+        });
+
+        gsap.from(".header_text", 1.5, {
+            top: "-100vh",
+            ease: "bounce.out",
+            delay: 1,
+            stagger: 0.2,
+        });
+
+        gsap.to(".footer_text", 0.4, {
+            y: -40,
+            ease: Expo.easeInOut,
+            delay: 2.4,
+        });
+
+    </script>
+
+
+
+{% endblock content%}

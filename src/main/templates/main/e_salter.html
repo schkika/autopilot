@@ -1,0 +1,1816 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block link %}
+<script>
+    function setFixedHeight(el){ // funkcija za fiksiranje visine elementa
+    
+        const element = document.getElementById(el);
+        const elHeight = element.offsetHeight;
+        element.style.height = elHeight + "px";
+        element.classList.add('overflow-y-auto');
+    
+    }
+</script>
+{% endblock link %}
+
+{% block leftnavlink %}
+<div class="flex pl-10 items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+    </svg>       
+    <a href="{% url 'main:subject' pk=pk %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Nazad</a>
+  </div>
+  
+{% endblock leftnavlink %}
+
+{% block mainpanel %}
+<div class="w-full h-full flex flex-col p-3 gap-3">
+    <div class="w-full h-full flex flex-col justify-start items-start gap-3">
+        <!-- top panel -->
+        <div class="w-full flex grow-0 flex-col justify-between items-center gap-4 md:flex-row head-card">
+            <h2 class="py-2">Vrsta zahteva</h2>
+            <div class="w-full md:w-1/2 flex flex-col justify-between items-center md:flex-row gap-4 lg:px-4">
+                <p>Lokacija</p>
+                <input type="text" class="input-salter w-full">
+            </div>
+        </div>
+        <!-- main panel -->
+        <div class="w-full flex grow flex-col lg:flex-row justify-start items-start gap-3">
+            <!-- levi panel -->
+            <div id="col-left" class="p-4 w-full lg:w-1/2 h-screen lg:h-full head-card bg-slate-900 flex flex-col justify-start items-start gap-4">
+                <script>setFixedHeight("col-left");</script><!-- fiksiranje visine kartice -->
+                <!-- wrapper za korake -->
+                <div id="accordionSteps" class="w-full flex flex-col justify-start items-start gap-3">
+                    <!-- korak 1 -->
+                    <div id="step-1" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                        <div>
+                            <h2 id="stepOne" class="p-4">
+                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseStepOne" aria-expanded="false" aria-controls="collapseStepOne">
+                                    <span class="inline-block text-center align-middle w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">1</span>Odabir vrste zahteva
+                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseStepOne" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="stepOne" data-te-parent="#accordionSteps">
+                            <!-- top -->
+                            <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                                <h3>Dostava zahteva u KN / KV - Korak 1 - Odabir vrste zahteva</h3>
+                            </div>
+                            <!-- wrapper za izbor zahteva -->
+                            <div class="flex justify-between items-start w-full">
+                                <div id="accordionRequests" class="w-full flex flex-col justify-start items-start gap-2">
+                                    <!-- segment1 -->
+                                    <div id="zahtevi-1" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                                        <div>
+                                            <h2 id="headingOne" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                    01. Zahtev za izdavanje KN podataka
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseOne" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingOne" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Deoba parcele / spajanje parcele</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox  zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class=" w-full">Promena nač. korišćenja i kat. klase</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox  zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Realizacija projekta i parcelacije / preparcelacije</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox  zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Izgradnja / dogradnja / deoba / spajanje objekta</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Postupak objedinjene procedure / ozakonjenja</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Uklanjanje objekta ili dela objekta</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class=" w-full">Za potrebe veštačenja</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Obnavljanje granica parcele</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class=" w-full">Identifikacija nepokrentnosti</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Izdrada geodetskih podloga</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox 01 zahtev" name="" id=""
+                                                    lux-panel="opcije-1">
+                                                <p class="w-full">Izdavanje podataka za izradu uverenja o udaljenosti kladionice</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment2 -->
+                                    <div id="zahtevi-2" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                                        <div>
+                                            <h2 id="headingTwo" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    02. Zahtev za izdavanje podataka iz evidencije KN-a
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseTwo" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingTwo" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Kopija plana parcele</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Izdavanje uverenja o imovinskom stanju za lica</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Izdavanje uverenja o predhodnim zahtevima na parceli / objektu / posebnom delu
+                                                    objekta</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Uverenje o kućnom broju</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Uverenje o nazivu ulice</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Uverenje o istorijatu kućnog broja</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Uverenje o istorijatu naziva ulice</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Obaveštenje o adresi objekta</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Uverenje o istorijatu promena na nepokretnosti</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-3">
+                                                <p class="w-full">Izdavanje uverenja o udaljenosti kladionica / objekta igara na sreću</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in  py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Uverenje o kategoriji premera</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment3 -->
+                                    <div id="zahtevi-3" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingThree" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    03. Zahtev za KN upis
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseThree" class="p-4 !visible hidden" data-te-collapse-item
+                                            aria-labelledby="headingThree" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Deoba parcele</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Promena nač. korišćenja i kat. klase</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Spajanje parcele</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Realizacija projekta parcelacije / preparcelacije</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Promena nastala izgradnjom i dogradnjom objekta sa promenom gabarita</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Promena nastala dogradnjom objekta bez promene gabarita</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Promena podataka o objektu</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Ukljanjanje objekta ili dela objekta</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Ispravka greške</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="">
+                                                <p class="w-full">Utvrđivanje, izmena i gašenje kućnog broja</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment4 -->
+                                    <div id="zahtevi-4" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingFour" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                    04. Zahtev za izdavanje KV podataka
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseFour" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingFour" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-2">
+                                                <p class="w-full">Geodetsko merenje voda</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-2">
+                                                <p class="w-full">Geodetsko merenje za objedinjenu proceduru / ozakonjenje</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-2">
+                                                <p class="w-full">Obnavljanje linije voda na terenu</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-2">
+                                                <p class="w-full">Uklanjanje / napuštanje voda</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-5">
+                                                <p class="w-full">List vodova za jedan vod</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-5">
+                                                <p class="w-full">List vodova za imaoca prava</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-2">
+                                                <p class="w-full">Uverenje o podacima poslednjeg stanja</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment5 -->
+                                    <div id="zahtevi-5" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingFive" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                    05. Zahtev za izdavanje kopije plana KV
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseFive" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingFive" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-6">
+                                                <p class="w-full">Katastarski plan vodova u analognom obliku</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-6">
+                                                <p class="w-full">Katastarski plan vodova u rasterskom obliku (georeferencirani)</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-6">
+                                                <p class="w-full">Katastarski plan vodova u vektorskom obliku</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment6 -->
+                                    <div id="zahtevi-6" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingSix" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                    06. Zahtev za KV upis
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseSix" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingSix" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Upis voda</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Pojedinačni upis nadzemnih objekata</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Promena alfanumeričkih podataka</p>
+                                            </div>
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-4">
+                                                <p class="w-full">Uklanjanje / napuštanje voda</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment7 -->
+                                    <div id="zahtevi-7" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingSeven" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                                    07. Zahtev za KV promenu
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseSeven" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingSeven" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="" lux-panel="">
+                                                <p class="w-full">Promena podataka o upisanom imaocu prava</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment8 -->
+                                    <div id="zahtevi-8" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingEight" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                                    08. Katastarski / komasacioni premer
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseEight" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingEight" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id="" lux-panel="">
+                                                <p class="w-full">Promena podataka o upisanom imaocu prava</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- segment 9-->
+                                    <div id="zahtevi-9" class="grupa bg-slate-50 rounded-md dark:bg-slate-700 bg-white w-full">
+                                        <div>
+                                            <h2 id="headingNine" class="p-4">
+                                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                                    09. Realizacija projekta
+                                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseNine" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="headingNine" data-te-parent="#accordionRequests">
+                                            <div class="flex justify-start items-center gap-4 w-full hover:bg-slate-100 dark:hover:bg-slate-500 transition duration-150 ease-out hover:ease-in py-2 lg:px-2">
+                                                <input type="checkbox" class="input-checkbox moj-checkbox zahtev" name="" id=""
+                                                    lux-panel="opcije-7">
+                                                <p class="w-full">Deoba parcela radi realizacije projekta izgradnje i rekonstrukcije linijskih
+                                                    infrastrukturnih objekata od posebnog značaja za RS</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- korak 2 -->
+                    <div id="step-2" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                        <div>
+                            <h2 id="stepTwo" class="p-4">
+                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseStepTwo" aria-expanded="false" aria-controls="collapseStepTwo">
+                                    <span class="inline-block text-center align-middle w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">2</span>Podnosioci zahteva
+                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseStepTwo" class="p-4 !visible hidden flex flex-col justify-between items-start" data-te-collapse-item aria-labelledby="stepTwo" data-te-parent="#accordionSteps">
+                            <div id="stepTwoItems" class="w-full flex flex-col justify-start items-start gap-3">
+                                <!-- top -->
+                                <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                                    <h3>Dostava zahteva u KN / KV - Korak 2 - Podnosioci zahteva</h3>
+                                </div>
+                            </div>
+                            <div class="w-full flex justify-end items-center gap-1 p-2">
+                                <button class="form-button" onclick="addNewStep2Item()" data-te-toggle="tooltip" data-te-placement="top" data-te-ripple-init data-te-ripple-color="light" title="Dodaj novu stavku">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 448 512"><path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- korak 3 -->
+                    <div id="step-3" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                        <div>
+                            <h2 id="stepThree" class="p-4">
+                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseStepThree" aria-expanded="false" aria-controls="collapseStepThree">
+                                    <span class="inline-block text-center align-middle w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">3</span>Nepokretnosti
+                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseStepThree" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="stepThree" data-te-parent="#accordionSteps">
+                            <div id="stepThreeItems" class="w-full flex flex-col justify-start items-start gap-3">
+                                <!-- top -->
+                                <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                                    <h3>Dostava zahteva u KN / KV - Korak 3 - Nepokretnosti</h3>
+                                </div>
+                            </div>
+                            <div class="w-full flex justify-end items-center gap-1 p-2"><!-- add new button -->
+                                <button class="form-button" onclick="addNewStep3Item()" data-te-toggle="tooltip" data-te-placement="top" data-te-ripple-init data-te-ripple-color="light" title="Dodaj novu stavku">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 448 512"><path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- korak 4 -->
+                    <div id="step-4" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                        <div>
+                            <h2 id="stepFour" class="p-4">
+                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseStepFour" aria-expanded="false" aria-controls="collapseStepFour">
+                                    <span class="inline-block text-center align-middle w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">4</span>Dokumenta
+                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseStepFour" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="stepTwo" data-te-parent="#accordionSteps">
+                            <div id="stepFourItems" class="w-full flex flex-col justify-start items-start gap-3">
+                                <!-- top -->
+                                <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                                    <h3>Dostava zahteva u KN / KV - Korak 4 - Dokumenta</h3>
+                                </div>
+                            </div>
+                            <div class="w-full flex justify-end items-center gap-1 p-2"><!-- add new button -->
+                                <button class="form-button" onclick="addNewStep4Item()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 448 512"><path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- korak 5 -->
+                    <div id="step-5" class="grupa w-full bg-slate-50 rounded-md dark:bg-slate-700 bg-white">
+                        <div>
+                            <h2 id="stepFive" class="p-4">
+                                <button class="group relative flex w-full items-center py-4 text-left transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-white [&:not([data-te-collapse-collapsed])]:text-primary dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 border-b-none [&:not([data-te-collapse-collapsed])]:border-b [&:not([data-te-collapse-collapsed])]:border-b-solid [&:not([data-te-collapse-collapsed])]:border-b-slate-300 dark:[&:not([data-te-collapse-collapsed])]:border-b-slate-600" type="button" data-te-collapse-init data-te-collapse-collapsed data-te-target="#collapseStepFive" aria-expanded="false" aria-controls="collapseStepFive">
+                                    <span class="inline-block text-center align-middle w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">5</span>Slanje
+                                    <span class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseStepFive" class="p-4 !visible hidden" data-te-collapse-item aria-labelledby="stepTwo" data-te-parent="#accordionSteps">
+                            <!-- formular -->
+                            <div class="w-full flex flex-col justify-between items-center gap-4">
+                                <div class="w-full flex flex-col justify-between items-start gap-4">
+                                    <!-- top -->
+                                    <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                                        <h3>Dostava zahteva u KN / KV - Korak 5 - Slanje</h3>
+                                    </div>
+                                    <!-- bottom -->
+                                    <div class="w-full flex flex-col justify-between items-center gap-4">
+                                        <h3 class="text-left">Pregled unetih podataka</h3>
+                                        <div class="w-full flex flex-col justify-between items-start md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Vrsta zahteva</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                        <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Lokacija</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                        <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Veza sa prethodnim (vanupravnim) predmetom</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                        <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Broj unetih učesnika</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                        <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Broj unetih parametara zahteva</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                        <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Broj unetih dokumenata</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                        <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                            <p class="w-full md:w-1/2">Zahtev će biti poslat u</p>
+                                            <input type="text" class="w-full md:w-1/2 input-salter">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex justify-end items-start">
+                                        <button class="form-button" onclick="sendRequest()">POŠALJI</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- desni panel -->
+            <div id="col-right" class="p-4 w-full lg:w-1/2 lg:h-full head-card bg-slate-900 flex flex-col justify-between items-start gap-4">
+                <script>setFixedHeight("col-right");</script><!-- fiksiranje visine kartice -->
+                <div class="head-card w-full title dark:bg-slate-700">
+                    <h3 class="font-bold p-2 uppercase">Dostava zahteva u KN / KV</h3>
+                    <h3 id="completeOne" class="hidden font-bold p-2 border-t-slate-600 border-t border-t-solid">
+                        <span class="inline-block align-middle text-center w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">
+                            1
+                        </span>
+                        Odabir vrste zahteva
+                        <span class="inline-block align-middle w-8 h-full ml-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><path fill="#4d7c0f" d="M56 2L18.8 42.9L8 34.7H2L18.8 62L62 2z"/></svg>
+                        </span>
+                    </h3>
+                    <h3 id="completeTwo" class="hidden font-bold p-2 border-t-slate-600 border-t border-t-solid">
+                        <span class="inline-block align-middle text-center w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">
+                            2
+                        </span>
+                        Podnosioci zahteva
+                        <span class="inline-block align-middle w-8 h-full ml-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><path fill="#4d7c0f" d="M56 2L18.8 42.9L8 34.7H2L18.8 62L62 2z"/></svg>
+                        </span>
+                    </h3>
+                    <h3 id="completeThree" class="hidden font-bold p-2 border-t-slate-600 border-t border-t-solid">
+                        <span class="inline-block align-middle text-center w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">
+                            3
+                        </span>
+                        Nepokretnosti
+                        <span class="inline-block align-middle w-8 h-full ml-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><path fill="#4d7c0f" d="M56 2L18.8 42.9L8 34.7H2L18.8 62L62 2z"/></svg>
+                        </span>
+                    </h3>
+                    <h3 id="completeFour" class="hidden font-bold p-2 border-t-slate-600 border-t border-t-solid">
+                        <span class="inline-block align-middle text-center w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">
+                            4
+                        </span>
+                        Dokumenta
+                        <span class="inline-block align-middle w-8 h-full ml-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><path fill="#4d7c0f" d="M56 2L18.8 42.9L8 34.7H2L18.8 62L62 2z"/></svg>
+                        </span>
+                    </h3>
+                    <h3 id="completeFive" class="hidden font-bold p-2 border-t-slate-600 border-t border-t-solid">
+                        <span class="inline-block align-middle text-center w-8 h-full mr-3 p-1 bg-slate-800 text-slate-100 dark:bg-slate-100 dark:text-slate-800 rounded-full">
+                            5
+                        </span>
+                        Slanje
+                        <span class="inline-block align-middle w-8 h-full ml-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><path fill="#4d7c0f" d="M56 2L18.8 42.9L8 34.7H2L18.8 62L62 2z"/></svg>
+                        </span>
+                    </h3>
+                </div>
+                <!-- forme za korak 1 -->
+                <div id="step1form" w-full grow hidden">
+                    <!-- opcije 1 -->
+                    <div id="opcije-1" class="child head-card w-full flex-col justify-start items-start gap-2 bg-slate-50 dark:bg-slate-700 rounded-md p-4 hidden">
+                        <h3 class="font-bold pb-4">Predmet zahteva</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Koordinate geodetskih referentnih tačaka / mreža</p>
+                               <!-- podopcija -->
+                               <div class="grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Detaljne tačke</p>
+                               <!-- podopcija -->
+                               <div class="grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Kopija katastarskog plana,sa brojevima graničnih tačaka i brojevima tačaka geodetske
+                                referentne mreže</p>
+                                   <!-- podopcija -->
+                            <div class="grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Drugi podaci premera u zavisnosti od specifičnosti premera</p>
+                               <!-- podopcija -->
+                               <div class="grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Rasterski format: geotif (tfv + tif)</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Vektorski format: dxf</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Prigovor</p>
+                               <!-- podopcija -->
+                               <div class="grow flex justify-between items-center gap-2 suboption hidden">
+                                <p>Na vanupravni predmet:</p>
+                                <input type="text" name="" id="" class="grow input-salter inputfield">
+                            </div>
+                        </div>
+                        <h3 class="font-bold py-4">Za izvođenje radova koristiće se:</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Mreža permanentnih stanica Republike Srbije (AGROS)</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-full md:w-1/2">Koordinate geodetskih referentnih tačaka preuzimaju se putem web servisa Geomreža</p>
+                        </div>
+        
+                    </div>
+                    <!-- opcije 2 -->
+                    <div id="opcije-2" class="child head-card w-full flex-col justify-start items-start gap-2 bg-slate-50 dark:bg-slate-700 rounded-md p-4 hidden">
+                        <h3 class="font-bold pb-4">Predmet zahteva</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-1/2">Koordinate i kote tačaka voda</p>
+                               <!-- podopcija -->
+                               <div class="grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-1/2">Skica merenja voda</p>
+                               <!-- podopcija -->
+                               <div class="grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+        
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Rasterski format: geotif (tfv + tif)</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Vektorski format: dxf</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-[30%]">Prigovor</p>
+                             <!-- podopcija -->
+                             <div class="flex justify-between items-center gap-2 w-full hidden">
+                                <p>Na vanupravni predmet:</p>
+                                <input type="text" name="" id="" class="grow input-salter inputfield">
+                            </div>
+                        </div>
+                        <h3 class="font-bold py-4">Za izvođenje radova koristiće se:</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Mreža permanentnih stanica Republike Srbije (AGROS)</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Koordinate geodetskih referentnih tačaka preuzimaju se putem web servisa Geomreža</p>
+                        </div>
+                    </div>
+                    <!-- opcije 3 -->
+                    <div id="opcije-3" class="child head-card w-full flex-col justify-start items-start bg-slate-50 dark:bg-slate-700 rounded-md p-4 gap-2 hidden">
+        
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <p>Veza sa prethodnim (vanupravnim) predmetom</p>
+                            <input type="text" class="grow input-salter inputfield" name="" id="">
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+        
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-[30%]">Prigovor</p>
+                            <!-- podopcija -->
+                            <div class="flex justify-between items-center gap-2 w-full suboption hidden">
+                               <p>Na vanupravni predmet:</p>
+                               <input type="text" name="" id="" class="grow input-salter inputfield">
+                           </div>
+                            
+                        </div>
+                    </div>
+                    <!-- opcije 4 -->
+                    <div id="opcije-4" class="child head-card w-full flex-col justify-start items-start bg-slate-50 dark:bg-slate-700 rounded-md p-4 hidden">
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <p>Veza sa prethodnim (vanupravnim) predmetom</p>
+                            <input type="text" class="grow input-salter inputfield" name="" id="">
+                        </div>
+                    </div>
+                    <!-- opcije 5 -->
+                    <div id="opcije-5" class="child head-card w-full flex-col justify-start items-start gap-2 bg-slate-50 dark:bg-slate-700 rounded-md p-4 hidden">
+                        <h3 class="font-bold pb-4">Predmet zahteva</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-1/2">Koordinate i kote tačaka voda</p>
+                            <!-- podopcija -->
+                            <div class="flex justify-between items-center gap-2 grow suboption hidden">
+                               <input type="text" name="" id="" class="w-full input-salter inputfield">
+                           </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p class="w-1/2">Skica merenja voda</p>
+                            <!-- podopcija -->
+                            <div class="flex justify-between items-center gap-2 grow suboption hidden">
+                                <input type="text" name="" id="" class="w-full input-salter inputfield">
+                            </div>
+                        </div>
+                        <h3 class="font-bold py-4">Za izvođenje radova koristiće se:</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Mreža permanentnih stanica Republike Srbije (AGROS)</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Koordinate geodetskih referentnih tačaka preuzimaju se putem web servisa Geomreža</p>
+                        </div>
+                    </div>
+                    <!-- opcije 6 -->
+                    <div id="opcije-6" class="child head-card w-full flex-col justify-start items-start gap-2 bg-slate-50 dark:bg-slate-700 rounded-md p-4 hidden">
+                        <h3 class="font-bold py-4">Za izvođenje radova koristiće se:</h3>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Mreža permanentnih stanica Republike Srbije (AGROS)</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <input type="checkbox" class="input-checkbox option" name="" id="">
+                            <p>Koordinate geodetskih referentnih tačaka preuzimaju se putem web servisa Geomreža</p>
+                        </div>
+                    </div>
+                    <!-- opcije 7 -->
+                    <div id="opcije-7" class="child head-card w-full flex-col justify-start items-start gap-2 border bg-slate-50 dark:bg-slate-700 rounded-md p-4 gap-2 hidden">
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <p>Veza sa prethodnim (vanupravnim) predmetom</p>
+                            <input type="text" class="grow input-salter inputfield" name="" id="">
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 w-full">
+                            <p>EGR dostavljen u predmetu</p>
+                            <input type="text" class="grow input-salter inputfield" name="" id="">
+                        </div>
+                    </div>
+                </div>
+                <!-- forma za korak 2 -->
+                <div id="step2form" class="w-full head-card grow hidden">
+                    <div id="stepTwoItems1" class="w-full"><!-- struktura kartice, orisati kasnije kad javascript bude gotov-->
+                        <div><!-- zaglavlje -->
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row sm:flex-row justify-between ">
+                                <p>ID:</p>
+                                <p id="podnosiociID" class="right-0"></p>
+                            </div> 
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-between">
+                                <p>Vrsta lica:</p>
+                                <select id="vrsta-lica" name="vrsta-lica" class="w-full md:w-1/2 border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value="fizicko" selected>Fizicko - Domace</option>
+                                    <option value="pravno">Pravno - Domace</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- domace fizicko-->
+                        <div id="fizicko-domace" class="">
+                            <p class="font-bold py-2">Osnovni podaci</p>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-between">
+                                <p>Ime* :</p>
+                                <input type="text" name="ime" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-between fizicko">
+                                <p>Prezime* :</p>
+                                <input type="text" name="prezime" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-between pravno hidden">
+                                <p>Ime pravnog lica*:</p>
+                                <input type="text" name="firma" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3 fizicko">
+                                <p>Ime jednog roditelja* :</p>
+                                <input type="text" name="ime-roditelja" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3 fizicko">
+                                <p>JMBG* :</p>
+                                <input type="text" name="jmbg" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3 fizicko">
+                                <p>Broj licne karte :</p>
+                                <input type="text" name="lk" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3 pravno hidden">
+                                <p>Maticni broj*:</p>
+                                <input type="text" name="mb" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3 pravno hidden">
+                                <p>PIB:</p>
+                                <input type="text" name="pib" class="w-full md:w-1/2 input-salter">
+                            </div>                                 
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>E-mail :</p>
+                                <input type="text" name="email" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <p class="font-bold py-2">Prebivaliste/Boraviste/Sediste</p>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p> Kosovo i Metohija :</p>
+                                <input type="checkbox" class="input-checkbox" name="kim" id="">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3 fizicko">
+                                <p> Prebivaliste u inostranstvu :</p>
+                                <input type="checkbox" class="input-checkbox" name="ino" id="">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>Opstina* :</p>
+                                <select name="opstina" class="w-full md:w-1/2 border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value=""> </option>
+                                    <option value=""> </option>
+                                </select>
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>Mesto* :</p>
+                                <select name="mesto" class="w-full md:w-1/2 border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value=""> </option>
+                                    <option value=""> </option>
+                                </select>
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>Rucni unos ulice:</p>
+                                <input type="checkbox" class="input-checkbox" name="rucni-unos" id="">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>Ulica* :</p>
+                                <select name="ulica" class="w-full md:w-1/2 border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value=""> </option>
+                                    <option value=""> </option>
+                                </select>
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>Broj* :</p>
+                                <input type="text" name="broj" class="w-full md:w-1/2 input-salter">
+                            </div>
+                            <div class="w-full px-2 py-1 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-3">
+                                <p>Postanski broj :</p>
+                                <input type="text" name="posta" class="w-full md:w-1/2 input-salter">
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 w-full">
+                            <button class="form-button" onclick="saveStep2Form()"><img src="{%static 'img/save.png'%}" class="w-[15px] h-[15px] mr-2" alt=""> SAČUVAJ</button>
+                            <button class="form-button" onclick="cancelStep2Form()">ODUSTANI</button>
+                        </div>   
+                    </div>
+                </div>
+                <!-- forma za korak 3 -->
+                <div id="step3form" class="w-full head-card grow hidden">
+                    <div class="w-full flex flex-col justify-between items-center gap-4">
+                        <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                            <h3>Nepokretnost - Detalji</h3>
+                        </div>
+                        <div class="w-full flex flex-col justify-start items-center gap-4">
+                            <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[20%]">ID</p>
+                                <p id="nepokretnostiID">
+                            </div>
+                            <!-- select tip -->
+                            <div class="w-full flex flex-col justify-start items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[20%]">Tip *</p>
+                                <div class="w-full md:w-[85%]">
+                                    <select class="w-full border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]" name="tip">
+                                        <option value="Парцела">Parcela</option>
+                                        <option value="Објекат">Objekat</option>
+                                        <option value="Посебан део">Poseban deo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- select opstina -->
+                            <div class="w-full flex flex-col justify-start items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[20%]">Opština *</p>
+                                <div class="w-full md:w-[85%]">
+                                    <select class="w-full border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]" name="opstina">
+                                        <!-- <option value="1">Parcela</option>
+                                        <option value="2">Objekat</option>
+                                        <option value="3">Poseban deo</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- select katastarska opstina -->
+                            <div class="w-full flex flex-col justify-start items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[20%]">Katastarska opština *</p>
+                                <div class="w-full md:md:w-[85%]">
+                                    <select class="w-full border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]" name="ko">
+                                        <!-- <option value="1">Parcela</option>
+                                        <option value="2">Objekat</option>
+                                        <option value="3">Poseban deo</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                <div class="w-full flex flex-col justify-start items-center md:flex-row md:w-[50%]">
+                                    <p class="w-full md:w-[40%]">Broj parcele *</p>
+                                    <input type="text" name="brparc" class="input-salter w-full md:w-[52%]">
+                                </div>
+                                <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2 md:w-[50%]">
+                                    <p class="w-full md:w-[40%]">Podbroj parcele</p>
+                                    <input type="text" name="pbrparc" class="input-salter w-full md:w-[62%]">
+                                </div>
+                            </div>
+                            <!-- kada je selektovan objekat -->
+                            <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                    <p class="w-full md:w-[20%]">Broj objekta *</p>
+                                    <input type="text" name="brobj" class="grow input-salter w-full md:w-[85%]">
+                                </div>
+                            </div>
+
+                            <!-- kada je selektovan poseban deo ostaje i broj objekta od gore -->
+
+                            <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                <div class="w-full flex flex-col justify-between items-center md:flex-row gap-2">
+                                    <p class="w-full md:w-[20%]">Evidencijski broj *</p>
+                                    <input type="text" name="evbr" class="grow input-salter w-full md:w-[85%]">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="flex justify-between gap-2 items-center w-full">
+                            <button class="form-button" onclick="saveStep3Form()"><img src="{%static 'img/save.png'%}" class="w-[15px] h-[15px] mr-2" alt=""> SAČUVAJ</button>
+                            <button class="form-button" onclick="cancelStep3Form()">ODUSTANI</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- forma za korak 4 -->
+                <div id="step4form" class="w-full head-card grow hidden">
+                    <div class="w-full flex flex-col justify-between items-start gap-4">
+                        <!-- top -->
+                        <div class="w-full bg-cyan-500 p-2 rounded-md text-center">
+                            <h3>Unos novog dokumenta - izbor tipa dokumenta i otpremanje</h3>
+                        </div>
+                        <!-- bottom -->
+                        <div class="flex justify-between items">
+                            <p>ID:</p>
+                            <p id="dokumentaID"></p>
+                        </div>
+                        <div class="w-full flex flex-col justify-start items-center gap-4">
+                            <div class="w-full flex flex-col justify-start items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[35%]">Tip dokumenta *</p>
+                                <div class="w-full md:w-[65%]">
+                                <select name="step4tip" class="w-full border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value="" disabled selected>Izaberite tip dokumenta</option>
+                                    <option value="20">Osnovna isprava</option>
+                                    <option value="30">Druga isprava</option>
+                                  </select>
+                               </div>
+                            </div>
+                        </div>
+                        <!-- osnovna isprava select -->
+                        <div class="w-full flex flex-col justify-start items-center gap-4">
+                            <div class="w-full flex flex-col justify-start items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[35%]">Vrsta isprave *</p>
+                                <div class="w-full md:w-[65%]">
+                                <select name="step4vrsta" class="w-full border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value="" disabled selected>Izaberite vrstu isprave</option>
+                                    <option value="21">Dozvola za gradnju</option>
+                                    <option value="28">Prijava geodetskih radova</option>
+                                    <option value="29">Zahtev</option>
+                                    <option value="901">Rešenje suda za veštačenje ili drugog nadležnog organa / zakonskog zastupnika ili stranke kojim je određeno veštačenje u konkretnom predmetu</option>
+                                    <option value="902">Zahtev za izdavanje podataka</option>
+                                    <option value="301">Definicija obuhvata</option>
+                                    <option value="22">Izjava</option>
+                                    <option value="23">Ugovor / isprava o sticanju prava</option>
+                                    <option value="24">Isprava o promeni podataka</option>
+                                    <option value="25">Upotrebna dozvola</option>
+                                    <option value="26">Ostale isprave</option>
+                                  </select>
+                               </div>
+                            </div>
+                        </div>
+                        <!-- druga isprava -->
+                        <div class="w-full flex flex-col justify-start items-center gap-4">
+                            <div class="w-full flex flex-col justify-start items-center md:flex-row gap-2">
+                                <p class="w-full md:w-[35%]">Druga isprava *</p>
+                                <div class="w-full md:w-[65%]">
+                                <select name="step4druga" class="w-full border border-neutral-200 rounded text-slate-800 bg-slate-50 dark:bg-focuscolor dark:text-white dark:border-neutral-500 focus:shadow-[0px_0px_8px_4px_#63b3ed] p-[3px]">
+                                    <option value="" disabled selected>Izaberite vrstu isprave</option>
+                                    <option value="302">Geodetski elaborat - Ceo</option>
+                                    <option value="911">Ostale isprave</option>
+                                    <option value="912">Definicija obuhvata</option>
+                                    <option value="306">Geodetski elaborat - Skica merenja</option>
+                                    <option value="307">Geodetski elaborat - Zapisnik sa koordinatama</option>
+                                    <option value="308">Ugovor o zajedničkoj izgradnji</option>
+                                    <option value="309">Kontinuitet prava</option>
+                                    <option value="310">Pravni interes ukoliko nije vlasnik</option>
+                                    <option value="311">Upotrebna dozvola</option>
+                                    <option value="312">Ostale isprave</option>
+                                    <option value="601">Očitana lična karta stranke</option>
+                                  </select>
+                               </div>
+                            </div>
+                        </div>
+
+                        <!-- unos novog dokumenta -->
+                        <div class="w-full flex flex-col justify-start items-center gap-4">
+                            <div class="w-full flex flex-col justify-start items-start gap-4">
+                                <p>Dozvoljene ekstenzije dokumenta za odabranu vrstu isprave: .pdf</p>
+                                <div class="w-full flex justify-between items-center gap-4">
+                                    <input name="step4naziv" class="h-8 !mb-0" type="file" id="file-upload" accept=".pdf, .txt">
+                                    <button class="form-button h-8" onclick="saveStep4Form()">SAČUVAJ</button>
+                                    <button class="form-button h-8" onclick="cancelStep4Form()">ODUSTANI</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+                <!-- forma za korak 5 -->
+                <div id="step5form" class="w-full head-card grow hidden">
+                    <div class="w-full flex flex-col justify-between items-start gap-4">
+                        <div class="w-full flex flex-col justify-between items-start gap-4">
+                            <!-- top -->
+                            <div class="w-full bg-cyan-500 py-2 rounded-md text-center">
+                                <h3>Dostava zahteva u KN / KV - Korak 5 - Slanje</h3>
+                            </div>
+                            <!-- bottom -->
+
+                            <div class="w-full flex flex-col justify-start items-center gap-4">
+                                <h3 class="text-left w-full font-bold">Pregled unetih podataka</h3>
+                                <div class="w-full flex flex-col justify-start items-start gap-2">
+                                    <p class="w-full ">Vrsta zahteva</p>
+                                    <input type="text" class="input-salter w-full">
+                                </div>
+
+                                <div class="w-full flex flex-col justify-between items-center gap-2">
+                                    <p class="w-full">Lokacija</p>
+                                    <input type="text" class="input-salter w-full ">
+                                </div>
+
+                                <div class="w-full flex flex-col justify-start items-center  gap-2">
+                                    <p class="w-full">Veza sa prethodnim (vanupravnim) predmetom</p>
+                                    <input type="text" class="input-salter w-full">
+                                </div>
+
+                                <div class="w-full flex flex-col justify-start items-center  gap-2">
+                                    <p class="w-full">Broj unetih učesnika</p>
+                                    <input type="text" class="input-salter w-full">
+                                </div>
+
+                                <div class="w-full flex flex-col justify-between items-center gap-2">
+                                    <p class="w-full">Broj unetih parametara zahteva</p>
+                                    <input type="text" class="input-salter w-full">
+                                </div>
+
+                                <div class="w-full flex flex-col justify-between items-center gap-2">
+                                    <p class="w-full">Broj unetih dokumenata</p>
+                                    <input type="text" class="input-salter w-full">
+                                </div>
+
+                                <div class="w-full flex flex-col justify-between items-center gap-2">
+                                    <p class="w-full ">Zahtev će biti poslat u</p>
+                                    <input type="text" class="input-salter w-full ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- dugme za resetovanje zahteva -->
+                <div class="w-full">
+                    <button class="form-button" onclick="requestReset()">Resetuj zahtev</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===============================
+              javascript              
+     =============================== -->
+<script>
+    // resetovanje zahteva
+    function requestReset(){
+        // localStorage.setItem('korak', 1);
+        // checkStep();
+        // clearAllCheckboxes('option');
+        // resetInputValues('inputfield');
+        // removeAllForms();
+        location.reload();
+    }
+    // ======================================================
+    // step 2 functions
+    // vrsta lica dropdown
+    function toggleVrstaLica(){
+        let listener = document.querySelector('#vrsta-lica');
+        listener.addEventListener('change', () => {
+            let dropDown = listener.value;
+            if(dropDown === 'fizicko'){
+                let vis = document.getElementsByClassName('fizicko');
+                Array.from(vis).forEach(function(item){
+                    if(item.classList.contains('hidden')){
+                        item.classList.remove('hidden');
+                    }
+                });
+                let inv = document.getElementsByClassName('pravno');
+                Array.from(inv).forEach(function(item){
+                    if(!item.classList.contains('hidden')){
+                        item.classList.add('hidden');
+                    }
+                });
+            } else if(dropDown === 'pravno'){
+                let vis = document.getElementsByClassName('pravno');
+                Array.from(vis).forEach(function(item){
+                    if(item.classList.contains('hidden')){
+                        item.classList.remove('hidden');
+                    }
+                });
+                let inv = document.getElementsByClassName('fizicko');
+                Array.from(inv).forEach(function(item){
+                    if(!item.classList.contains('hidden')){
+                        item.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    }
+    // dodavanje novog itema za drugi korak
+    function addNewStep2Item(){
+        showOnlyOneForm(2);
+        let obj = localStorage.getItem('podnosioci');
+        let itemID = document.getElementById('podnosiociID');
+        itemID.innerText = parseInt(getLastID('podnosioci'))+1;
+    }
+    // pokupi najveci id iz objekta
+    function getLastID(object){
+        let podnosioci = JSON.parse(localStorage.getItem(object));
+        let highestId = -1;
+        let objectWithHighestId = null;
+        for(let obj of podnosioci){
+            if(obj.id > highestId){
+                highestId = obj.id;
+                objectWithHighestId = obj;
+            }
+        }
+        return highestId;
+    }
+    function saveStep2Form(){
+        // pravljenje niza od podataka iz formulara
+        let itemArray = localStorage.getItem('podnosioci');
+        itemArray = JSON.parse(itemArray) || [];
+        
+        const indexToRemove = itemArray.findIndex(obj => obj.id === 0);
+        if(indexToRemove !== -1){
+            itemArray.splice(indexToRemove, 1);
+        }
+        
+        let podnosioci = {
+            "id": parseInt(document.getElementById('podnosiociID').innerText),
+            "vrstalica": document.querySelector('select[name="vrsta-lica"]').value,
+            "ime": document.querySelector('input[name="ime"]').value,
+            "prezime": document.querySelector('input[name="prezime"]').value,
+            "firma": document.querySelector('input[name="firma"]').value,
+            "imeroditelja": document.querySelector('input[name="ime-roditelja"]').value,
+            "jmbg": document.querySelector('input[name="jmbg"]').value,
+            "lk": document.querySelector('input[name="lk"]').value,
+            "mb": document.querySelector('input[name="mb"]').value,
+            "pib": document.querySelector('input[name="pib"]').value,
+            "email": document.querySelector('input[name="email"]').value,
+            "kim": document.querySelector('input[name="kim"]').checked,
+            "ino": document.querySelector('input[name="ino"]').checked,
+            "opstina": document.querySelector('select[name="opstina"]').value,
+            "mesto": document.querySelector('select[name="mesto"]').value,
+            "ulica": document.querySelector('select[name="ulica"]').value,
+            "broj": document.querySelector('input[name="broj"]').value,
+            "posta": document.querySelector('input[name="posta"]').value
+        };
+
+        itemArray.push(podnosioci);
+        localStorage.setItem('podnosioci', JSON.stringify(itemArray));
+
+        localStorage.setItem('korak', 3);
+        checkStep();
+        createStep2Card(podnosioci);
+    }
+    function cancelStep2Form(){
+        let form = document.getElementById('step2form');
+        form.classList.add('hidden');
+    }
+    function createStep2Card(obj){
+        const card = document.createElement("div");
+        card.classList.add('card');
+        card.classList.add('rounded');
+        card.classList.add('w-full');
+        card.id = "step2card"+obj.id;
+        const p1 = document.createElement("p");
+        p1.innerText = "ID: "+obj.id;
+        const p2 = document.createElement("p");
+        p2.innerText = "Vrsta lica: "+obj.vrstalica;
+        const p3 = document.createElement("p");
+        p3.innerText = "Ime: "+obj.ime;
+        const p4 = document.createElement("p");
+        p4.innerText = "Prezime: "+obj.prezime;
+        const p5 = document.createElement("p");
+        p5.innerText = "Ime pravnog lica: "+obj.firma;
+        card.appendChild(p1);
+        card.appendChild(p2);
+        card.appendChild(p3);
+        card.appendChild(p4);
+        card.appendChild(p5);
+        const buttonWrapper = document.createElement("div");
+        buttonWrapper.setAttribute('class', 'w-full flex justify-end items-center gap-1 p-2');
+        buttonWrapper.appendChild(createEditButton('editStep2Form()'));
+        buttonWrapper.appendChild(createDeleteButton('deleteStep2Card(this)', obj.id));
+        card.appendChild(buttonWrapper);
+
+        const stepTwoItems = document.getElementById("stepTwoItems");
+        stepTwoItems.appendChild(card);
+        removeAllForms();
+    }
+    function deleteStep2Card(el){
+        let id = el.getAttribute('cardID');
+        let cardID = "step2card" + id;
+        let card = document.getElementById(cardID);
+        card.remove();
+    }
+    // ======================================================
+    // step 3 functions
+    // dodavanje novog itema za treci korak
+    function addNewStep3Item(){
+        showOnlyOneForm(3);
+        let obj = localStorage.getItem('nepokretnosti');
+        let itemID = document.getElementById('nepokretnostiID');
+        itemID.innerText = parseInt(getLastID('nepokretnosti'))+1;
+    }
+    function saveStep3Form(){
+        // pravljenje niza od podataka iz formulara
+        let itemArray = localStorage.getItem('nepokretnosti');
+        itemArray = JSON.parse(itemArray) || [];
+        
+        const indexToRemove = itemArray.findIndex(obj => obj.id === 0);
+        if(indexToRemove !== -1){
+            itemArray.splice(indexToRemove, 1);
+        }
+        
+        let nepokretnosti = {
+            "id": parseInt(document.getElementById('nepokretnostiID').innerText),
+            "tip": document.querySelector('select[name="tip"]').value,
+            "opstina": document.querySelector('select[name="opstina"]').value,
+            "ko": document.querySelector('select[name="ko"]').value,
+            "brparc": document.querySelector('input[name="brparc"]').value,
+            "pbrparc": document.querySelector('input[name="pbrparc"]').value,
+            "brobj": document.querySelector('input[name="brobj"]').value,
+            "evbr": document.querySelector('input[name="evbr"]').value
+        };
+
+        itemArray.push(nepokretnosti);
+        localStorage.setItem('nepokretnosti', JSON.stringify(itemArray));
+
+        localStorage.setItem('korak', 4);
+        checkStep();
+        createStep3Card(nepokretnosti);
+    }
+    function cancelStep3Form(){
+        let form = document.getElementById('step3form');
+        form.classList.add('hidden');
+    }
+    function createStep3Card(obj){
+        const card = document.createElement("div");
+        card.classList.add('card');
+        card.classList.add('rounded');
+        card.classList.add('w-full');
+        card.id = "step3card"+obj.id;
+        const p1 = document.createElement("p");
+        p1.innerText = "ID: "+obj.id;
+        const p2 = document.createElement("p");
+        p2.innerText = "Tip: "+obj.tip;
+        const p3 = document.createElement("p");
+        p3.innerText = "Opština: "+obj.opstina;
+        const p4 = document.createElement("p");
+        p4.innerText = "Katastarska opština: "+obj.ko;
+        const p5 = document.createElement("p");
+        p5.innerText = "Broj parcele: "+obj.brparc;
+        const p6 = document.createElement("p");
+        p6.innerText = "Podbroj parcele: "+obj.pbrparc;
+        const p7 = document.createElement("p");
+        p7.innerText = "Broj objekta: "+obj.brobj;
+        const p8 = document.createElement("p");
+        p8.innerText = "Evidencijski broj: "+obj.evbr;
+        card.appendChild(p1);
+        card.appendChild(p2);
+        card.appendChild(p3);
+        card.appendChild(p4);
+        card.appendChild(p5);
+        card.appendChild(p6);
+        card.appendChild(p7);
+        card.appendChild(p8);
+        const buttonWrapper = document.createElement("div");
+        buttonWrapper.setAttribute('class', 'w-full flex justify-end items-center gap-1 p-2');
+        buttonWrapper.appendChild(createEditButton('editStep3Form()'));
+        buttonWrapper.appendChild(createDeleteButton('deleteStep3Card(this)', obj.id));
+        card.appendChild(buttonWrapper);
+
+        const stepThreeItems = document.getElementById("stepThreeItems");
+        stepThreeItems.appendChild(card);
+        removeAllForms();
+    }
+    function deleteStep3Card(el){
+        let id = el.getAttribute('cardID');
+        let cardID = "step3card" + id;
+        let card = document.getElementById(cardID);
+        card.remove();
+    }
+
+    // ======================================================
+    // step 4 functions
+    // dodavanje novog itema za cetvrti korak
+    function addNewStep4Item(){
+        showOnlyOneForm(4);
+        let obj = localStorage.getItem('dokumenta');
+        let itemID = document.getElementById('dokumentaID');
+        itemID.innerText = parseInt(getLastID('dokumenta'))+1;
+    }
+    function saveStep4Form(){
+        // pravljenje niza od podataka iz formulara
+        let itemArray = localStorage.getItem('dokumenta');
+        itemArray = JSON.parse(itemArray) || [];
+        
+        const indexToRemove = itemArray.findIndex(obj => obj.id === 0);
+        if(indexToRemove !== -1){
+            itemArray.splice(indexToRemove, 1);
+        }
+        
+        let dokumenta = {
+            "id": parseInt(document.getElementById('dokumentaID').innerText),
+            "tip": document.querySelector('select[name="step4tip"]').value,
+            "vrsta": document.querySelector('select[name="step4vrsta"]').value,
+            // "ct": document.querySelector('input[name="step4ct"]').value,
+            // "elpotpis": document.querySelector('input[name="step4elpotpis"]').value,
+            "naziv": document.querySelector('input[name="step4naziv"]').value,
+        };
+
+        itemArray.push(dokumenta);
+        localStorage.setItem('dokumenta', JSON.stringify(itemArray));
+
+        localStorage.setItem('korak', 5);
+        checkStep();
+        createStep4Card(dokumenta);
+    }
+    function cancelStep4Form(){
+        let form = document.getElementById('step4form');
+        form.classList.add('hidden');
+    }
+    function createStep4Card(obj){
+        const card = document.createElement("div");
+        card.classList.add('card');
+        card.classList.add('rounded');
+        card.classList.add('w-full');
+        card.id = "step4card"+obj.id;
+        const p1 = document.createElement("p");
+        p1.innerText = "ID: "+obj.id;
+        const p2 = document.createElement("p");
+        p2.innerText = "Tip dokumenta: "+obj.tip;
+        const p3 = document.createElement("p");
+        p3.innerText = "Vsta isprave: "+obj.vrsta;
+        const p4 = document.createElement("p");
+        p4.innerText = "Content type: "+obj.ct;
+        const p5 = document.createElement("p");
+        p5.innerText = "Elektronski potpisan: "+obj.elpotpis;
+        const p6 = document.createElement("p");
+        p6.innerText = "Naziv fajla: "+obj.naziv;
+        card.appendChild(p1);
+        card.appendChild(p2);
+        card.appendChild(p3);
+        card.appendChild(p4);
+        card.appendChild(p5);
+        card.appendChild(p6);
+        const buttonWrapper = document.createElement("div");
+        buttonWrapper.setAttribute('class', 'w-full flex justify-end items-center gap-1 p-2');
+        buttonWrapper.appendChild(createEditButton('editStep4Form()'));
+        buttonWrapper.appendChild(createDeleteButton('deleteStep4Card(this)', obj.id));
+        card.appendChild(buttonWrapper);
+
+        const stepFourItems = document.getElementById("stepFourItems");
+        stepFourItems.appendChild(card);
+        removeAllForms();
+    }
+    function deleteStep4Card(el){
+        let id = el.getAttribute('cardID');
+        let cardID = "step4card" + id;
+        let card = document.getElementById(cardID);
+        card.remove();
+    }
+    // ======================================================
+    // funkcija za kreiranje edit dugmeta
+    function createEditButton(func){
+        const button = document.createElement("button");
+        button.classList.add('form-button');
+        const svgNamespace = "http://www.w3.org/2000/svg";
+        const svgElement = document.createElementNS(svgNamespace, "svg");
+        svgElement.setAttribute("width", "16");
+        svgElement.setAttribute("height", "16");
+        svgElement.setAttribute("viewBox", "0 0 512 512");
+        const pathElement = document.createElementNS(svgNamespace, "path");
+        pathElement.setAttribute("d", "M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1L377.9 88L407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9l46.1 46.1l-134.3 134.2c-2.9 2.9-6.5 5-10.4 6.1L186.9 325l16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25c-28.1-28.1-73.7-28.1-101.8 0zM88 64c-48.6 0-88 39.4-88 88v272c0 48.6 39.4 88 88 88h272c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24v112c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40h112c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z");
+        pathElement.setAttribute("fill", "currentColor");
+        svgElement.appendChild(pathElement);
+        button.appendChild(svgElement);
+        button.setAttribute('onclick', func);
+
+        return button;
+    }
+    function createDeleteButton(func, id){
+        const button = document.createElement("button");
+        button.classList.add('form-button');
+        const svgNamespace = "http://www.w3.org/2000/svg";
+        const svgElement = document.createElementNS(svgNamespace, "svg");
+        svgElement.setAttribute("width", "14");
+        svgElement.setAttribute("height", "16");
+        svgElement.setAttribute("viewBox", "0 0 448 512");
+        const pathElement = document.createElementNS(svgNamespace, "path");
+        pathElement.setAttribute("d", "m170.5 51.6l-19 28.4h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6h-93.7c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6l36.7 55H424c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8v304c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128h-8c-13.3 0-24-10.7-24-24s10.7-24 24-24h69.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128v304c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V128H80zm80 64v208c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0v208c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0v208c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z");
+        pathElement.setAttribute("fill", "currentColor");
+        svgElement.appendChild(pathElement);
+        button.appendChild(svgElement);
+        button.setAttribute('onclick', func);
+        button.setAttribute('cardID', id);
+
+        return button;
+    }
+
+    // prikazivanje samo aktuelne forme i sakrivanje ostalih
+    function showOnlyOneForm(id){
+        let stepform;
+        for(let i=1; i <= 5; i++){
+            stepform = document.getElementById('step'+i+'form');
+            if(i == id){
+                stepform.classList.remove('hidden');
+            } else {
+                if(!stepform.classList.contains('hidden')){
+                    stepform.classList.add('hidden');
+                }                
+            }
+        }
+    }
+    function removeAllForms(){
+        let stepform;
+        for(let i = 1; i <= 5; i++){
+            stepform = document.getElementById('step'+i+'form');
+            if(!stepform.classList.contains('hidden')){
+                    stepform.classList.add('hidden');
+                }                
+        }
+    }
+    function removeAllFormChilds(form){
+        let children = getAllChildDivs(form);
+        if(children.length > 0){
+            Array.from(children).forEach(function(child){
+                if(!child.classList.contains('hidden')){
+                    child.classList.add('hidden');
+                }
+            });
+        }
+    }
+    // proveri koji korak je aktivan i shodno tome ukluci odgovarajucu karticu
+    function checkStep(){
+        let step = localStorage.getItem('korak');
+        switch (step){
+            case "1":
+                disableSteps(["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"]);
+                activateSteps(["stepOne"]);
+                hideCompletedSteps(["completeOne", "completeTwo", "completeThree", "completeFour"]);
+                break;
+            case "2": 
+                disableSteps(["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"]);
+                activateSteps(["stepOne", "stepTwo"]);
+                showCompletedSteps(["completeOne"]);
+                break;
+            case "3": 
+                disableSteps(["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"]);
+                activateSteps(["stepOne", "stepTwo", "stepThree"]);
+                showCompletedSteps(["completeOne", "completeTwo"]);
+                break;
+            case "4":
+                disableSteps(["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"]);
+                activateSteps(["stepOne", "stepTwo", "stepThree", "stepFour"]);
+                showCompletedSteps(["completeOne", "completeTwo", "completeThree"]);
+                break;
+            case "5": 
+                disableSteps(["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"]);
+                activateSteps(["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"]);
+                showCompletedSteps(["completeOne", "completeTwo", "completeThree", "completeFour"]);
+                break;
+        }
+    }
+
+    function activateSteps(steps){
+        steps.forEach(function(step){
+            document.querySelector('#'+step+' button').removeAttribute('disabled');
+        });
+    }
+    // iskljuci korake
+    function disableSteps(steps){
+        steps.forEach(function(step){
+            document.querySelector('#'+step+' button').setAttribute('disabled', true);
+        });
+    }
+    // ukljucuje $completedOne do #completedFive
+    function showCompletedSteps(steps){
+        steps.forEach(function(step){
+            document.querySelector('#'+step).classList.remove('hidden');
+        });
+    }
+    // gasi #completedOne do #completedFive
+    function hideCompletedSteps(steps){
+        steps.forEach(function(step){
+            document.querySelector('#'+step).classList.add('hidden');
+        });
+    }
+    // uzima sve child divove prvog nivoa nekog elementa sa id='id'
+    function getAllChildDivs(id) {
+        let parent = document.getElementById(id);
+        let children = parent.querySelectorAll(':scope > div');
+        return children;
+    }
+    // resetuje sve checkbox inpute koji imaju odredjenu klasu
+    function clearAllCheckboxes(klasa) {
+        let checkboxes = document.getElementsByClassName(klasa);
+        Array.from(checkboxes).forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+    }
+    // value=null na sve inpute sa odredjenom klasom
+    function resetInputValues(klasa){
+        let inputFields = document.getElementsByClassName(klasa);
+        Array.from(inputFields).forEach(function(inputField){
+            inputField.value = null;
+        });
+        hideElements('suboption');
+    }
+    // sakriva sve elemente sa odredjenom klasom
+    function hideElements(klasa){
+        let suboptions = document.getElementsByClassName(klasa);
+        Array.from(suboptions).forEach(function(suboption){
+            suboption.classList.add('hidden');
+        })
+    }
+    // prikazuje sve elemente sa odredjenom klasom
+    function showElements(klasa){
+        let suboptions = document.getElementsByClassName(klasa);
+        Array.from(suboptions).forEach(function(suboption){
+            suboption.classList.remove('hidden');
+        })
+    }
+
+    // otvara opcije u desnomo panelu prilikom odabira zahteva iz levog panela
+    function openRightPanelOptions(checkbox) {
+        let id = checkbox.getAttribute('lux-panel');
+        let children = getAllChildDivs('col-right');
+        removeAllFormChilds('step1form');
+        const panel = document.getElementById(id);
+        // console.log('otvaranje', panel);
+        if(panel){
+            panel.classList.remove('hidden');
+        }
+        showOnlyOneForm(1);
+        console.log('start');
+    }
+    function closeRightPanelOptions(checkbox) {
+        let id = checkbox.getAttribute('lux-panel');
+        let children = getAllChildDivs('step1form');
+        removeAllForms(1);
+        const panel = document.getElementById(id);
+        // console.log('zatvaranje', panel);
+        if(panel){
+            panel.classList.add('hidden');
+        }
+    }
+    // otvara opcije u desnomo panelu prilikom odabira zahteva iz levog panela
+    function openRightPanelSuboptions(checkbox) {
+        let sibling = checkbox;
+        while (sibling = sibling.nextElementSibling) {
+            if (sibling.tagName === 'DIV') {
+                sibling.style.display = 'flex';
+            }
+        }
+    }
+    function closeRightPanelSuboptions(checkbox) {
+        let sibling = checkbox;
+        while (sibling = sibling.nextElementSibling) {
+            if (sibling.tagName === 'DIV') {
+                sibling.style.display = 'none';
+            }
+        }
+    }
+    // osluskivanje checkbox-eva iz levog panela i po cekiranju poziva funkciju openRightPanelOptions
+    function listenCheckboxGroups(klasa) {
+        let checkboxes = document.getElementsByClassName(klasa);
+        Array.from(checkboxes).forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    Array.from(checkboxes).forEach(function (otherCheckbox) {
+                        if (otherCheckbox !== checkbox) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
+                    openRightPanelOptions(checkbox);
+                    let targetID = document.getElementById('col-right');
+                    targetID.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    // let button = checkbox.closest('.grupa').querySelector('button');
+                    // let buttonText = button.childNodes[0].nodeValue.trim();
+                    
+                    let korak = localStorage.getItem('korak');
+                    if(korak == 1){
+                        korak++;
+                        localStorage.setItem('korak', korak);
+                    }
+
+                    if(klasa == "zahtev"){
+                        localStorage.setItem('korak', 2);
+                    }
+                    checkStep();
+                } else {
+                    localStorage.setItem('korak', 1);
+                    checkStep();
+                    removeAllForms();
+                    closeRightPanelOptions(checkbox);
+                    clearAllCheckboxes('option');
+                    resetInputValues('inputfield');
+                }
+            })
+        })
+    }
+    // osluskivanje checkbox-eva iz desnog panela i po cekiranju poziva funkciju openRightPanelSuboptions
+    function listenCheckboxOptions(klasa) {
+        let checkboxes = document.getElementsByClassName(klasa);
+        Array.from(checkboxes).forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    openRightPanelSuboptions(checkbox);
+                    checkStep();
+                } else {
+                    resetInputValues('inputfield');
+                    closeRightPanelSuboptions(checkbox);
+                }
+            })
+        })
+    }
+
+    function defineLocalStorage(){
+        localStorage.setItem('korak', 1);
+        let podnosioci = [
+            {
+                "id": 0,
+                "vrstalica": "",
+                "ime": "",
+                "prezime": "",
+                "firma": "",
+                "imeroditelja": "",
+                "jmbg": "",
+                "lk": "",
+                "mb": "",
+                "pib": "",
+                "email": "",
+                "kim": false,
+                "ino": false,
+                "opstina": "",
+                "mesto": "",
+                "ulica": "",
+                "broj": "",
+                "posta": ""
+            },
+        ];
+        localStorage.setItem('podnosioci', JSON.stringify(podnosioci));
+        let nepokretnosti = [
+            {
+                "id": 0,
+                "tip": "",
+                "opstina": "",
+                "ko": "",
+                "brparc": "",
+                "pbrparc": "",
+                "brobj": "",
+                "evbr": ""
+            },
+        ];
+        localStorage.setItem('nepokretnosti', JSON.stringify(nepokretnosti));
+        let dokumenta = [
+            {
+                "id": 0,
+                "tip": "",
+                "vrsta": "",
+                "ct": "",
+                "elpotpis": false,
+                "naziv": "",
+            },
+        ];
+        localStorage.setItem('dokumenta', JSON.stringify(dokumenta));
+
+    }
+    // po ucitavanju stranice resetuje sva input polja i poziva funkcije za osluskivanje na istim
+    document.addEventListener('DOMContentLoaded', function () {
+        defineLocalStorage();
+        checkStep();
+        clearAllCheckboxes('zahtev');
+        clearAllCheckboxes('option');
+        resetInputValues('inputfield');
+        listenCheckboxGroups('zahtev');
+        listenCheckboxOptions('option');
+        toggleVrstaLica();
+    })
+</script>
+{% endblock mainpanel %}

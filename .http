@@ -1,0 +1,6 @@
+POST http://127.0.0.1:8000/check-autocad-user/milan@test1.com
+Content-Type: application/json
+
+{
+    "password": "1234567890"
+}

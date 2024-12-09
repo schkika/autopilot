@@ -1,0 +1,184 @@
+{% extends 'main/base_main_form.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block placeform %}
+<div class="main-form">
+  <section class="my-8 flex justify-center relative">
+    <img id="profile-pic" src="{% url 'accounts:profile-image' %}" class="rounded-full w-[120px] h-[120px] absolute -top-[110px] bg-white dark:bg-maincolor border border-slate-200 dark:border-neutral-500" alt="">
+    <button class="absolute right-[35%] -top-[20px] cursor-pointer" onclick="uploadPicture()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#3b82f6" d="M12 18q2.075 0 3.538-1.462Q17 15.075 17 13q0-2.075-1.462-3.538Q14.075 8 12 8Q9.925 8 8.463 9.462Q7 10.925 7 13q0 2.075 1.463 3.538Q9.925 18 12 18Zm0-2q-1.25 0-2.125-.875T9 13q0-1.25.875-2.125T12 10q1.25 0 2.125.875T15 13q0 1.25-.875 2.125T12 16Zm6-6q.425 0 .712-.288Q19 9.425 19 9t-.288-.713Q18.425 8 18 8t-.712.287Q17 8.575 17 9t.288.712Q17.575 10 18 10ZM4 21q-.825 0-1.412-.587Q2 19.825 2 19V7q0-.825.588-1.412Q3.175 5 4 5h3.15L8.7 3.325q.15-.15.337-.238Q9.225 3 9.425 3h5.15q.2 0 .388.087q.187.088.337.238L16.85 5H20q.825 0 1.413.588Q22 6.175 22 7v12q0 .825-.587 1.413Q20.825 21 20 21Z"/></svg>
+    </button>
+  </section>
+    <form method="POST" class="flex flex-col justify-start gap-5">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="non-field-errors">
+      {% for err in form.non_field_errors %}
+        <p class="text-red-500">{{ err }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+      <div class="flex flex-col gap-5 md:flex-row">
+
+        {% if form.first_name.errors %}
+            {% render_field form.first_name|add_class:"input-error" placeholder="Ime" %}
+        {% else %}
+            {% render_field form.first_name|add_class:"input-standard" placeholder="Ime" %}
+        {% endif %}
+        
+        {% for error in form.first_name.errors %}
+            <div class="text-red-500">{{error}}</div>
+        {% endfor %}
+
+
+
+        {% if form.last_name.errors %}
+            {% render_field form.last_name|add_class:"input-error" placeholder="Prezime" %}
+        {% else %}
+            {% render_field form.last_name|add_class:"input-standard" placeholder="Prezime" %}
+        {% endif %}
+        
+        {% for error in form.last_name.errors %}
+            <div class="text-red-500">{{error}}</div>
+        {% endfor %}
+
+      </div>
+
+        {% if form.email.errors %}
+        {% render_field form.email|add_class:"input-error" placeholder="Email Adresa" %}
+        {% else %}
+            {% render_field form.email|add_class:"input-standard" placeholder="Email Adresa" %}
+        {% endif %}
+
+        {% for error in form.email.errors %}
+            <div class="text-red-500">{{error}}</div>
+        {% endfor %}
+
+        {% if user.type == 'employee' %}
+
+          {% if form.licence_number.errors %}
+          {% render_field form.licence_number|add_class:"input-error" placeholder="Broj licence" %}
+          {% else %}
+              {% render_field form.licence_number|add_class:"input-standard" placeholder="Broj licence" %}
+          {% endif %}
+
+          {% for error in form.licence_number.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.education.errors %}
+          {% render_field form.education|add_class:"input-error" placeholder="Obrazovanje" %}
+          {% else %}
+              {% render_field form.education|add_class:"input-standard" placeholder="Obrazovanje" %}
+          {% endif %}
+
+          {% for error in form.education.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+          {% if form.telefon_number.errors %}
+          {% render_field form.telefon_number|add_class:"input-error" placeholder="Broj telefona" %}
+          {% else %}
+              {% render_field form.telefon_number|add_class:"input-standard" placeholder="Broj telefona" %}
+          {% endif %}
+
+          {% for error in form.telefon_number.errors %}
+              <div class="text-red-500">{{error}}</div>
+          {% endfor %}
+
+        {% endif %}
+
+
+      <button class="form-button" type="submit">Snimi promene</button>
+    </form>
+
+    <input class="hidden" type="file" id="upload-picture" accept=".jpg, .png">
+
+</div>
+
+{% endblock placeform %}
+
+{% block script %}
+<script>
+  let csrfToken = getCookie('csrftoken');
+  let inputFile = document.getElementById("upload-picture")
+  let profilePic = document.getElementById("profile-pic")
+  let indexProfilePic = document.getElementById("index-profile-image")
+  let userId = "{{ user.id }}"
+  function uploadPicture() {
+    inputFile.click()
+  }
+
+  inputFile.addEventListener('change', async function() {
+    let file = inputFile.files[0]
+    const sizeLimit = 20 * 1024 * 1024;
+      if(file.size > sizeLimit){
+          alert('Velicina fajla mora biti maksimalno 5MB!');
+          return;
+      }
+      const fileType = file.name.split('.').pop().toLowerCase();
+      if(fileType !== 'jpg' && fileType !== 'png'){
+          alert('Ovaj tip datoteke ' + fileType + ' nije podrzan!');
+          return;
+      }
+      if (file) {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("id", userId);
+        try {
+            //showLoadingPopup();
+            const response = await fetch("/accounts/upload-profile-picture", {
+                method: "POST",
+                headers: {
+                'X-CSRFToken': csrfToken
+                },
+                body: formData
+            });
+            if (response.ok) {
+                console.log("File uploaded successfully.")
+                retrieveNewPic()
+                //Swal.close()
+                //let linkDiv = document.querySelector(`[data-link-name="${linkName}"]`)
+                //linkDiv.click()
+            } else {
+                console.error("Error uploading file.");
+            }
+          } catch (error) {
+              console.error("Error:", error);
+          }
+        }
+  })
+
+  async function retrieveNewPic() {
+    try {
+        userId="{{user.id}}"
+        const response = await fetch(`/accounts/profile-images/${userId}`);
+        const data = await response.url;
+        profilePic.src = data
+        indexProfilePic.src = data
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+        }
+    }
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+        }
+        }
+    }
+    return cookieValue;
+    }
+
+</script>
+{% endblock script %}

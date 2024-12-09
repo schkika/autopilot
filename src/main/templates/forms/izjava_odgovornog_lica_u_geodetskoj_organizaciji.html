@@ -1,0 +1,186 @@
+<div
+  style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+  id="document" data-orientation="portrait">
+  <p class="text-right">Прилог 16</p>
+
+  <div style="padding-top: 50px">
+    <p>
+      <span style="
+          width: 200px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true">{{ subject.company.full_name }}</span>
+      <br />
+      <span class="italic text-center">(назив геодетске организације)</span>
+    </p>
+
+    <p>
+      <span style="
+          width: 200px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"><script>document.write(lat2cyr("{{ subject.company.city }}"))</script></span>
+      <br />
+      <span class="italic text-center">(седиште геодетске организације)</span>
+    </p>
+  </div>
+
+  <div class="text-center pt-10">
+    <p class="font-bold" style="font-size: 14pt">ИЗЈАВА</p>
+    <p class="font-bold">одговорног лица у геодетској организацији</p>
+  </div>
+
+  <div>
+    <p class="pt-10">
+      1. По захтеву број
+      <span style="
+          width: 200px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"></span>
+      од
+      <span style="
+          width: 100px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"></span>
+      . године, који је Служби за катастар непокретности
+      <span style="
+          width: 150px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true">
+            {% if subject.cadastral_municipality.office %}
+              <script>document.write(lat2cyr("{{ subject.cadastral_municipality.office|title }}"))</script></span>
+            {% else %}
+              <script>document.write(lat2cyr("{{ subject.municipality|title }}"))</script></span>
+            {% endif %}
+      поднео/поднела
+      <span style="
+          width: 150px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.0 }}"))</script></span>
+      из места
+      <span style="
+          width: 100px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.0.city }}"))</script></span>
+      , геодетска организација
+      <span style="
+          width: 200px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true">{{ subject.company }}</span>
+      са седиштем у месту
+      <span style="
+          width: 250px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"><script>document.write(lat2cyr("{{ subject.company.city }}, {{ subject.company.address }}"))</script></span>
+      извршила је геодетске радове
+      <span style="
+          width: 100%;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"><script>document.write(lat2cyr("{{ subject.service_type }}"))</script></span>
+      <span style="
+          width: 100%;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"></span>
+      <span style="
+          width: 100%;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"></span>
+      <span style="display: block; text-align: center">(врста геодетских радова)</span>
+    </p>
+
+    <p class="pt-10">
+      2. Изјављујем да су извршени геодетски радови и подаци геодетског мерења,
+      прикупљања и обраде података приказани у овом елаборату у складу са
+      законом,другим прописима,стандардима и другим техничким нормативима.
+    </p>
+  </div>
+
+  <div class="flex flex-col justify-between items-center md:flex-row pt-20">
+    <div>
+      <!-- <p>
+        Датум:
+        <span style="
+            width: 200px;
+            border-bottom: 1px solid black;
+            display: inline-block;
+            overflow: hidden;
+          " contenteditable="true"></span>
+      </p> -->
+
+      <div class="w-full flex justify-start items-center">
+        <p class="flex text-center">Датум:</p>
+        <div id="datePickerContainer" class="relative w-full">
+            <input type="text" class="date-picker" id="dateInput" readonly />
+            <div id="calendar" class="hidden absolute top-[100%] left-0 w-[209px] bg-white">
+          
+            </div>
+          </div>
+       
+    </div>
+
+      <div>
+        <p class="flex whitespace-nowrap">Место:&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" contenteditable="true"><script>document.write(lat2cyr("{{ subject.company.city }}"))</script></span></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="text-center">
+        <span class="font-bold"> Одговорно лицe: </span> <br />
+        <span style="
+            width: 200px;
+            border-bottom: 1px solid black;
+            display: inline-block;
+            overflow: hidden;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></span>
+        <br />
+        <span class="italic">(име и презиме)</span>
+      </p>
+      <p class="text-center py-4">
+        <span style="
+    width: 200px;
+    border-bottom: 1px solid black;
+    display: inline-block;
+    overflow: hidden;
+  " contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker.licence_number }}"))</script></span>
+        <br />
+        <span class="italic">(број геодетске лиценце)</span>
+      </p>
+      <p class="text-center mt-4">
+        <span style="
+    width: 200px;
+    border-bottom: 1px solid black;
+    display: inline-block;
+    overflow: hidden;
+  " contenteditable="true"></span>
+        <br />
+        <span class="italic ">(потпис)</span>
+      </p>
+
+    </div>
+  </div>
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 800px; left: 330px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="330" ypos="800">
+<img id="pecat-odgovorni" style="position: absolute; top: 780px; left: 540px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="540" ypos="780">
+<img id="potpis-odgovorni" style="position: absolute; top: 790px; left: 560px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="560" ypos="790">

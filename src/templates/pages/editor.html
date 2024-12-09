@@ -1,0 +1,1084 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block link %}
+
+{% endblock link %}
+
+{% block leftnavlink %}
+<div class="h-full p-4 mt-5">
+    <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+        </svg>       
+        <p class="py-2 ml-2"><a href="{% url 'main:subject' pk=subject.id %}">Nazad na predmet</a></p>
+    </div>
+    {% if docs %}   
+        <div class="flex pl-10 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+            </svg>       
+            <p class="py-2 ml-2"><a href="{% url 'main:elaborat' pk=subject.id %}">Nazad na elaborat</a></p>
+        </div>
+    {% endif %}      
+</div>
+{% endblock leftnavlink %}
+
+{% block mainpanel %}
+<script>
+    function lat2cyr(text){
+    const mapa = {
+        'a': 'а', 'b': 'б', 'c': 'ц', 'd': 'д', 'e': 'е', 'f': 'ф', 'g': 'г', 'h': 'х',
+        'i': 'и', 'j': 'ј', 'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о', 'p': 'п',
+        'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 'v': 'в', 'z': 'з', 'š': 'ш', 'đ': 'ђ',
+        'ž': 'ж', 'č': 'ч', 'ć': 'ћ', 'lj': 'љ', 'nj': 'њ', 'dž': 'џ',
+        'A': 'А', 'B': 'Б', 'C': 'Ц', 'D': 'Д', 'E': 'Е', 'F': 'Ф', 'G': 'Г', 'H': 'Х',
+        'I': 'И', 'J': 'Ј', 'K': 'К', 'L': 'Л', 'M': 'М', 'N': 'Н', 'O': 'О', 'P': 'П',
+        'R': 'Р', 'S': 'С', 'T': 'Т', 'U': 'У', 'V': 'В', 'Z': 'З', 'Š': 'Ш', 'Đ': 'Ђ',
+        'Ž': 'Ж', 'Č': 'Ч', 'Ć': 'Ћ', 'LJ': 'Љ', 'NJ': 'Њ', 'DŽ': 'Џ'
+    };
+    let output = "";
+    for (let i = 0; i < text.length; i++) {
+        let c = text[i];
+        let c_next = text[i + 1];
+        let double = c + c_next;
+
+        if (mapa[double]) {
+        output += mapa[double];
+        i++;
+        } else if (mapa[c]) {
+        output += mapa[c];
+        } else {
+        output += c;
+        }
+    }
+    return output;
+}
+
+</script>
+<div id="toolbar" class="flex w-[32] h-full flex-col justify-start items-start bg-slate-200 fixed z-[1]">
+
+    <button class="p-1 hover:bg-slate-50" onclick="insertStamps()" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Ubaci pečate i potpise">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="M624 475.968V640h144a128 128 0 0 1 128 128H128a128 128 0 0 1 128-128h144V475.968a192 192 0 1 1 224 0zM128 896v-64h768v64H128z"/></svg>
+    </button>
+    <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+    <button class="p-1 hover:bg-slate-50 " onclick="savePDF('editor')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Preuzmi PDF">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7l7-7zM5 18v2h14v-2H5z"/></svg>
+    </button>
+    <!-- <div class="h-10" style="border-left: 1px solid #c0c0c0; border-right: 1px solid #efefef;"></div> v-separator -->
+    <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+    {% if docs %}
+        <button class="p-1 hover:bg-slate-50" onclick="sendToAWS('editor')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Snimi u elaborat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 7v12q0 .825-.588 1.413T19 21H5q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h12l4 4Zm-2 .85L16.15 5H5v14h14V7.85ZM12 18q1.25 0 2.125-.875T15 15q0-1.25-.875-2.125T12 12q-1.25 0-2.125.875T9 15q0 1.25.875 2.125T12 18Zm-6-8h9V6H6v4ZM5 7.85V19V5v2.85Z"/></svg>
+        </button>
+    {% else %}
+        <button class="p-1 hover:bg-slate-50" onclick="sendToAWS('editor')" data-te-toggle="tooltip" data-te-placement="right" data-te-ripple-init data-te-ripple-color="light" title="Snimi u predmet">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 7v12q0 .825-.588 1.413T19 21H5q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h12l4 4Zm-2 .85L16.15 5H5v14h14V7.85ZM12 18q1.25 0 2.125-.875T15 15q0-1.25-.875-2.125T12 12q-1.25 0-2.125.875T9 15q0 1.25.875 2.125T12 18Zm-6-8h9V6H6v4ZM5 7.85V19V5v2.85Z"/></svg>
+        </button>
+    {% endif %}
+    <div class="w-full" style="border-top: 1px solid #c0c0c0; border-bottom: 1px solid #efefef;"></div> <!-- h-separator -->
+    <!-- <div class="h-10" style="border-left: 1px solid #c0c0c0; border-right: 1px solid #efefef;"></div> v-separator -->
+
+</div>        
+<div class="flex justify-center items-center w-full">
+    <div id="editor" class="relative overflow-x-auto">
+        {% if assemble %}
+        <button class="fixed right-10 top-2/4" onclick="sendToAWSandContinue('editor')">
+            <img src="{% static 'img/next2.png' %}">
+        </button>
+        {% endif %}
+
+        {% if id == 1 %}
+            {% include 'forms/elaborat_geodetskih_radova.html' %}
+        {% endif %}
+        {% if id == 2 %}
+            {% include 'forms/izjava_odgovornog_lica_u_geodetskoj_organizaciji.html' %}
+        {% endif %}
+        {% if id == 3 %}
+            {% include 'forms/potvrda_o_izvrsenom_geodetskom_merenju_vodova.html' %}
+        {% endif %}
+        {% if id == 4 %}
+            {% include 'forms/zahtev_za_upis_promene_u_katastru_vodova.html' %}
+        {% endif %}
+        {% if id == 5 %}
+            {% include 'forms/zapisnik_o_izvrsenom_uvidjaju.html' %}
+        {% endif %}
+        {% if id == 6 %}
+            {% include 'forms/podaci_o_objektima.html' %}
+        {% endif %}
+        {% if id == 7 %}
+            {% include 'forms/izjava_o_prihvatanju_izvrsenja_geodetskih_radova_na_terenu.html' %}
+        {% endif %}
+        {% if id == 8 %}
+            {% include 'forms/skica_odrzavanja_katastra_nepokretnosti.html' %}
+        {% endif %}
+        {% if id == 9 %}
+            {% include 'forms/izvestaj_o_kontroli_postignute_tacnosti_polozaja_granicnih_tacaka.html' %}
+        {% endif %}
+        {% if id == 10 %}
+            {% include 'forms/naslovna_strana.html' %}
+        {% endif %}
+        {% if id == 11 %}
+            {% include 'forms/tehnicki_izvestaj.html' %}
+        {% endif %}
+        {% if id == 12 %}
+            {% include 'forms/tehnicki_izvestaj_snimanja.html' %}
+        {% endif %}
+        {% if id == 13 %}
+            {% include 'forms/zapisnik_transformacije_grider.html' %}
+        {% endif %}
+        {% if id == 14 %}
+            {% include 'forms/RTK_osrednjavanje.html' %}
+        {% endif %}
+        {% if id == 15 %}
+            {% include 'forms/TO_25.html' %}
+        {% endif %}
+        {% if id == 16 %}
+            {% include 'forms/glavni_sadrzaj.html' %}
+        {% endif %}
+        {% if id == 17 %}
+            {% include 'forms/tahimetrijski_zapisnik.html' %}
+        {% endif %}
+        {% if id == 18 %}
+            {% include 'forms/obrazac_3.html' %}
+        {% endif %}
+        {% if id == 19 %}
+            {% include 'forms/faktura.html' %}
+        {% endif %}
+
+        
+        <!-- test formulari -->
+        {% if id == 998 %}
+            {% include 'forms/test-landscape.html' %}
+        {% endif %}
+        {% if id == 999 %}
+            {% include 'forms/test-portrait.html' %}
+        {% endif %}
+
+    </div>
+
+    
+</div>
+{% endblock mainpanel %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<script>
+/* pocetak javascripta */
+    /* date picker */
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInputs = document.querySelectorAll('.date-picker');
+        const calendar = document.getElementById('calendar');
+
+        dateInputs.forEach((dateInput) => {
+            const dateFormat = dateInput.getAttribute('data-date-format') || 'dd.mm.yyyy.';
+
+            // Prikazuje ili sakriva kalendar
+            dateInput.addEventListener('focus', function() {
+                initializeCalendar(calendar, dateInput, {
+                    format: dateFormat,
+                    language: 'sr'
+                });
+                calendar.classList.toggle('hidden');
+            });
+        });
+    });
+    /* funkcija za inicijalizaciju kalendara */
+    function initializeCalendar(calendarElement, inputElement, options) {
+        let currentMonth = new Date().getMonth();
+        console.log(currentMonth);
+        let currentYear = new Date().getFullYear();
+
+        const monthNames = options.language === 'sr'
+            ? ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+            : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        const days = options.language === 'sr'
+            ? ['P', 'U', 'S', 'Č', 'P', 'S', 'N']
+            : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+        function generateCalendar() {
+            calendarElement.innerHTML = '';
+
+            // Dodaj naslov meseca i godine i napravi da mogu da se biraju iz dropdown liste
+            const header = document.createElement('div');
+            header.setAttribute('class','calendar_header w-[100%] flex justify-center items-center text-white pointer');
+            const monthSelector = document.createElement('select');
+
+            monthSelector.setAttribute('class', 'block w-full bg-white border border-gray-300 focus:border-indigo-500 text-gray-900 rounded-lg shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50');
+
+            monthNames.forEach((name, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = name;
+                if (index === currentMonth) {
+                    option.selected = true;
+                }
+                monthSelector.appendChild(option);
+            });
+
+            monthSelector.addEventListener('change', function() {
+                currentMonth = parseInt(this.value, 10);
+                generateCalendar();
+            });
+
+            let yearSelector = document.createElement('select');
+            yearSelector.setAttribute('class', 'block w-full bg-white border border-gray-300 focus:border-indigo-500 text-gray-900 rounded-lg shadow-sm px-4 py-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50')
+            for (let i = 1900; i <= 2100; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = i;
+                if (i === currentYear) {
+                    option.selected = true;
+                }
+                yearSelector.appendChild(option);
+            }
+            yearSelector.addEventListener('change', function() {
+                currentYear = parseInt(this.value, 10);
+                generateCalendar();
+            });
+
+            header.appendChild(monthSelector);
+            header.appendChild(yearSelector);
+            calendarElement.appendChild(header);
+
+            // Dodaj dane nedelje
+            const dayNames = document.createElement('div');
+            dayNames.setAttribute('class','day_names w-full flex justify-around items-center cursor-pointer');
+            for (let i = 0; i < 7; i++) {
+                const day = document.createElement('span');
+                day.setAttribute('class','w-[30px] text-center')
+                day.innerText = days[i];
+                dayNames.appendChild(day);
+            }
+            calendarElement.appendChild(dayNames);
+
+            // Dodaj dane u mesecu
+            const firstDay = new Date(currentYear, currentMonth).getDay();
+            const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+            let date = 1;
+
+            for (let i = 0; i < 6; i++) {
+                const week = document.createElement('div');
+                week.setAttribute('class','week w-full flex justify-around items-center cursor-pointer');
+                for (let j = 0; j < 7; j++) {
+                const day = document.createElement('span');
+                day.setAttribute('class','w-[30px] text-center')
+                if (i === 0 && j < firstDay - 1 || date > lastDate) {
+                    day.innerText = '';
+                    day.classList.add('day_none');
+                } else {
+                    day.classList.add('day');
+                    day.innerText = date;
+                    (function(currentDate, currentMonth, currentYear) {
+                        day.addEventListener('click', function() {
+                            let formattedDate;
+                            // formatiranje datuma
+                            if(options.format === 'mmmm yyyy'){
+                                formattedDate = lat2cyr(`${monthNames[currentMonth]} ${currentYear}`);
+                            } else {
+                                formattedDate = options.format
+                                .replace('dd', currentDate.toString().padStart(2, '0'))
+                                .replace('mm', (currentMonth + 1).toString().padStart(2, '0'))
+                                .replace('yyyy', currentYear.toString());
+                            }
+
+                            inputElement.value = formattedDate;
+                            calendarElement.classList.add('hidden');
+                        });
+                    })(date, currentMonth, currentYear);
+                
+                    date++;        }
+
+                week.appendChild(day);
+                }
+                calendarElement.appendChild(week);
+            }
+        }
+
+        // Generiši početni kalendar
+        generateCalendar();
+        
+    }
+
+    /* ======================== */
+    /* Konvertovanje HTML u PDF */
+    /* ======================== */
+
+    async function insertStamps() {
+        insertAuthorizedStamp();
+        insertAuthorizedSignature();
+        insertResponsibleStamp();
+        insertResponsibleSignature(1);
+        insertResponsibleSignature(2);
+    }
+
+    let csrfToken = getCookie('csrftoken');
+    /* slanje obrazca u PDF obliku na AWS */
+    async function sendToAWS(element) {
+        var htmlElement = document.getElementById(element);
+        var docEl = document.getElementById("document");
+        var orientation = docEl.getAttribute('data-orientation');
+        var imgPecat = document.getElementById("pecat");
+        const docs = "{{docs}}"
+
+        if(orientation !== "portrait" && orientation !== "landscape" && orientation == null) {
+            orientation = "portrait"; // default orijentacija na portrait
+        }
+
+        let docWidth, windowWidth;
+        if(orientation === "portrait"){
+            docWidth = 210; windowWidth = 795;
+        }
+        if(orientation === "landscape"){
+            docWidth = 297; windowWidth = 1128;
+        }
+
+        let jsPdf = new jspdf.jsPDF({
+            orientation: orientation,
+            unit: 'mm',
+            format: 'A4',
+            setLineHeightFactor: 1,
+        });
+
+        const fontArray = [
+            ['TIMES.TTF', 'Times New Roman', 'normal'],
+            ['TIMESBD.TTF', 'Times New Roman', 'bold'],
+            ['TIMESI.TTF', 'Times New Roman', 'italic'],
+            ['TIMESBI.TTF', 'Times New Roman', 'bolditalic']
+        ];
+
+        let fontPromises = fontArray.map(font => getBase64Data('/static/fonts/' + font[0]));
+
+        Promise.all(fontPromises)
+        .then(fontsData => {
+            fontsData.forEach((data, index) => {
+            jsPdf.addFileToVFS('/static/fonts/' + fontArray[index][0], data);
+            jsPdf.addFont('/static/fonts/' + fontArray[index][0], fontArray[index][1], fontArray[index][2]);
+            });
+
+            const opt = {
+            autoPaging: true,
+            html2canvas: {
+                logging: false,
+            },
+            x: 0,
+            y: 0,
+            width: docWidth,
+            windowWidth: windowWidth,
+            };
+
+            return jsPdf.html(htmlElement, opt);
+        })
+        .then(() => {
+            var blob = jsPdf.output('blob');
+            var formData = new FormData();
+            const elabID = "{{id}}";
+            const subjectID = "{{subject.id}}";
+            let route = ""
+            if(docs != ""){
+                route = "upload-elaborat-document"
+            } else {
+                route = "upload-pdf-to-subject"
+            }
+            console.log(route)
+            formData.append('pdf', blob, `${elabID}-${subjectID}.pdf`);
+            formData.append('elaboratID', elabID);
+            formData.append('subjectID', subjectID);
+            if("{{aws_name}}"==='faktura.pdf'){
+                formData.append('faktura', 'faktura')
+            }
+            console.log(formData);
+            return fetch(`/main/${route}`, {
+            method: 'POST',
+            headers: {
+                    'X-CSRFToken': csrfToken
+                },
+            body: formData
+            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            const subjectId = "{{subject.id}}";
+            if(docs != ""){
+                window.location.href = `/main/elaborat/${subjectId}`;
+            } else {
+                window.location.href = `/main/subject/${subjectId}`;
+            }
+            
+        })
+        .catch(error => {
+            console.log('Error:', error);
+        });
+    }
+    /* slanje pdf-a na rutu */
+    function sendToAWSandContinue(element) {
+        var htmlElement = document.getElementById(element);
+        var docEl = document.getElementById("document");
+        var orientation = docEl.getAttribute('data-orientation');
+        var imgPecat = document.getElementById("pecat");
+
+        if(orientation !== "portrait" && orientation !== "landscape" && orientation == null) {
+            orientation = "portrait"; // default orijentacija na portrait
+        }
+
+        let docWidth, windowWidth;
+        if(orientation === "portrait"){
+            docWidth = 210; windowWidth = 795;
+        }
+        if(orientation === "landscape"){
+            docWidth = 297; windowWidth = 1128;
+        }
+
+        let jsPdf = new jspdf.jsPDF({
+            orientation: orientation,
+            unit: 'mm',
+            format: 'A4',
+            setLineHeightFactor: 1,
+        });
+
+        const fontArray = [
+            ['TIMES.TTF', 'Times New Roman', 'normal'],
+            ['TIMESBD.TTF', 'Times New Roman', 'bold'],
+            ['TIMESI.TTF', 'Times New Roman', 'italic'],
+            ['TIMESBI.TTF', 'Times New Roman', 'bolditalic']
+        ];
+
+        let fontPromises = fontArray.map(font => getBase64Data('/static/fonts/' + font[0]));
+
+        Promise.all(fontPromises)
+        .then(fontsData => {
+            fontsData.forEach((data, index) => {
+            jsPdf.addFileToVFS('/static/fonts/' + fontArray[index][0], data);
+            jsPdf.addFont('/static/fonts/' + fontArray[index][0], fontArray[index][1], fontArray[index][2]);
+            });
+
+            const opt = {
+            autoPaging: true,
+            html2canvas: {
+                logging: false,
+            },
+            x: 0,
+            y: 0,
+            width: docWidth,
+            windowWidth: windowWidth,
+            };
+
+            return jsPdf.html(htmlElement, opt);
+        })
+        .then(() => {
+            var blob = jsPdf.output('blob');
+            var formData = new FormData();
+            console.log(blob);
+            const elabID = "{{id}}";
+            const subjectID = "{{subject.id}}";
+            const assemble = "{{assemble}}";
+            formData.append('pdf', blob);
+            formData.append('elaboratID', elabID);
+            formData.append('subjectID', subjectID);
+            formData.append('assemble', assemble);
+            console.log(formData);
+            return fetch('/main/edit-elaborat', {
+            method: 'POST',
+            headers: {
+                    'X-CSRFToken': csrfToken
+                },
+            body: formData
+            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if(data.template_number){
+                // pozivamo obican editor
+                console.log('obican editor');
+                const templateNumber = data.template_number;
+                const pk = data.pk;
+                const assemble = data.assemble;
+
+                window.location.href = `/editor/${templateNumber}/${pk}/${assemble}`;
+            } else {
+                // pozivamo pdf-editor
+                console.log('pozovi pdf editor');
+                const pk = data.pk;
+                const awsName = data.aws_name;
+                const folder = data.folder;
+                const assemble = data.assemble;
+
+                window.location.href = `/main/pdf-editor/${pk}/${awsName}/${folder}/${assemble}`;
+            }
+            
+
+            // const subjectId = "{{subject.id}}";
+            // window.location.href = `/main/elaborat/${subjectId}`;
+        })
+        .catch(error => {
+            console.log('Error:', error);
+        });
+    }
+    /* kreiranje PDF fajla */
+    async function createPDF(element){
+
+        var htmlElement = document.getElementById(element);
+        var docEl = document.getElementById("document");
+        var orientation = docEl.getAttribute('data-orientation');
+        var imgPecat = document.getElementById("pecat");
+        if(orientation != "portrait" && orientation != "landscape" && orientation == null){
+            orientation = "portrait"; // default orijentacija na portrait
+        };
+        let docWidth, windowWidth;
+        if(orientation == "portrait"){
+            docWidth = 210; windowWidth = 795;
+        }
+        if(orientation == "landscape"){
+            docWidth = 297; windowWidth = 1128;
+        }
+
+        let jsPdf = new jspdf.jsPDF({
+            orientation: orientation,
+            unit: 'mm',
+            format: 'A4',
+            setLineHeightFactor: 1,
+        });
+        const fontArray = [
+            ['TIMES.TTF', 'Times New Roman', 'normal'],
+            ['TIMESBD.TTF', 'Times New Roman', 'bold'],
+            ['TIMESI.TTF', 'Times New Roman', 'italic'],
+            ['TIMESBI.TTF', 'Times New Roman', 'bolditalic']
+        ];
+
+        let fontPromises = fontArray.map(font => getBase64Data('/static/fonts/' + font[0]));
+
+        Promise.all(fontPromises)
+        .then(fontsData => {
+            fontsData.forEach((data, index) => {
+                jsPdf.addFileToVFS('/static/fonts/' + fontArray[index][0], data);
+                jsPdf.addFont('/static/fonts/' + fontArray[index][0], fontArray[index][1], fontArray[index][2]);
+            });
+            const opt = {
+                autoPaging: true,
+                html2canvas: {
+                    logging: false,
+                },
+                x: 0,
+                y: 0,
+                width: docWidth,
+                windowWidth: windowWidth,
+            };
+
+            jsPdf.html(htmlElement, opt).save("doc.pdf");   
+
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Greška!',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        });
+    }
+    /* snimanje pdf-a */
+    async function savePDF(element){
+        const awsName = "{{ aws_name }}";
+        const bp = "{{ subject.id }}";
+        var htmlElement = document.getElementById(element);
+        var docEl = document.getElementById("document");
+        var orientation = docEl.getAttribute('data-orientation');
+        var imgPecat = document.getElementById("pecat");
+        
+        if (orientation != "portrait" && orientation != "landscape" && orientation == null) {
+            orientation = "portrait"; // default orientation to portrait
+        }
+        
+        let docWidth, windowWidth;
+        if (orientation == "portrait") {
+            docWidth = 210; windowWidth = 795;
+        }
+        if (orientation == "landscape") {
+            docWidth = 297; windowWidth = 1128;
+        }
+
+        let jsPdf = new jspdf.jsPDF({
+            orientation: orientation,
+            unit: 'mm',
+            format: 'A4',
+            setLineHeightFactor: 1,
+        });
+
+        const fontArray = [
+            ['TIMES.TTF', 'Times New Roman', 'normal'],
+            ['TIMESBD.TTF', 'Times New Roman', 'bold'],
+            ['TIMESI.TTF', 'Times New Roman', 'italic'],
+            ['TIMESBI.TTF', 'Times New Roman', 'bolditalic']
+        ];
+
+        let fontPromises = fontArray.map(font => getBase64Data('/static/fonts/' + font[0]));
+
+        Promise.all(fontPromises)
+            .then(fontsData => {
+                fontsData.forEach((data, index) => {
+                    jsPdf.addFileToVFS('/static/fonts/' + fontArray[index][0], data);
+                    jsPdf.addFont('/static/fonts/' + fontArray[index][0], fontArray[index][1], fontArray[index][2]);
+                });
+
+                const opt = {
+                    autoPaging: true,
+                    html2canvas: {
+                        logging: false,
+                    },
+                    x: 0,
+                    y: 0,
+                    width: docWidth,
+                    windowWidth: windowWidth,
+                };
+
+                return jsPdf.html(htmlElement, opt); // Returns a promise
+            })
+            .then(() => {
+                // Create Blob from the PDF
+                var pdfBlob = jsPdf.output('blob');
+
+                // Create Object URL
+                var pdfUrl = URL.createObjectURL(pdfBlob);
+
+                var fileName = `${bp}_${awsName}`;
+                if (!fileName.endsWith('.pdf')) {
+                    fileName += '.pdf';
+                }
+                // Create download link and click it
+                var a = document.createElement("a");
+                a.href = pdfUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                // Release the Object URL
+                URL.revokeObjectURL(pdfUrl);
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Greška!',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+    }
+    /* Dodavanje pecata */
+    // function insertStamp(){
+    //     const editor = document.getElementById("editor");
+    //     const pecat = document.createElement("img");
+    //     pecat.setAttribute('id', 'pecat');
+    //     pecat.src = "https://stasuk.net/files/pecat.png";
+    //     pecat.style.position = "absolute";
+    //     pecat.style.top = "300px";
+    //     pecat.style.left = "300px";
+    //     pecat.style.cursor = "move";
+    //     pecat.style.width = "150px";
+    //     pecat.style.height = "150px";
+    //     pecat.setAttribute('draggable', true);
+    //     pecat.setAttribute('onmousedown', 'handleMouseDown(this, event)');
+    //     pecat.setAttribute('ontouchstart', 'handleMouseDown(this, event)');
+    //     editor.appendChild(pecat);
+
+    // }
+    /* ubacivanje logoa u zaglavlje */
+    async function insertLogo() {
+        let csrfToken = getCookie('csrftoken');
+        let bucket = 'autopilot-kancelarija-'+'{{user.company.id}}';
+        let data = "OpstiDokumenti/logo.png";
+        try {
+            const response = await fetch ('/main/return-aws-png', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({bucket: bucket, link: data})
+            })
+            if (response.ok) {
+                const result = await response
+                const blob = await result.blob()
+                const blobUrl = URL.createObjectURL(blob);
+                let logo = document.getElementById('logo');
+                if(logo){
+                    logo.src = blobUrl;
+                }
+            } else {
+                Swal.fire({
+                    title: 'Greška!',
+                    text: 'Učitavanje slike za logo firme nije uspelo!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Greška!',
+                text: 'Učitavanje logoa firme nije uspelo!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+    /* Iscitavanje base64 */
+    async function getBase64Data(url){
+        return new Promise((resolve, reject) => {
+            fetch(url)
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not OK');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64Data = reader.result.split(',')[1];
+                    resolve(base64Data);
+                };
+                reader.onerror = () => {
+                    reject(new Error('Error reading the font file'));
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    /* pomeranje slike (pecata) na zeljeno mesto */
+    function handleMouseDown(element, event){
+        event.preventDefault();
+
+        const editor = document.getElementById("editor");
+        const spans = editor.getElementsByTagName('span');
+        for(let i = 0; i < spans.length; i++){
+            spans[i].setAttribute('contenteditable', 'false');
+        }
+
+        function moveAt(pos){           
+            element.style.left = pos.x + 'px';
+            element.style.top = pos.y + 'px';
+            element.setAttribute('xPos', pos.x);
+            element.setAttribute('yPos', pos.y);
+        }
+
+        function getEventPosition(e){
+            if(e.touches){
+                return getPos(element.id, e.touches[0]);
+            } else {
+                return getPos(element.id, e);
+            }
+        }
+
+        function onMouseMove(e){
+            var pos = getEventPosition(e);
+            moveAt(pos);
+        }
+
+        function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            document.removeEventListener('touchmove', onMouseMove);
+            document.removeEventListener('touchend', onMouseUp);
+
+            const editor = document.getElementById("editor");
+            const spans = editor.getElementsByTagName('span');
+            for(let i = 0; i < spans.length; i++){
+                spans[i].setAttribute('contenteditable', 'true');
+            }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('touchmove', onMouseMove);
+        document.addEventListener('touchend', onMouseUp);
+
+    }
+    /* preracunavanje trenutne pozicije elementa */
+    function getPos(id, event){
+        const pecat = document.getElementById(id);
+        const elNav = document.querySelector("nav"); /* navigacija */
+        const elEdit = pecat.parentNode; /* editor */
+        const elEditWrap = elEdit.parentNode; /* editor parent */
+        const elBack = elEditWrap.parentNode; /* elEditWrap parent */ 
+        const elToolbar = document.getElementById("toolbar");
+        const elHeader = document.querySelector("header");
+        if(isMobileDevice()){
+            var x = event.pageX + elEdit.scrollLeft - (elBack.offsetWidth - elEdit.offsetWidth)/2 - pecat.offsetWidth/2;
+            var y = event.pageY + elBack.scrollTop - elHeader.offsetHeight - pecat.offsetHeight/2;
+        } else {
+            var x = event.pageX - elNav.offsetWidth - (elBack.offsetWidth - elEdit.offsetWidth)/2 - pecat.offsetWidth/2;
+            var y = event.pageY + elBack.scrollTop - elHeader.offsetHeight - pecat.offsetHeight/2;
+        }
+        const position = {
+            x: x,
+            y: y
+        };
+       
+        return position;
+    }
+    function isMobileDevice(){ // funkcija za proveravanje da li se gleda preko mobilnog uredjaja
+        return 'ontouchstart' in window || navigator.maxTouchPoints;
+    }
+    function handleDragStart(e){ // kunkcija za kontrolu pomeranja pecata i potpisa
+        e.preventDefault();
+        return false;
+    }
+    // /* Dodavanje reda u tabelu [ID tabele = "tabela"] */
+    // function addTableRow(){
+    //     const table = document.getElementById("tabela");
+    //     const lastRow = table.rows[table.rows.length - 1];
+    //     const newRow = lastRow.cloneNode(true);
+
+    //     table.appendChild(newRow);
+    // }
+    // /* Uklanjanje poslednje reda u tabeli [ID tabele = "tabela"] */
+    // function removeLastRow(){
+    //     const table = document.getElementById("tabela");
+    //     const rowCount = table.rows.length;
+
+    //     if(rowCount > 2){
+    //         table.deleteRow(rowCount - 1);
+    //     }
+    // }
+    /* ubacivanje pecata ovlascenog lica na predvidjeno mesto */
+    async function insertAuthorizedStamp() {
+        let csrfToken = getCookie('csrftoken');
+        let bucket = 'autopilot-kancelarija-'+'{{user.company.id}}';
+        let data = "OpstiDokumenti/pecat.png";
+        try {
+            const response = await fetch ('/main/return-aws-png', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({bucket: bucket, link: data})
+            })
+            if (response.ok) {
+                const result = await response
+                const blob = await result.blob()
+                const blobUrl = URL.createObjectURL(blob);
+                let pecat = document.getElementById('pecat-ovlasceni');
+                if(pecat){
+                    pecat.src = blobUrl;
+                }
+            } else {
+                Swal.fire({
+                    title: 'Greška!',
+                    text: 'Učitavanje slike pečata ovlašćenog lica nije uspelo!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Greška!',
+                text: 'Učitavanje slike pečata ovlašćenog lica nije uspelo!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+    /* ubacivanje pecata odgovornog lica na predvidjeno mesto */
+    async function insertResponsibleStamp() {
+        let csrfToken = getCookie('csrftoken');
+        let bucket = 'autopilot-kancelarija-'+'{{user.company.id}}';
+        let data = "zaposleni-{{subject.responsible_worker.id}}/pecat.png";
+        try {
+            const response = await fetch ('/main/return-aws-png', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({bucket: bucket, link: data})
+            })
+            if (response.ok) {
+                const result = await response
+                const blob = await result.blob()
+                const blobUrl = URL.createObjectURL(blob);
+                let pecat = document.getElementById('pecat-odgovorni');
+                if(pecat){
+                    pecat.src = blobUrl;
+                }
+            } else {
+                Swal.fire({
+                    title: 'Greška!',
+                    text: 'Učitavanje slike pečata odgovornog lica nije uspelo!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Greška!',
+                text: 'Učitavanje slike pečata odgovornog lica nije uspelo!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+    /* ubacivanje potpisa ovlascenog lica na predvidjeno mesto */
+    async function insertAuthorizedSignature() {
+        let csrfToken = getCookie('csrftoken');
+        let bucket = 'autopilot-kancelarija-'+'{{user.company.id}}';
+        let data = "OpstiDokumenti/potpis.png";
+        try {
+            const response = await fetch ('/main/return-aws-png', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({bucket: bucket, link: data})
+            })
+            if (response.ok) {
+                const result = await response
+                const blob = await result.blob()
+                const blobUrl = URL.createObjectURL(blob);
+                let pecat = document.getElementById('potpis-ovlasceni');
+                if(pecat){
+                    pecat.src = blobUrl;
+                }
+            } else {
+                Swal.fire({
+                    title: 'Greška!',
+                    text: 'Učitavanje slike potpisa ovlašćenog lica nije uspelo!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Greška!',
+                text: 'Učitavanje slike potpisa ovlašćenog lica nije uspelo!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+    /* ubacivanje ppotpisa odgovornog lica na predvidjeno mesto */
+    async function insertResponsibleSignature(instance) {
+        let csrfToken = getCookie('csrftoken');
+        let bucket = 'autopilot-kancelarija-'+'{{user.company.id}}';
+        let data = "zaposleni-{{subject.responsible_worker.id}}/potpis.png";
+        try {
+            const response = await fetch ('/main/return-aws-png', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({bucket: bucket, link: data})
+            })
+            if (response.ok) {
+                const result = await response
+                const blob = await result.blob()
+                const blobUrl = URL.createObjectURL(blob);
+                let pecat
+                if(instance > 1) {
+                    pecat = document.getElementById('potpis-odgovorni'+instance);
+                }else{
+                    pecat = document.getElementById('potpis-odgovorni');
+                }
+                if(pecat){
+                    pecat.src = blobUrl;
+                }
+            } else {
+                console.error('Request failed with status:', response.status)
+            }
+        } catch (error) {
+            console.error('Request failed:', error)
+        }
+    }
+    /* getCookie */
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+            }
+        }
+        return cookieValue;
+    }
+    /* prevodjenje sa latinice na cirilicu */
+    function lat2cyr(text){
+        const mapa = {
+            'a': 'а', 'b': 'б', 'c': 'ц', 'd': 'д', 'e': 'е', 'f': 'ф', 'g': 'г', 'h': 'х',
+            'i': 'и', 'j': 'ј', 'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о', 'p': 'п',
+            'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 'v': 'в', 'z': 'з', 'š': 'ш', 'đ': 'ђ',
+            'ž': 'ж', 'č': 'ч', 'ć': 'ћ', 'lj': 'љ', 'nj': 'њ', 'dž': 'џ',
+            'A': 'А', 'B': 'Б', 'C': 'Ц', 'D': 'Д', 'E': 'Е', 'F': 'Ф', 'G': 'Г', 'H': 'Х',
+            'I': 'И', 'J': 'Ј', 'K': 'К', 'L': 'Л', 'M': 'М', 'N': 'Н', 'O': 'О', 'P': 'П',
+            'R': 'Р', 'S': 'С', 'T': 'Т', 'U': 'У', 'V': 'В', 'Z': 'З', 'Š': 'Ш', 'Đ': 'Ђ',
+            'Ž': 'Ж', 'Č': 'Ч', 'Ć': 'Ћ', 'LJ': 'Љ', 'NJ': 'Њ', 'DŽ': 'Џ'
+        };
+        let output = "";
+        for (let i = 0; i < text.length; i++) {
+            let c = text[i];
+            let c_next = text[i + 1];
+            let double = c + c_next;
+
+            if (mapa[double]) {
+            output += mapa[double];
+            i++;
+            } else if (mapa[c]) {
+            output += mapa[c];
+            } else {
+            output += c;
+            }
+        }
+        return output;
+    }
+
+    /* prevodjenje sa cirilice na latinicu */
+    function cyr2lat(text) {
+        const mapa = {
+            'а': 'a', 'б': 'b', 'ц': 'c', 'д': 'd', 'е': 'e', 'ф': 'f', 'г': 'g', 'х': 'h',
+            'и': 'i', 'ј': 'j', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p',
+            'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'в': 'v', 'з': 'z', 'ш': 'š', 'ђ': 'đ',
+            'ж': 'ž', 'ч': 'č', 'ћ': 'ć', 'љ': 'lj', 'њ': 'nj', 'џ': 'dž',
+            'А': 'A', 'Б': 'B', 'Ц': 'C', 'Д': 'D', 'Е': 'E', 'Ф': 'F', 'Г': 'G', 'Х': 'H',
+            'И': 'I', 'Ј': 'J', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O', 'П': 'P',
+            'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'В': 'V', 'З': 'Z', 'Ш': 'Š', 'Ђ': 'Đ',
+            'Ж': 'Ž', 'Ч': 'Č', 'Ћ': 'Ć', 'Љ': 'LJ', 'Њ': 'NJ', 'Џ': 'DŽ'
+        };
+        let output = "";
+        for (let c of text) {
+            output += mapa[c] || c;
+        }
+        return output;
+    }
+    
+    /* startovanje funkcija po ucitanoj stranici */
+    document.addEventListener("DOMContentLoaded", () => {
+        insertLogo();
+        mesto = document.getElementById("mesto")
+        if(mesto){ mesto.innerText = mesto.innerText.split(',')[0] }
+
+        const theme = localStorage.getItem('theme');
+        if(theme == 'dark'){
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    });
+    /* kraj javascripta */
+</script>
+{% endblock script %}

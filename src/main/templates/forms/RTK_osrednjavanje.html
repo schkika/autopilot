@@ -1,0 +1,72 @@
+
+{%load static%}
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+id="document" data-orientation="portrait">
+
+    {% include 'forms/zaglavlje_logo.html' %}
+    <div class="pt-10 text-center">
+        <h3 class="py-5 font-bold">Рачунање координата -РТК Метода</h3>
+        <p>Ивештај ГПС мерења</p>
+    </div>
+
+    <div class="py-5">
+        <table id="init_values" style="width: 100%; border-collapse: collapse; border: 1px solid black" class="text-sm" contenteditable="true"
+        cellspacing="0" cellpadding="0">
+            <tr style="border: 1px solid black" class="h-4 text-center">
+                <td style="border: 1px solid black" class="font-bold">
+                    Број
+                </td>
+                <td style="border: 1px solid black" class="font-bold">
+                    Y(м)
+                </td>
+                <td style="border: 1px solid black" class="font-bold">
+                    X(м)
+                </td>
+                <td style="border: 1px solid black" class="font-bold">
+                    Z(м)
+                </td>
+                <td style="border: 1px solid black" class="font-bold">
+                    PDOP
+                </td>
+                <td style="border: 1px solid black" class="font-bold">
+                    Mh (m)
+                </td>
+                <td style="border: 1px solid black" class="font-bold">
+                    Mv (m)
+                </td>
+                <td style="border: 1px solid black" class="font-bold" colspan="2">
+                    Време мерења
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h3 class="pb-5 text-center">Средње вредности</h3>
+        <table id="avg_values" style="width: 50%; border-collapse: collapse; border: 1px solid black" class="text-sm" contenteditable="true"
+        cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr style="border: 1px solid black" class="h-4 text-center">
+                <td style="border: 1px solid black" class="font-bold">&nbsp;Број</td>
+                <td style="border: 1px solid black" class="font-bold">&nbsp;Y(м)</td>
+                <td style="border: 1px solid black" class="font-bold">&nbsp;X(м)</td>
+                <td style="border: 1px solid black" class="font-bold">&nbsp;Z(м)</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3 class="py-5 text-center">Дефинитивне вредности</h3>
+        <table id="mod_values" style="width: 50%; border-collapse: collapse; border: 1px solid black" class="text-sm" contenteditable="true"
+        cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr style="border: 1px solid black" class="h-4 text-center">
+                <td style="border: 1px solid black" class="font-bold">&nbsp;Број</td>
+                <td style="border: 1px solid black" class="font-bold">&nbsp;Y(м)</td>
+                <td style="border: 1px solid black" class="font-bold">&nbsp;X(м)</td>
+                <td style="border: 1px solid black" class="font-bold">&nbsp;Z(м)</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>

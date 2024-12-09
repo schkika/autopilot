@@ -1,0 +1,114 @@
+{%load static%}
+
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+    id="document" data-orientation="portrait">
+    {% include 'forms/zaglavlje_logo.html' %}
+    <br>
+
+
+    <div class="w-full">
+        <p class="flex whitespace-nowrap py-4">Предмет број:&nbsp;<span
+                class="flex-grow whitespace-nowrap overflow-hidden" contenteditable="true">{{ subject.cadastral_number }}</span></p>
+    </div>
+
+    <div class="pt-4">
+        <h2 class="text-center font-bold text-xl">ТЕХНИЧКИ ИЗВЕШТАЈ</h2>
+    </div>
+
+    <div class="w-full pt-4 leading-6">
+        <h3 class="font-bold pb-4">ПРАТЕЋА ДОКУМЕНТАЦИЈА:</h3>
+        <p class="flex whitespace-nowrap">Пријава радова инвеститора:&nbsp;<span
+                class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;"
+                contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.0 }}"))</script></span> из места&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.0.city }}"))</script></span></p>
+
+        <p class="flex whitespace-nowrap">адреса&nbsp;<span class="w-1/2 whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.0.address }}"))</script></span>. </p>
+        <p class="flex whitespace-nowrap">Пријава је заведена у Служби за катастар непокретности&nbsp;<span
+                class="w-1/2 whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;"
+                contenteditable="true">
+                {% if subject.cadastral_municipality.office %}
+                    <script>document.write(lat2cyr("{{ subject.cadastral_municipality.office|title }}"))</script></span>
+                {% else %}
+                    <script>document.write(lat2cyr("{{ subject.municipality|title }}"))</script></span>
+                {% endif %}
+            </span></p>
+
+        <p class="flex whitespace-nowrap">под бројем&nbsp;<span class="w-1/2 whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true">{{ subject.cadastral_number }}</span>.</p>
+    </div>
+
+    <div class="w-full pt-4 leading-6">
+        <h3 class="font-bold pb-4">ЛОКАЦИЈА И ПРЕДМЕТ СНИМАЊА:</h3>
+        <p class="flex whitespace-nowrap">Предмет снимања је објекат на парцели број&nbsp;<span class="w-1/6 whitespace-nowrap overflow-hidden"
+            style="border-bottom: 1px solid #000;" contenteditable="true">
+            {% for lot in subject.lot_set.all %}
+                {% if forloop.last %}
+                    {{ lot }}
+                {% else %}
+                    {{ lot }},
+                {% endif %} 
+            {% endfor %}
+            </span>у К.О.&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+            style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.cadastral_municipality|title }}"))</script></span></p>
+            <textarea name="" class="w-full outline outline-2  outline-offset-2 outline-cyan-500 h-[50px] mt-4"
+            style="resize: none;"></textarea>
+    </div>
+
+    <div class="w-full pt-4 leading-6">
+        <h3 class="font-bold pb-4">СНИМАЊЕ ДЕТАЉА:</h3>
+        <p class="pb-4">Метода снимања</p>
+        <p class="flex whitespace-nowrap">Снимање помоћних тачака извршено је ГПС-РТК методом помоћу&nbsp;
+            <span class="min-w-4 mx-1 whitespace-nowrap overflow-hidden" contenteditable="true">
+                                    {% for device in subject.company.gpsdevice_set.all %}
+                                      {% if device.type == 'gps' %}
+                                      {% if forloop.first %}
+                                        {{ device.manufacturer }}
+                                        {% endif %}
+                                      {% endif %}
+                                    {% endfor %}
+            </span>модел&nbsp;<span class="min-w-4 mx-1  whitespace-nowrap overflow-hidden"
+            contenteditable="true">
+                                    {% for device in subject.company.gpsdevice_set.all %}
+                                      {% if device.type == 'gps' %}
+                                      {% if forloop.first %}
+                                        {{ device.model }}
+                                      {% endif %}
+                                      {% endif %}
+                                    {% endfor %}        
+            </span>,</p>
+
+            <p class="flex whitespace-nowrap">серијски број&nbsp;<span class="min-w-4 mx-1 whitespace-nowrap overflow-hidden" contenteditable="true">
+                                    {% for device in subject.company.gpsdevice_set.all %}
+                                        {% if device.type == 'gps' %}
+                                        {% if forloop.first %}
+                                            {{ device.serial_number }}
+                                        {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                </span>према Инструкцији за
+                прикупљање података о</p>
+                <p>непокретностима. Снимање детаља је извршено поларном
+                    методом.</p>
+
+        <p class="py-4">Трансформација координата</p>
+        <p>Трансформација је извршена помоћу програма за трансформацију координата и
+            висина ГРИДЕР 3.1 из WGS координатног система у ГК координатни систем у
+            Републици Србији.</p>
+           
+    </div>
+
+    <div class="w-full  pt-10">
+   
+        <p class="flex whitespace-nowrap">Оверава:</p>
+        <p class="w-1/4 whitespace-nowrap overflow-hidden pt-4"
+             contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></p>
+    </div>
+
+
+
+
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 930px; left: 330px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="330" ypos="930">
+<img id="pecat-odgovorni" style="position: absolute; top: 910px; left: 190px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="190" ypos="910">
+<img id="potpis-odgovorni" style="position: absolute; top: 930px; left: 210px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="210" ypos="930">

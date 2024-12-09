@@ -1,0 +1,188 @@
+<div
+    style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;" id="document" data-orientation="portrait">
+    <p class="text-right">Прилог 12</p>
+    <div class="pt-5 flex flex-col justify-between items-start">
+        <div>
+            <p>
+                <span style="
+            width: 132%;
+            border-bottom: 1px solid black;
+            display: inline-block;
+            overflow: hidden;
+          " contenteditable="true">{{ user.company.full_name }}</span>
+                <br />
+                <span class="italic text-center">(назив геодетске организације)</span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <span style="
+            width: 120%;
+            border-bottom: 1px solid black;
+            display: inline-block;
+            overflow: hidden;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.company.city }}, {{ subject.company.address }}"))</script></span>
+                <br />
+                <span class="italic text-center">(седиште геодетске организације)</span>
+            </p>
+        </div>
+    </div>
+    <div class="pt-5">
+        <p>У складу са чланом 117. став 4. Закона о државном премеру и катастру ("Службени гласник РС",бр. 72/09, 18/10,
+            65/13, 15/15 - УС, 96/15, 47/17 - аутентично тумачење, 113/17 - др. закон, 28-17 - др. закон и 41/12 - др. закон) даје се следећа</p>
+    </div>
+
+    <div class="text-center pt-5">
+        <p style="font-size: 14pt" class="font-bold">ИЗЈАВА</p>
+        <p class="font-bold">о прихватању извршења геодетских радова на терену</p>
+    </div>
+
+    <div>
+        <p style="padding-top: 10px;">
+            <span style="display: inline-block;">1. За потребе</span>
+            <span style="
+                width: 85%;
+                border-bottom: 1px solid black;
+                display: inline-block;
+              " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.first }}, " ))</script>
+                                      <script>document.write(lat2cyr("{{ subject.clients.first.city}}, ul. "))</script>
+                                      <script>document.write(lat2cyr("{{ subject.clients.first.address }}"))</script>
+            </span>
+            <span style="
+              width:100%;
+              border-bottom: 1px solid black;
+              display: inline-block;
+            " contenteditable="true">&nbsp;</span>
+            <span style="
+            width:100%;
+            border-bottom: 1px solid black;
+            display: inline-block;
+          " contenteditable="true"></span>
+        </p>
+        <p class="text-center italic">(презиме, име и име једног родитеља и адреса/назив, седиште и адреса правног лица)
+        </p>
+    </div>
+
+    <div class="pt-2">
+        <p style="padding-top: 10px;">
+            извршиће се следећи геодетски радови
+            <span style="
+                width: 58%;
+                border-bottom: 1px solid black;
+                display: inline-block;
+              " contenteditable="true"><script>document.write(lat2cyr("{{ subject.service_type }}"))</script></span>
+            <span style="
+              width:100%;
+              border-bottom: 1px solid black;
+              display: inline-block;
+            " contenteditable="true"><script>document.write(lat2cyr(" u KO {{ subject.cadastral_municipality | title }}, "))</script>
+                                      парцела бр. {% if subject.lot_set.all %}
+                                                    {% for lot in subject.lot_set.all %}
+                                                      {% if forloop.last %}
+                                                        {{ lot }}
+                                                      {% else %}
+                                                        {{ lot }},&nbsp;
+                                                      {% endif %}
+                                                    {% endfor %}
+                                                  {% endif %}
+            </span>
+            <span style="
+            width:100%;
+            border-bottom: 1px solid black;
+            display: inline-block;
+            overflow: hidden;
+          " contenteditable="true"></span>
+        </p>
+        <p class="text-center italic">(врста радова и место извршења)</p>
+    </div>
+    <div class="pt-4">
+        <span>Са извршењем наведених радова отпочеће се дана</span>
+            <span style="
+              border-bottom: 1px solid black;
+              overflow: hidden;
+            " contenteditable="true">по преузимању података</span>
+            ,а завршиће се дана
+            <span style="
+          border-bottom: 1px solid black;
+          overflow: hidden;
+        " contenteditable="true"> у року од 30 дана.</span>
+
+    </div>
+
+
+    <!-- <div class="pt-5">
+        <p>
+            2. За извођење радова из тачке 1. ове изјаве користиће се: <br>
+            &nbsp; &nbsp;<input type="checkbox">&nbsp;мрежа перманентних станица Републике Србије (АГРОС) <br>
+            &nbsp;&nbsp;&nbsp;<input type="checkbox">&nbsp;подаци преузети путем web сервиса Републичког геодетског
+            завода <br>
+            <span>(означити ако ће се наведени подаци користити)</span>
+        </p>
+    </div> -->
+    <div class="pt-4">
+        <p class="font-bold">
+            Ова изјава истовремено представља и пријаву радова Републичком геодетском заводу,наведеној служби за
+            катастар непокретности.
+        </p>
+    </div>
+
+        <div class="flex justify-between items-center pt-5">
+            <div>
+               <div>
+
+                <div class="w-full flex justify-start items-center ">
+                  <p class="flex text-center">Датум:&nbsp;</p>
+                  <div id="datePickerContainer" class="relative w-full ">
+                      <input type="text" class="date-picker" id="dateInput" readonly />
+                      <div id="calendar" class="hidden absolute top-[100%] left-0 w-[209px] bg-white z-10">                   
+                      </div>
+                    </div>
+                 
+              </div>
+               </div>
+                
+
+                <div>
+                    <p>
+                        
+                        <span style="
+                        width: 200px;
+                        display: inline-block;
+                        overflow: hidden;
+                      " contenteditable="true">Место: <script>document.write(lat2cyr("{{ subject.company.city }}"))</script></span>
+                    </p>
+                </div>
+            </div>
+            <div>
+                <p class="text-center">
+                    <span class="font-bold"> Давалац изјаве: </span> <br />
+                    <span
+                      style="
+                        width: 200px;
+                        border-bottom: 1px solid black;
+                        display: inline-block;
+                        overflow: hidden;
+                      "
+                      contenteditable="true"
+                    ><script>document.write(lat2cyr("{{ subject.responsible_worker}}"))</script></span>
+                    <br />
+                    <span class="italic">(име и презиме овлашћеног лица)</span><br />
+                    <span
+                    style="
+                      width: 200px;
+                      border-bottom: 1px solid black;
+                      display: inline-block;
+                      overflow: hidden;
+                      margin-top: 50px;
+                    "
+                    contenteditable="true"
+                  ></span> <br />
+                  <span class="italic">(квалификовани електронски потпис)</span>
+                  </p>
+
+            </div>
+        </div>
+    </div>
+    <img id="pecat-ovlasceni" style="position: absolute; top: 990px; left: 280px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="280" ypos="990">
+<img id="pecat-odgovorni" style="position: absolute; top: 960px; left: 480px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="480" ypos="960">
+<img id="potpis-odgovorni" style="position: absolute; top: 980px; left: 500px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="500" ypos="980">

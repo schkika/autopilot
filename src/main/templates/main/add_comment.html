@@ -1,0 +1,34 @@
+{% extends 'main/base_main_form.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block placeform %}
+<div class="main-form">
+    <h2 class="text-xl mb-3 text-slate-600 dark:text-white">Dodajte komentar</h2>
+      <form method="POST" class="flex flex-col justify-start gap-4">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="non-field-errors">
+          {% for err in form.non_field_errors %}
+            <p class="text-red-500">{{ err }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if form.text.errors %}
+        {% render_field form.text|add_class:"input-error"|attr:'required' placeholder="Tekst komentara" %}
+        {% else %}
+            {% render_field form.text|add_class:"input-standard"|attr:'required' placeholder="Tekst komentara" %}
+        {% endif %}
+        
+        {% for error in form.text.errors %}
+            <div class="text-red-500">{{error}}</div>
+        {% endfor %}
+
+
+        <button class="form-button" type="submit">Dodajte</button>
+      </form>
+</div> 
+{% endblock placeform %}

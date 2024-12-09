@@ -1,0 +1,50 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block searchbar %}
+
+<div class="search-wrapper">
+    <div class="w-6 h-6 my-auto ml-1 dark:stroke-slate-500">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-auto dark:stroke-slate-500">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>
+    </div>             
+    <input type="search" id="searchbox" class="search-bar w-full">
+
+</div>
+
+{% endblock searchbar %}
+
+{% block mainpanel %}
+<div class="main-card-grid">
+    {% for subject in subjects %}
+        <a href="{% url 'main:subject' pk=subject.id %}">
+            <div class="card">
+                <div>
+                    <p><span class="font-light">Broj predmenta:</span>&nbsp; {{ subject.id }}</p>
+                    <p><span class="font-light">Tip posla:</span>&nbsp; {{ subject.service_type }}</p>
+                    <p><span class="font-light">Otvoren:</span>&nbsp; {{ subject.start_date }}</p>
+                    <p><span class="font-light">Faza:</span>&nbsp; {{ subject.status }}</p>
+                    {% if subject.cadastral_municipality %}
+                        <p><span class="font-light">Katastarska opština:</span>&nbsp; {{ subject.cadastral_municipality }}</p>
+                    {% endif %}
+                    {% if subject.municipality %}
+                        <p><span class="font-light">Opština:</span>&nbsp; {{ subject.municipality }}</p>
+                    {% endif %}
+                    {% if subject.clients.all %}
+                        <span class="font-light">Stranka:</span>&nbsp;
+                        {% for client in subject.clients.all %}
+                            {{ client }},
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+{% endblock mainpanel %}
+
+{% block script %}
+<script src="{% static 'js/navbar-search.js' %}"></script>
+{% endblock script %}

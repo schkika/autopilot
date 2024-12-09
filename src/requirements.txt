@@ -1,0 +1,8 @@
+Django
+django-environ
+gunicorn
+psycopg2-binary
+django-widget-tweaks
+django-flatpickr
+boto3
+mechanicalsoup

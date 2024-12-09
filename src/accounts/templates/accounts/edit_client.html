@@ -1,0 +1,99 @@
+{% extends 'main/base_main_form.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block placeform %}
+<div class="main-form">
+  <h2 class="text-xl mb-3 text-slate-600 dark:text-white">Izmenite podatke</h2>
+    <form method="POST" class="flex flex-col justify-start gap-4 text-slate-800">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="non-field-errors">
+        {% for err in form.non_field_errors %}
+        <p class="text-red-500">{{ err }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if message %}
+    <p class="text-red-500">{{ message }}</p>
+    {% endif %}
+
+
+    {% if form.first_name.errors %}
+    {% render_field form.first_name|add_class:"input-error" placeholder="Ime" %}
+    {% else %}
+    {% render_field form.first_name|add_class:"input-standard" placeholder="Ime" %}
+    {% endif %}
+    
+    {% for error in form.first_name.errors %}
+    <div class="text-red-500">{{error}}</div>
+    {% endfor %}
+
+
+    {% if form.last_name.errors %}
+    {% render_field form.last_name|add_class:"input-error" placeholder="Prezime" %}
+    {% else %}
+    {% render_field form.last_name|add_class:"input-standard" placeholder="Prezime" %}
+    {% endif %}
+    
+    {% for error in form.last_name.errors %}
+    <div class="text-red-500">{{error}}</div>
+    {% endfor %}
+
+
+    {% if form.city.errors %}
+    {% render_field form.city|add_class:"input-error" placeholder="Mesto" %}
+    {% else %}
+    {% render_field form.city|add_class:"input-standard" placeholder="Mesto" %}
+    {% endif %}
+    
+    {% for error in form.city.errors %}
+    <div class="text-red-500">{{error}}</div>
+    {% endfor %}
+
+
+    {% if form.address.errors %}
+    {% render_field form.address|add_class:"input-error" placeholder="Adresa" %}
+    {% else %}
+    {% render_field form.address|add_class:"input-standard" placeholder="Adresa" %}
+    {% endif %}
+   
+    {% for error in form.address.errors %}
+      <div class="text-red-500">{{error}}</div>
+    {% endfor %}
+
+
+    {% if form.contact.errors %}
+    {% render_field form.contact|add_class:"input-error" placeholder="Kontakt" %}
+    {% else %}
+    {% render_field form.contact|add_class:"input-standard" placeholder="Kontakt" %}
+    {% endif %}
+   
+    {% for error in form.contact.errors %}
+      <div class="text-red-500">{{error}}</div>
+    {% endfor %}
+
+
+    {% if form.email.errors %}
+    {% render_field form.email|add_class:"input-error" placeholder="Email" %}
+    {% else %}
+    {% render_field form.email|add_class:"input-standard" placeholder="Email" %}
+      {% if not user.email %}
+        <p class="text-xs font-light px-2 dark:text-white">Ako stranka obezbedi validan email imace uvid u svoje predmete!</p>
+      {% endif %}
+    {% endif %}
+   
+    {% for error in form.email.errors %}
+      <div class="text-red-500">{{error}}</div>
+    {% endfor %}
+
+
+      <button class="form-button" type="submit">Snimi promene</button>
+    </form>
+
+</div>
+
+{% endblock placeform %}

@@ -1,0 +1,201 @@
+{%load static%}
+
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm 10mm; font-family: 'Times New Roman', Times, serif; font-size: 10pt; line-height: 14pt;"
+    id="document" data-orientation="portrait">
+    <div class="w-full flex justify-between items-center" style="border-bottom:  1px solid black;">
+        <div class="w-1/2">
+            <img id="logo" alt="" class="h-[100px]" style="object-fit: contain;">
+        </div>
+
+        <div class="w-1/2 text-right">
+            <p class=" whitespace-nowrap"><span class=" whitespace-nowrap overflow-hidden" contenteditable="true">{{ subject.company.full_name }}</span></p>
+
+            <p class=" whitespace-nowrap"><span class=" whitespace-nowrap overflow-hidden" contenteditable="true">{{ subject.company.address }}, {{ subject.company.city }}</span></p>
+            <p class=" whitespace-nowrap"><span class=" whitespace-nowrap overflow-hidden" contenteditable="true">Ispostava: {{ subject.company.department }}</span></p>
+
+            <p class=" whitespace-nowrap">PIB:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">{{ subject.company.tax_number }}</span></p>
+            <div class="flex justify-end items-center gap-4">
+                <p class="whitespace-nowrap">Matični broj:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                        contenteditable="true">{{ subject.company.id_number }}</span></p>
+                <p class="whitespace-nowrap">Registarski broj:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                        contenteditable="true">21150606</span></p>
+            </div>
+            <p class="whitespace-nowrap">Telefon:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">{{ subject.company.telefon }}</span></p>
+
+            <p class="whitespace-nowrap pb-4">Račun:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">{{ subject.company.account_number }}</span></p>
+        </div>
+
+    </div>
+    <br>
+    <p class="whitespace-nowrap pb-4 text-center font-bold text-[14pt]">Račun-otpremnica br. :&nbsp;<span
+            class=" whitespace-nowrap overflow-hidden" contenteditable="true">23-RN003000006</span></p>
+
+    <div class="w-full flex justify-between items-center">
+        <div class="w-1/2">
+            <p class="whitespace-nowrap pb-2">Objekat: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">DIGITAL ARROW - FAKTURISANJE</span></p>
+            <p class="whitespace-nowrap pb-2"><span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">ovde adresa</span></p>
+            <p class="whitespace-nowrap pb-2">Datum izdavanja računa: &nbsp;<span
+                    class=" whitespace-nowrap overflow-hidden" contenteditable="true">28.09.2023</span></p>
+            <p class="whitespace-nowrap pb-2">Mesto izdavanja računa: &nbsp;<span
+                    class=" whitespace-nowrap overflow-hidden" contenteditable="true">NOVI SAD</span></p>
+            <p class="whitespace-nowrap pb-2">Datum prometa dobara: &nbsp;<span
+                    class=" whitespace-nowrap overflow-hidden" contenteditable="true">28.09.2023</span></p>
+            <p class="whitespace-nowrap pb-2">Mesto prometa dobara: &nbsp;<span
+                    class=" whitespace-nowrap overflow-hidden" contenteditable="true">NOVI SAD</span></p>
+            <p class="whitespace-nowrap pb-2">Dokument: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true"></span></p>
+
+        </div>
+
+        <div class="w-1/2">
+            <p class="whitespace-nowrap pb-2 text-end">Šifra partnera: &nbsp;<span
+                    class=" whitespace-nowrap overflow-hidden" contenteditable="true">00256</span></p>
+
+            <div class="border-black border-2 px-2">
+                <p class="whitespace-nowrap pb-4 font-bold"><span class=" whitespace-nowrap overflow-hidden"
+                        contenteditable="true">LUXCO GROUP DOO NOVI SAD</span></p>
+
+                <p class="whitespace-nowrap pb-2"><span class=" whitespace-nowrap overflow-hidden"
+                        contenteditable="true">21000 Novi Sad, PERE POPADICA 1</span></p>
+
+                <div class="flex justify-between items-center gap-4">
+                    <p class="whitespace-nowrap">PIB:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                            contenteditable="true">21150606</span></p>
+                    <p class="whitespace-nowrap">Mat.br. :&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                            contenteditable="true">21150606</span></p>
+                    <p class="whitespace-nowrap">Reg.br./ :&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                            contenteditable="true">BPG:</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full">
+        <table id=""
+            style="width: 100%; border-collapse: collapse; border: 2px solid black; border-left: none;border-right: none;"
+            class="text-sm" contenteditable="true" cellspacing="0" cellpadding="0">
+            <tr class="font-bold text-center">
+                <td>Rb</td>
+                <td>Šifra</td>
+                <td>Naziv artikla</td>
+                <td>Barkod</td>
+                <td>JM</td>
+                <td>KOL</td>
+                <td>Cena bez <br> PDV</td>
+                <td>% <br> Rabat</td>
+                <td>PDV</td>
+                <td>Iznos <br> PDV</td>
+                <td>Vrednost sa <br> PDV</td>
+            </tr>
+            <tr class="text-center">
+                <td style="border-top: 2px solid black">1.</td>
+                <td style="border-top: 2px solid black">000011</td>
+                <td style="border-top: 2px solid black">ZAKUP TEHNIČKE <br> OPREME I <br>
+                    INVENTARA</td>
+                <td style="border-top: 2px solid black"></td>
+                <td style="border-top: 2px solid black">KOM</td>
+                <td style="border-top: 2px solid black">1,000</td>
+                <td style="border-top: 2px solid black">64.458,08</td>
+                <td style="border-top: 2px solid black">0,00</td>
+                <td style="border-top: 2px solid black">20%</td>
+                <td style="border-top: 2px solid black">12.892,62</td>
+                <td style="border-top: 2px solid black">77.355,70</td>
+
+
+            </tr>
+
+
+        </table>
+        <p class="whitespace-nowrap text-end py-2">Ukupan iznos sa PDV:&nbsp;<span
+                class=" whitespace-nowrap overflow-hidden" contenteditable="true">77.355,70</span></p>
+    </div>
+
+    <div class="w-full py-2">
+        <table id=""
+            style="width: 100%; border-collapse: collapse; border: 2px solid black; border-left: none;border-right: none;"
+            class="text-sm" contenteditable="true" cellspacing="0" cellpadding="0">
+            <tr class="font-bold text-center">
+                <td>Datum</td>
+                <td>Broj računa</td>
+                <td>Iznos: </td>
+                <td>Osnovica 20%</td>
+                <td>Iznos 20%</td>
+                <td>Osnovica 10%</td>
+                <td>Iznos 10%</td>
+            </tr>
+            <tr class="text-center">
+                <td style="border-top: 2px solid black">28.09.2023</td>
+                <td style="border-top: 2px solid black">RN003000006</td>
+                <td style="border-top: 2px solid black">77.355,70</td>
+                <td style="border-top: 2px solid black">64.463,08</td>
+                <td style="border-top: 2px solid black">12.892,62</td>
+                <td style="border-top: 2px solid black">0,00</td>
+                <td style="border-top: 2px solid black">0,00</td>
+            </tr>
+
+            <tr class="text-center font-bold">
+                <td style="border-top: 2px solid black"></td>
+                <td style="border-top: 2px solid black"></td>
+                <td style="border-top: 2px solid black">77.355,70</td>
+                <td style="border-top: 2px solid black">64.463,08</td>
+                <td style="border-top: 2px solid black">12.892,62</td>
+                <td style="border-top: 2px solid black">0,00</td>
+                <td style="border-top: 2px solid black">0,00</td>
+            </tr>
+
+
+        </table>
+    </div>
+    <div class="w-full flex justify-start items-center gap-2 mt-6">
+        <div class="w-1/2 border-black border-2 p-2">
+            <p class="whitespace-nowrap">Vrednost bez PDV: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">64.463,08</span></p>
+            <p class="whitespace-nowrap">Iznos PDV: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">12.892,62</span></p>
+            <p class="whitespace-nowrap">Vrednost sa PDV: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">77.355,70</span></p>
+            <p class="whitespace-nowrap">Rabat: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">0,00</span></p>
+
+        </div>
+
+        <div class="w-1/2">
+            <p class="whitespace-nowrap pb-2 font-bold text-[12pt]">UKUPAN IZNOS ZA UPLATU: &nbsp;<span
+                    class=" whitespace-nowrap overflow-hidden" contenteditable="true">77.355,70</span></p>
+        </div>
+    </div>
+
+    <p class="pt-2 inline-block font-bold border-b-2 border-black">VALUTE PLAĆANJA:</p>
+    <div class="flex justify-between items-center gap-4 py-4">
+        <p class="whitespace-nowrap"><span class=" whitespace-nowrap overflow-hidden"
+                contenteditable="true">77.355,70</span></p>
+        <p class="whitespace-nowrap">Valuta:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                contenteditable="true"></span></p>
+        <p class="whitespace-nowrap"><span class=" whitespace-nowrap overflow-hidden"
+                contenteditable="true">28.09.2023</span></p>
+        <p class="whitespace-nowrap">Model:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                contenteditable="true">97</span></p>
+        <p class="whitespace-nowrap">Poziv na broj:<span class=" whitespace-nowrap overflow-hidden"
+                contenteditable="true">23-RN003000006</span></p>
+    </div>
+
+    <div class="w-full">
+        <p class="font-bold pb-2">NAPOMENA:</p>
+        <textarea name="" id="" class="w-full h-8 resize-none border-black border-2"></textarea>
+        <p class="whitespace-nowrap">Ovlašćeno lice: &nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                contenteditable="true">Ferenc Giric, Železnička 20, Novi Sad, tel.</span></p>
+    </div>
+
+    <div class="w-full flex justify-between items-center mt-12">
+        <p class="whitespace-nowrap "><span class="border-b-2 border-black whitespace-nowrap overflow-hidden"
+                contenteditable="true">Ime i prezime <br></span>(fakturisao)</p>
+        <p class="font-bold">M.P</p>
+        <p class="whitespace-nowrap"><span class="border-b-2 border-black whitespace-nowrap overflow-hidden"
+                contenteditable="true">Ime i prezime <br></span>(primio)</p>
+    </div>
+</div>

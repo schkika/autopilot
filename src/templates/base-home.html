@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Autopilot" />
+  <meta property="og:url" content="{{og_url}}" />
+  <meta property="og:image" content="{{og_image}}" />
+  <meta property="og:description" content="{{og_description}}" />
+  <meta property="twitter:title" content="Autopilot" />
+  <meta property="twitter:description" content="{{twitter_description}}" />
+  <meta property="twitter:image" content="{{twitter_image}}" />
+  <title>{% block head_title %}Autopilot{% endblock %}</title>
+  <link rel="shortcut icon" href="{% static 'favicon/favicon.svg' %}" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/autopilothome-ui.css' %}" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+    integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/CustomEase.min.js"
+    integrity="sha512-8AjW5l765ApzGk1tv9UXvcf0+CPrvJlFtmf6pPLM3AWcPM8+9aOSTjw29Sq7bQ/HJdqGjnQ3s8ztg8+ceZqwPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="{%static 'js/ScrollTrigger.min.js'%}"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+
+  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+  <script>
+    Weglot.initialize({
+      api_key: 'wg_c45ba2d1df839a8d4dd0879fb94594cf3'
+    });
+  </script>
+</head>
+
+<body class="h-full bg-gradient-to-r from-gray-900 to-black">
+  {% block content %}
+
+  {% endblock %}
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> -->
+  <!-- <meta http-equiv="Pragma" content="no-cache" /> -->
+  <!-- <meta http-equiv="Expires" content="0" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block head_title %}Autopilot{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/autopilothome-ui.css' %}" />
+  <link rel="shortcut icon" href="{% static 'favicon/favicon.svg' %}" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+  <script>/* */</script>
+  <!-- To displace somwhere -->
+
+
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+  <script>
+    Weglot.initialize({
+      api_key: 'wg_c45ba2d1df839a8d4dd0879fb94594cf3'
+    });
+  </script>
+
+  {% block link %}
+
+  {% endblock link %}
+
+  </head>
+
+  <body class="h-screen bg-maincolor" onload="document.body.style.opacity=`1`;">
+    <script>document.body.style.opacity=`0`;</script>
+    {% block content %}
+
+  {% endblock content %}
+
+  {% block script %}
+  {% endblock script %}
+  <script>
+    const themeToggleDarkIcon = document.getElementById(
+      "theme-toggle-dark-icon"
+    );
+    const themeToggleLightIcon = document.getElementById(
+      "theme-toggle-light-icon"
+    );
+    // Change the icons inside the button based on previous settings
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      themeToggleLightIcon.classList.remove("hidden");
+      document.documentElement.classList.add("dark");
+    } else {
+      themeToggleDarkIcon.classList.remove("hidden");
+      document.documentElement.classList.remove("dark");
+    }
+
+    const themeToggleBtn = document.getElementById("theme-toggle");
+
+    themeToggleBtn.addEventListener("click", function () {
+      // toggle icons inside button
+      themeToggleDarkIcon.classList.toggle("hidden");
+      themeToggleLightIcon.classList.toggle("hidden");
+
+      // if set via local storage previously
+      if (localStorage.theme) {
+        if (localStorage.theme === "light") {
+          document.documentElement.classList.add("dark");
+          localStorage.theme = "dark";
+        } else {
+          document.documentElement.classList.remove("dark");
+          localStorage.theme = "light";
+        }
+
+        // if NOT set via local storage previously
+      } else {
+        if (document.documentElement.classList.contains("dark")) {
+          document.documentElement.classList.remove("dark");
+          localStorage.theme = "light";
+        } else {
+          document.documentElement.classList.add("dark");
+          localStorage.theme = "dark";
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

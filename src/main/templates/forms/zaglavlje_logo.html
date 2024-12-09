@@ -1,0 +1,27 @@
+{% load static %}
+<!-- zaglavlje -->
+
+    <div class="w-full flex justify-between items-center" style="border-bottom:  1px solid black;">
+        <div class="w-1/2">
+            <img id="logo" alt="" class="h-[100px]" style="object-fit: contain;">
+        </div>
+
+        <div class="w-1/2 text-right">
+            <p class=" whitespace-nowrap">Геодетски биро:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">{{ subject.company }}</span></p>
+
+            <p class=" whitespace-nowrap">Улица и број:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true"><script>document.write(lat2cyr("{{ subject.company.address }}"))</script></span></p>
+                    {% if subject.company.department %}
+                        <p class=" whitespace-nowrap">Испостава:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                        contenteditable="true">
+                        <script>document.write(lat2cyr("{{ subject.company.department }}"))</script>
+                        </span></p>
+                    {% endif %}
+            <p class=" whitespace-nowrap">Телефон:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">{{ subject.company.telefon }}</span></p>
+            <p class="whitespace-nowrap pb-4">Е-маил:&nbsp;<span class=" whitespace-nowrap overflow-hidden"
+                    contenteditable="true">{{ subject.company.email }}</span></p>
+        </div>
+
+    </div>

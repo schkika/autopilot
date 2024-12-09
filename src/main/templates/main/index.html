@@ -1,0 +1,533 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block link %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha512-q+4liFwdPC/bNdhUpZx6aXDx/h77yEQtn4I1slHydcbZK34nLaR3cAeYSJshoxIOq3mjEf7xJE8YWIUHMn+oCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock link %}
+
+
+{% block content %}
+
+<div x-cloak x-data="{ sideOpened: false }" class="flex h-screen overflow-hidden">
+
+  <!-- left sidebar -->
+  <nav class="h-full bg-sbcolor dark:bg-sbcolordark absolute left-0 top-0 -translate-x-full transform transition-transform duration-300 ease-in-out z-10 w-60 lg:static lg:translate-x-0 lg:w-80 flex flex-col justify-between gap-4" x-bind:class="{ 'translate-x-0': sideOpened }">
+    <!-- upper section -->
+    <div class="font-medium leading-normal text-gray-200 ">
+      <div class="w-full">
+        <a href="{% url 'home'%}">
+          <img style="width: 320px; height: 95px; margin-top: 10px;" src="{% static 'img/AutopIlot.svg' %}">
+        </a>
+        <span class="absolute top-8 right-4 lg:hidden" @click="sideOpened = false">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>        
+        </span>
+      </div>
+
+        <!-- accordion start -->
+
+    {% block leftnavlink %}  
+    <div class="h-full no-scrollbar overflow-y-auto">
+
+
+    {% if user.type == 'employee' %}
+
+      <div>
+        <h2 class="mb-0" id="headingTwo5">
+          <button
+            class="group relative flex w-full items-center px-10 mt-16 text-left text-base text-gray-200 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:text-gray-200"
+            type="button"
+            data-te-collapse-init
+            data-te-collapse-collapsed
+            data-te-target="#collapseTwo5"
+            aria-expanded="false"
+            aria-controls="collapseTwo5">
+            <p class="font-medium leading-normal text-gray-200 hover:underline decoration-cyan-600 underline-offset-8">Kontrolna tabla</p>
+            <span
+              class="-mr-1 ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-gray-400 transition duration-500 ease-out group-[[data-te-collapse-collapsed]]:mr-0 group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-gray-400 motion-reduce:transition-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="cyan"
+                class="h-6 w-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </span>
+          </button>
+        </h2>
+          <div
+            id="collapseTwo5"
+            class="!visible hidden mt-4 transition ease-out duration-700"
+            data-te-collapse-item
+            aria-labelledby="headingTwo5">
+            <div class="px-5">
+              {% if not user.has_full_access and user.type == 'employee' %}
+              <div class="flex pl-10 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>                
+                <a href="{% url 'accounts:self-edit-user' pk=user.id %}" class="m-2 block text-center p-2 pt-4 hover:underline decoration-cyan-600 underline-offset-8">Izmenite podatke</a>
+              </div>
+              <div class="flex pl-10 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                </svg>                
+                <a href="{% url 'accounts:add-user-files-aws' pk=user.id %}" class="m-2 block text-center p-2 pt-4 hover:underline decoration-cyan-600 underline-offset-8">Fajlovi</a>
+              </div>
+              {% endif %}
+              {% if user.has_full_access or user.can_add_user %}
+              <div class="flex pl-10 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>                      
+                <a href="{% url 'main:users' %}" class="m-2 block text-center p-2 pt-4 hover:underline decoration-cyan-600 underline-offset-8">Zaposleni</a>
+              </div>
+              {% endif %}
+              {% if user.has_full_access or user.can_add_assosiate %}
+              <div class="flex pl-10 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>                      
+                <a href="{% url 'main:assosiates' %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Saradnici</a>
+              </div>
+              {% endif %}
+              {% if user.has_full_access or user.can_add_client %}
+              <div class="flex pl-10 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>                     
+                <a href="{% url 'main:clients' %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Stranke</a>
+              </div>
+              {% endif %}
+              {% if user.has_full_access %}
+              <div class="flex pl-10 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                </svg>                                     
+                <a href="{% url 'accounts:edit-company' %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Kancelarija</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+      </div>
+
+      <!-- accordion end -->
+      
+     <div class="mt-5 ">
+      <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+        </svg>      
+        <a href="{% url 'main:subjects' %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Predmeti</a>
+      </div>
+      {% if user.has_full_access or user.can_open_subject %}
+      <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+        </svg>             
+        <a href="{% url 'main:open-subject' %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Otvori novi predmet</a>
+      </div>
+
+      <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+        </svg>               
+        <a href="{% url 'main:company-stats' %}" class="m-2 block text-center p-2 hover:underline decoration-cyan-600 underline-offset-8">Statistika</a>
+      </div>
+
+     </div>
+      {% endif %}
+
+    {% endif %}
+    
+    {% if user.type == 'assosiate' %}
+    <div class="flex justify-center items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+      </svg>     
+      <a href="{% url 'accounts:edit-assosiate' pk=user.assosiate.id %}" class="m-2">PROMENITE PODATKE</a>
+      </div>
+    {% endif %}
+
+    {% if user.type == 'client' %}
+    <div class="flex justify-center items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+      </svg>     
+      <a href="{% url 'accounts:self-edit-client' pk=user.client.id %}" class="m-2">PROMENITE PODATKE</a>
+      </div>
+    {% endif %}
+
+    </div>
+  </div>
+    {% endblock leftnavlink %}
+
+    <!-- lower section -->
+    <div class="absolute w-full p-1 border-t border-slate-600 bg-sbcolor dark:bg-sbcolordark fixed inset-x-0 bottom-0 flex flex-row justify-between">
+      <div class="flex justify-center items-center">
+            
+        <a href="{% url 'accounts:logout' %}" class="mx-2 pl-2 block text-center font-medium leading-normal text-gray-200">Odjavite se</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-200 py-auto">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+        </svg>  
+      </div>
+      <div class="flex justify-center items-center pr-2">
+        <h3 class="p-2 font-medium leading-normal text-gray-200">Tema</h3>
+
+        <!-- Dark mode switcher -->
+
+        <button
+        id="theme-toggle"
+        type="button"
+        class="text-gray-200 dark:text-gray-200 hover:bg-gray-700 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:focus:ring-slate-500 rounded-md text-sm p-2"
+      >
+        <svg
+          id="theme-toggle-dark-icon"
+          class="w-5 h-5 hidden"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+          ></path>
+        </svg>
+        <svg
+          id="theme-toggle-light-icon"
+          class="w-5 h-5 hidden"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Dark mode switcher end -->
+
+      </div>
+    </div>
+  </nav>
+
+<!-- main panel -->
+
+  <div class="h-screen w-full dark:bg-maincolor absolute lg:static lg:grow overflow-y-auto flex flex-col">
+
+    <header class="sticky p-2 top-0 bg-white drop-shadow-lg dark:text-white dark:bg-sbcolordark dark:drop-shadow-none flex items-center justify-between gap-2 ">
+
+      <div class="lg:hidden inline-block" @click="sideOpened = true">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+      </div>
+      <!-- <a href="{% url 'home' %}" class="inline-block  text-xl dark:text-gray-200"></a> -->
+      {% block searchbar %}
+      {% endblock searchbar %}
+     
+      
+
+      <div class="flex w-full flex-wrap items-center justify-center">
+        <ul
+          class="list-style-none ml-auto lg:pr-6 flex items-center justify-center flex-row lg:gap-1"
+
+          data-te-navbar-nav-ref>
+          <li class="relative px-2" data-te-dropdown-ref>
+            <!-- First dropdown trigger -->
+            <a
+              class="hidden-arrow flex items-center text-slate-500 motion-reduce:transition-none transition duration-200 hover:ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+              href="#"
+              id="dropdownMenuButton1"
+              role="button"
+              data-te-dropdown-toggle-ref
+              aria-expanded="false">
+              <!-- Dropdown trigger icon -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-7 w-7">
+                <path
+                  d="M3.505 2.365A41.369 41.369 0 019 2c1.863 0 3.697.124 5.495.365 1.247.167 2.18 1.108 2.435 2.268a4.45 4.45 0 00-.577-.069 43.141 43.141 0 00-4.706 0C9.229 4.696 7.5 6.727 7.5 8.998v2.24c0 1.413.67 2.735 1.76 3.562l-2.98 2.98A.75.75 0 015 17.25v-3.443c-.501-.048-1-.106-1.495-.172C2.033 13.438 1 12.162 1 10.72V5.28c0-1.441 1.033-2.717 2.505-2.914z" />
+                <path
+                  d="M14 6c-.762 0-1.52.02-2.271.062C10.157 6.148 9 7.472 9 8.998v2.24c0 1.519 1.147 2.839 2.71 2.935.214.013.428.024.642.034.2.009.385.09.518.224l2.35 2.35a.75.75 0 001.28-.531v-2.07c1.453-.195 2.5-1.463 2.5-2.915V8.998c0-1.526-1.157-2.85-2.729-2.936A41.645 41.645 0 0014 6z" />
+              </svg>
+              <!-- Notification counter -->
+              <span
+                class="absolute -mt-6 ml-5 rounded-full bg-danger px-[0.50em] py-[0.25em] text-[0.6rem] font-bold leading-none text-white"
+                >6</span
+              >
+            </a>
+            <!-- Dropdown menu -->
+            <ul
+              class="absolute left-auto right-0 z-[1000] float-left m-0 mt-4 hidden h-90 w-80 list-none overflow-hidden rounded-md border border-slate-300
+              dark:border-slate-600 bg-sbcolor bg-clip-padding text-left text-base shadow-lg dark:bg-maincolor [&[data-te-dropdown-show]]:block"
+              aria-labelledby="dropdownMenuButton1"
+              data-te-dropdown-menu-ref>
+              <!-- Dropdown menu items -->
+              <div class="py-2 px-2">
+                <h5 class="text-sm font-normal text-white flex items-center justify-center">Poruke</h5>
+              </div>
+              <li class="border-y border-slate-600">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2 dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+              <li class="border-b border-slate-600">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2 dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+              <li class="border-b border-slate-600">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2 dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+              <li class="">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2 dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </li>
+    
+          <li class="relative px-2" @click.outside="dropdownOpen = false" data-te-dropdown-ref>
+            <!-- Second dropdown trigger -->
+            <a
+              class="hidden-arrow mr flex items-center text-slate-500 motion-reduce:transition-none transition duration-200 hover:ease-in-out hover:text-slate-400 focus:text-slate-400 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-slate-400"
+              href="#"
+              id="dropdownMenuButton1"
+              role="button"
+              data-te-dropdown-toggle-ref
+              aria-expanded="false">
+              <!-- Dropdown trigger icon -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-7 w-7">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              <!-- Notification counter -->
+              <span
+                class="absolute -mt-6 ml-3 rounded-full bg-danger px-[0.50em] py-[0.25em] text-[0.6rem] font-bold leading-none text-white"
+                >12</span
+              >
+            </a>
+            <!-- Dropdown menu -->
+            <ul
+              class="absolute left-auto right-0 z-[1000] float-left mt-4 hidden h-90 w-80 list-none overflow-hidden rounded-md border border-slate-300 dark:border-slate-600 bg-sbcolor bg-clip-padding text-left text-base shadow-lg dark:bg-maincolor [&[data-te-dropdown-show]]:block"
+              aria-labelledby="dropdownMenuButton1"
+              data-te-dropdown-menu-ref>
+              <!-- Dropdown menu items -->
+              <div class="py-2 px-2">
+                <h5 class="text-sm font-normal text-white dark:text-slate-400 flex items-center justify-center">Obaveštenja</h5>
+              </div>
+              <li class="border-y border-slate-600">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2 dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+              <li class="border-b border-slate-600">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2  dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+              <li class="">
+                <a class="flex gap-4 px-4 py-3 hover:bg-gray-2  dark:hover:bg-meta-4"
+                  href="">
+                  <div class="h-12 w-12 p-1">
+                    <img src="{% static 'img/ki.jpg' %}"
+                         alt="User"
+                         class="rounded-full" />
+                  </div>
+
+                  <div>
+                    <h6 class="text-sm font-medium text-white">
+                      Robert Vašaš:
+                    </h6>
+                    <p class="text-sm text-white">Odlično obavljeno 💪</p>
+                    <p class="text-xs mt-1 text-white">pre 2 min</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <div class="relative" x-cloak x-data="{ dropdownOpen: false }">
+            <a class="flex items-center gap-3 xs:pl-2" href="#" @click.prevent="dropdownOpen =! dropdownOpen">
+              <span class="hidden text-right sm:block">
+                <span class="block text-sm font-medium text-black dark:text-white">{{user.first_name}} {{ user.last_name }}</span>
+                <span class="block text-xs font-medium">
+                  {% if user.education %}
+                    {{ user.education }}
+                  {% endif %}
+                </span>
+              </span>
+    
+              <span class="h-12 w-12">
+                <img id="index-profile-image" src="{% url 'accounts:profile-image' %}" alt="User" class="h-12 w-12 rounded-full" />
+              </span>
+    
+              <svg :class="dropdownOpen && 'rotate-180'" class="hidden fill-current xs:block" width="12" height="8"
+                viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M0.410765 0.910734C0.736202 0.585297 1.26384 0.585297 1.58928 0.910734L6.00002 5.32148L10.4108 0.910734C10.7362 0.585297 11.2638 0.585297 11.5893 0.910734C11.9147 1.23617 11.9147 1.76381 11.5893 2.08924L6.58928 7.08924C6.26384 7.41468 5.7362 7.41468 5.41077 7.08924L0.410765 2.08924C0.0853277 1.76381 0.0853277 1.23617 0.410765 0.910734Z"
+                  fill="" />
+              </svg>
+            </a>
+    
+            <!-- Dropdown Start -->
+            <div x-cloak x-show="dropdownOpen" @click.outside="dropdownOpen = false"
+              class="absolute right-0 mt-4 flex w-60 flex-col rounded-md border border-slate-600 bg-sbcolor dark:bg-maincolor "
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-20 transform scale-50"
+              x-transition:enter-end="opacity-100 transform scale-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100 transform scale-100"
+              x-transition:leave-end="opacity-0 transform scale-50"
+              x-cloak>
+              <ul class="flex flex-col gap-4 border-b border-slate-600 px-6 py-2">
+                <li class="p-1">
+                  <a href="{% url 'accounts:self-edit-user' pk=user.id %}"
+                    class="flex items-center gap-4 text-sm text-gray-200 font-medium duration-300 ease-in-out hover:underline decoration-cyan-600 underline-offset-8 lg:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                    </svg>
+                    Moj profil
+                  </a>
+                </li>
+                <li class="p-1">
+                  <a href="#"
+                    class="flex items-center gap-4 text-sm text-gray-200 font-medium duration-300 ease-in-out hover:underline decoration-cyan-600 underline-offset-8 lg:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="cyan" class="bi bi-chat-right-text" viewBox="0 0 16 16"> <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/> <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/> </svg>
+                    Chat
+                  </a>
+                </li>
+                <li class="p-1">
+                  <a href=""
+                    class="flex items-center gap-4 text-sm text-gray-200 font-medium duration-300 ease-in-out hover:underline decoration-cyan-600 underline-offset-8 lg:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Podešavanje profila
+                  </a>
+                </li>
+              </ul>
+              <button class="flex items-center py-4 pl-7 text-sm text-gray-200 font-medium duration-300 ease-in-out hover:underline decoration-cyan-600 underline-offset-8 lg:text-base">
+                <a href="{% url 'accounts:logout' %}" class="flex flex-row justify-between gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                </svg>  
+                Odjavite se
+                </a>
+              </button>
+            </div>
+            <!-- Dropdown End -->
+          </div>
+        </ul>
+        
+      </div>
+    </header>
+    <div class="grow overflow-x-auto overflow-y-auto mt-5 md:mt-0 bg-slate-100 dark:bg-maincolor">
+    {% block mainpanel %}
+
+    {% endblock mainpanel %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

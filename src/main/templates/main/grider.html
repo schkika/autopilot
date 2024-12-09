@@ -1,0 +1,946 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block link %}
+<!-- <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script> -->
+{{ block.super }}
+<script>   
+    function setFixedHeight(el){ // funkcija za fiskiranje visine elementa
+
+        const element = document.getElementById(el);
+        const elHeight = element.offsetHeight;
+        element.style.height = elHeight + "px";
+        element.classList.add('overflow-y-auto');
+
+    }
+</script>
+
+{% endblock link %}
+
+{% block leftnavlink %}
+<div class="h-full p-4 mt-5">
+    <div class="flex pl-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+        </svg>       
+        <p class="py-2 ml-2"><a href="{% url 'main:subject' pk=subject.id %}">Nazad na predmet</a></p>
+    </div>
+</div>
+{% endblock leftnavlink %}
+
+
+{% block mainpanel %}
+<script>
+    function lat2cyr(text){
+    const mapa = {
+        'a': 'а', 'b': 'б', 'c': 'ц', 'd': 'д', 'e': 'е', 'f': 'ф', 'g': 'г', 'h': 'х',
+        'i': 'и', 'j': 'ј', 'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о', 'p': 'п',
+        'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 'v': 'в', 'z': 'з', 'š': 'ш', 'đ': 'ђ',
+        'ž': 'ж', 'č': 'ч', 'ć': 'ћ', 'lj': 'љ', 'nj': 'њ', 'dž': 'џ',
+        'A': 'А', 'B': 'Б', 'C': 'Ц', 'D': 'Д', 'E': 'Е', 'F': 'Ф', 'G': 'Г', 'H': 'Х',
+        'I': 'И', 'J': 'Ј', 'K': 'К', 'L': 'Л', 'M': 'М', 'N': 'Н', 'O': 'О', 'P': 'П',
+        'R': 'Р', 'S': 'С', 'T': 'Т', 'U': 'У', 'V': 'В', 'Z': 'З', 'Š': 'Ш', 'Đ': 'Ђ',
+        'Ž': 'Ж', 'Č': 'Ч', 'Ć': 'Ћ', 'LJ': 'Љ', 'NJ': 'Њ', 'DŽ': 'Џ'
+    };
+    let output = "";
+    for (let i = 0; i < text.length; i++) {
+        let c = text[i];
+        let c_next = text[i + 1];
+        let double = c + c_next;
+
+        if (mapa[double]) {
+        output += mapa[double];
+        i++;
+        } else if (mapa[c]) {
+        output += mapa[c];
+        } else {
+        output += c;
+        }
+    }
+    return output;
+}
+
+</script>
+<div class="h-full flex flex-col p-4">
+    <div class="head-card md:flex gap-8">
+        <div class="p-2">
+            <p class="text-2xl">Grider transformacije za predmet {{ subject.id }}</p>
+        </div>
+    </div>
+    <div class="mt-3 grow grid lg:grid-rows-6 gap-3 lg:grid-cols-2">
+        <div id="card-aws" class="card p-2 lg:row-span-4 border flex min-h-[50vh]"> <!-- top-left card -->
+            <script>setFixedHeight("card-aws");</script><!-- fiksiranje visine kartice -->
+            <div class="w-full flex flex-col gap-4">
+                <div id="aws" class="w-full grow overflow-y-auto">
+                    <script>
+                        const objView = document.getElementById('aws');
+                        const objHeight = objView.offsetHeight - 48;
+                        objView.style.height = objHeight + "px";
+                        objView.classList.remove('grow');
+                    </script>
+                    <div class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="orange" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
+                        </svg>                                  
+                        <li class="ml-2 folderlink">Grider</li>
+                    </div>      
+                    <!-- <ul> -->
+                        {% for file in files %}
+                            {% if not forloop.first %}
+                                {% if "." in file %}
+                                <!-- <li class="cursor-pointer filelink ml-8" data-link-name="{{ file }}"> -->
+                                    <div class="flex justify-between items-center">
+                                        <div class="cursor-pointer filelink ml-8" data-link-name="{{ file }}">{{ file }}</div>
+                                        <button class="delete-button text-white bg-red-500 p-1 text-xs font-bold border rounded border-red-700 hidden" data-link-name="{{ file }}" onclick="deleteFile(this)">OBRIŠI</button>
+                                    </div>
+                                <!-- </li> -->
+                                {% else %}
+                                    <div class="flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="orange" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
+                                        </svg>                                  
+                                        <li class="ml-2 folderlink">{{ file }}</li>
+                                    </div>
+                                {% endif %}                       
+                            {% endif %}
+                        {% endfor %}
+                    <!-- </ul> -->
+                </div>
+                <div class="w-full flex justify-between items-center gap-4">
+                    <p>Izaberite ulazne podatke</p>
+                    <input class="h-8 !mb-0" type="file" id="file-upload" accept=".txt, .pdf">
+                    <button class="form-button" onclick="fileUpload()">Učitaj</button>
+                </div>
+            </div>
+        </div>
+        <div id="card-preview" class="card p-2 lg:row-span-4 border flex flex-col min-h-[50vh]"> <!-- top-right card -->
+            <script>setFixedHeight("card-preview");</script><!-- fiksiranje visine kartice -->
+            <div id="preview" class="w-full h-full">
+                Pregled selektovanog fajla
+            </div>
+        </div>
+        <div id="card-objekti" class="card p-2 lg:row-span-2 border min-h-[25vh]"> <!-- bottom-left card -->
+            <script>setFixedHeight("card-objekti");</script><!-- fiksiranje visine kartice -->
+            <div class="w-full overflow-x-auto">
+                <div class="grid grid-cols-8">
+                    <div class="col-span-2 space-y-2 radio-group1">
+                        <div class="flex items-center">
+                            <input id="etrfInput" type="radio" class="form-radio h-4 w-4 text-indigo-600" name="radio-group1" value="ETRF">
+                            <label for="etrfInput" class="ml-2">ETRF</label>
+                        </div>
+                          <div class="flex items-center">
+                            <input id="wgsInput" type="radio" class="form-radio h-4 w-4 text-indigo-600" name="radio-group1" value="WGS">
+                            <label for="wgsInput" class="ml-2">WGS</label>
+                          </div>
+                    </div>
+                    <div class="col-span-2 space-y-2 radio-group2">
+                        <div class="flex items-center">
+                            <input id="xyzInput" type="radio" class="form-radio h-4 w-4 text-indigo-600" name="radio-group2" value="E00(XYZ)">
+                            <span class="ml-2">XYZ</span>
+                          </div>
+                          <div class="flex items-center">
+                            <input id="blhInput" type="radio" class="form-radio h-4 w-4 text-indigo-600" name="radio-group2" value="E00(BLh)">
+                            <span class="ml-2">BLh</span>
+                          </div>
+                          <div class="flex items-center">
+                            <input id="enhInput" type="radio" class="form-radio h-4 w-4 text-indigo-600" name="radio-group2" value="E00(ENh)">
+                            <span class="ml-2">ENh</span>
+                          </div>
+                    </div>
+                    <div class="col-span-4">
+                        <div><button id="etrfBtn" class="form-button my-1 w-full disabled:bg-gray-500" onclick="etrfgk7()">etrf2000 ---&gt;&nbsp;gk7</button></div>
+                        <div><button id="gk7" class="form-button my-1 w-full disabled:bg-gray-500" onclick="gk7etrf()">gk7 ---&gt;&nbsp;etrf2000</button></div>
+                        <div><button id="trst" class="form-button my-1 w-full disabled:bg-gray-500" onclick="trst2nv2()">h.datumtrst  ---&gt;&nbsp; h.datumfr-nvt2</button></div>
+                        <div><button id="nvt2" class="form-button my-1 w-full disabled:bg-gray-500" onclick="nvt2trst()">h.datumfr-nvt2  ---&gt;&nbsp; h.datumtrst</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="card-comments" class="card p-2 lg:row-span-2 border flex min-h-[25vh]"> <!-- bottom-right card -->
+            <script>setFixedHeight("card-objekti");</script> <!-- fiksiranje visine kartice -->
+            <div class="w-full flex flex-col gap-4 my-auto">
+                <div id="messageContainer" class="h-full animate-pulse text-2xl flex justify-center items-center"></div>
+                <div class="flex flex-col items-center gap-4 spinner hidden">
+                    <div class="w-12 h-12 rounded-full animate-spin border-y-2 border-solid border-blue-500 border-t-transparent shadow-md"></div>
+                    <p class="text-2xl">Transformacija u toku...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex justify-center items-center w-full hidden">
+    <div id="editor" class="relative overflow-x-auto">
+        {% include 'forms/RTK_osrednjavanje.html' %}
+    </div>
+</div>
+{% endblock mainpanel %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<script>
+let csrfToken = getCookie('csrftoken');
+let fileLinks = document.querySelectorAll('.filelink')
+let folderLinks = document.querySelectorAll('.folderlink')
+const preview = document.getElementById('preview')
+const inputFile = document.getElementById('file-upload')
+const messageContainer = document.getElementById('messageContainer')
+messageContainer.innerText = 'Izaberite fajl za transformaciju'
+deleteButtons = document.querySelectorAll('.delete-button')
+// buttons
+const etrf = document.getElementById('etrfBtn')
+etrf.disabled = true
+const gk7 = document.getElementById('gk7')
+gk7.disabled = true
+const trst = document.getElementById('trst')
+trst.disabled = true
+const nvt2 = document.getElementById('nvt2')
+nvt2.disabled = true
+// checkboxes
+const etrfInput = document.getElementById('etrfInput')
+etrfInput.disabled = true
+etrfInput.checked = false
+const wgsInput = document.getElementById('wgsInput')
+wgsInput.disabled = true
+wgsInput.checked =false
+
+const xyzInput = document.getElementById('xyzInput')
+xyzInput.disabled = true
+xyzInput.checked = false
+const blhInput = document.getElementById('blhInput')
+blhInput.disabled = true
+blhInput.checked = false
+const enhInput = document.getElementById('enhInput')
+enhInput.disabled = true
+enhInput.checked = false
+
+etrfInput.addEventListener('change', () => {
+    messageContainer.innerText = 'Izaberite ulazni koordinatni sistem \nili transformišite visine'
+    clearTypeRadioButtons()
+    disableButtons()
+    nvt2.disabled = false
+})
+wgsInput.addEventListener('change', ()=> {
+    messageContainer.innerText = 'Transformišite visine \nili izaberite izlazni koordinatni sistem'
+    clearTypeRadioButtons()
+    disableButtons()
+    trst.disabled = false
+})
+
+xyzInput.addEventListener('change', ()=> {
+    messageContainer.innerText = 'Započnite transformaciju'
+    if(etrfInput.checked){
+        enableETRF()
+    }else{
+        enableWGS()
+    }
+})
+
+blhInput.addEventListener('change', ()=> {
+    messageContainer.innerText = 'Započnite transformaciju'
+    if(etrfInput.checked){
+        enableETRF()
+    }else{
+        enableWGS()
+    }
+})
+
+enhInput.addEventListener('change', ()=> {
+    messageContainer.innerText = 'Započnite transformaciju'
+    if(etrfInput.checked){
+        enableETRF()
+    }else{
+        enableWGS()
+    }
+})
+
+function clearTypeRadioButtons(){
+    xyzInput.disabled = false
+    blhInput.disabled = false
+    enhInput.disabled = false
+    xyzInput.checked = false
+    blhInput.checked = false
+    enhInput.checked = false
+}
+
+function enableETRF(){
+    etrf.disabled = false
+    nvt2.disabled = false
+    gk7.disabled = true
+    trst.disabled = true
+}
+
+function enableWGS(){
+    gk7.disabled = false
+    trst.disabled = false
+    etrf.disabled = true
+    nvt2.disabled = true 
+}
+
+function disableButtons(){
+    etrf.disabled = true
+    nvt2.disabled = true
+    gk7.disabled = true
+    trst.disabled = true
+}
+
+
+storedMessage = localStorage.getItem('message')
+if(storedMessage){
+    messageContainer.textContent = storedMessage
+    localStorage.removeItem('message')
+}
+let osrName
+
+Array.from(folderLinks).forEach((folderLink) => {
+    if(folderLink.innerText.trim().endsWith('/')) {
+        folderLink.innerText = folderLink.innerText.slice(0, -1)
+    }
+    let str = folderLink.innerText.trim()
+    let lastIndex = str.lastIndexOf('/')
+    folderLink.innerText = folderLink.innerText.slice(lastIndex + 1)
+})
+Array.from(fileLinks).forEach((fileLink) => {
+    let str = fileLink.innerText.trim()
+    let lastIndex = str.lastIndexOf('/')
+    fileLink.innerText = fileLink.innerText.slice(lastIndex + 1)
+    fileLink.addEventListener('click', () => {
+        //removeBackground()
+        //fileLink.style.backgroundColor = "#1c2434"
+        hideDeleteButtons()
+        fileLink.nextElementSibling.style.display = 'block'
+        if (fileLink.dataset.linkName.includes('txt')) {
+            osrName = fileLink.dataset.linkName
+            etrfInput.disabled = false
+            wgsInput.disabled =false
+            messageContainer.innerText = 'Izaberite ulazni tip transformacije'
+            retriveDataFromAWS(fileLink.dataset.linkName)
+        }
+        if (fileLink.dataset.linkName.includes('pdf')) {
+            retrivePdfFromAWS(fileLink.dataset.linkName)
+        }
+    })
+})
+
+// function removeBackground() {
+//     Array.from(fileLinks).forEach((filelink) => {
+//         filelink.style.backgroundColor = "#24303f"
+//     })
+// }
+
+function hideDeleteButtons() {
+    Array.from(deleteButtons).forEach((deleteButton) => {
+        deleteButton.style.display = 'none'
+    })
+}
+
+let bucket = 'autopilot-kancelarija-'+'{{subject.company.id}}'
+
+async function retrivePdfFromAWS(data) {
+    try {
+        const response = await fetch ('/main/return-aws-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        })
+        if (response.ok) {
+            const result = await response
+            const blob = await result.blob()
+            const blobText = await blob.text()
+            await previewPDF(blob)
+        } else {
+            console.error('Request failed with status:', response.status)
+        }
+    } catch (error) {
+        console.error('Request failed:', error)
+    }
+}
+
+
+async function previewPDF(blob) {
+    let canvasContainer = document.getElementById('preview');
+    let containerWidth = canvasContainer.clientWidth;
+    let containerHeight = canvasContainer.clientHeight;
+    let pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    let url = URL.createObjectURL(blob);
+    let loadingTask = pdfjsLib.getDocument(url);
+    let pdf = await loadingTask.promise;
+    let page = await pdf.getPage(1);
+    let viewport = page.getViewport({ scale: 1 });
+    let canvas = document.createElement('canvas');
+    let context = canvas.getContext('2d');
+    let pageWidth = viewport.width;
+    let pageHeight = viewport.height;
+    let scale = Math.min(containerWidth / pageWidth, containerHeight / pageHeight);
+
+    canvas.className = 'pdf-page';
+    canvas.height = viewport.height * scale;
+    canvas.width = viewport.width * scale;
+
+    let docView = page.getViewport({ scale: scale });
+
+    canvasContainer.innerHTML = "";
+    canvasContainer.appendChild(canvas);
+
+    let renderTask = page.render({
+      canvasContext: context,
+      viewport: docView
+    });
+
+    await renderTask.promise;
+}
+
+async function retriveDataFromAWS(data) {
+    try {
+        const response = await fetch ('/main/return-aws-preview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({bucket: bucket, link: data})
+        })
+        if (response.ok) {
+            const result = await response.json()
+            set_text_preview(result.returned)
+        } else {
+            console.error('Request failed with status:', response.status)
+        }
+    } catch (error) {
+        console.error('Request failed:', error)
+    }
+}
+
+function set_text_preview(text) {
+    preview.innerText = text
+}
+
+// Function to retrieve the value of a cookie by name
+function getCookie(name) {
+var cookieValue = null;
+if (document.cookie && document.cookie !== '') {
+    let cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+    }
+    }
+}
+return cookieValue;
+}
+
+async function fileUpload(){
+    pk="{{subject.id}}"
+    const file = inputFile.files[0]
+    const sizeLimit = 1 * 1024 * 1024;
+    if(file.size > sizeLimit){
+        alert('Velicina fajla mora biti maksimalno 5MB!');
+        return;
+    }
+    const fileType = file.name.split('.').pop().toLowerCase();
+    if(fileType !== 'pdf' && fileType !== 'txt'){
+        alert('Ovaj tip datoteke ' + fileType + ' nije podrzan!');
+        return;
+    }
+    if (file) {
+        osrName = file.name
+        let fileContent
+        const reader = new FileReader();
+        reader.onload = function(event) {
+        fileContent = event.target.result; // Get the content of the file
+       // Do something with the file content
+        average(fileContent);
+        };
+        reader.readAsText(file);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("pk", pk);
+        // formData.append("fileType", fileType);
+
+        try {
+            const response = await fetch("/main/upload-grider-file-to-bucket", {
+                method: "POST",
+                headers: {
+                'X-CSRFToken': csrfToken
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                //console.log("File uploaded successfully.");
+                location.reload()
+            } else {
+                console.error("Error uploading file.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        console.log(fileContent)
+    }
+}
+
+function readTextFile() {
+    let inputText = preview.innerText
+    // iscitavanje podataka iz txt fajla i pravljenje nizova
+    let lines = inputText.split('\n'); // uzimanje reda
+    let arrays = lines.map(line => line.split(',')); // rasclanjivanje po zarezima
+    let filteredArrays = arrays.filter(array => array[0].startsWith('SP')); //uzimanje samo vrednosti koje pocinju sa SP
+    if (filteredArrays.length > 0) {
+        return true
+    }
+}
+
+function average(fileContent) {
+    let inputText = fileContent
+    let delimiter = detectDelimiter(inputText);
+    let lines = inputText.split('\n'); // uzimanje reda
+    let arrays = lines.map(line => line.split(delimiter)); // rasclanjivanje po zarezima
+    let filteredArrays = arrays.filter(array => array[0].startsWith('SP')); //uzimanje samo vrednosti koje pocinju sa SP
+
+    if(filteredArrays.length > 0){
+        printSourceTable('init_values', filteredArrays);
+    
+        // pravljenje grupa
+        let groups = filteredArrays.reduce((acc, array) => {
+            let key = array[0].charAt(2);
+            if(!acc[key]){
+                acc[key] = [];
+            }
+            acc[key].push(array);
+            return acc;
+        }, {});
+    
+        // osrednjavanje
+        let averages = Object.keys(groups).map((key) => {
+            let group = groups[key];let message = localStorage.setItem('message', 'Uspešna transformacija')
+            let sum2 = 0, sum3 = 0, sum4 = 0;
+    
+            for(let i = 0; i < group.length; i++){
+                sum2 += parseFloat(group[i][1] || 0);
+                sum3 += parseFloat(group[i][2] || 0);
+                sum4 += parseFloat(group[i][3] || 0);
+            }
+    
+            let avg2 = sum2 / group.length;
+            let avg3 = sum3 / group.length;
+            let avg4 = sum4 / group.length;
+    
+            return [
+                'SP'+key+'SR',
+                avg2.toFixed(2),
+                avg3.toFixed(2),
+                avg4.toFixed(2)
+            ];
+        });
+    
+        printSourceTable('avg_values', averages);
+    
+        const firstText = filteredArrays.join('\n');
+            console.log(firstText);
+        const secondText = averages.join('\n');
+            console.log(secondText);
+        // konacne vrednosti
+        let modifiedAverages = averages.map(array => {
+            array[0] = array[0].replace('SR', '');
+            return array;
+        });
+        const withCommma = modifiedAverages.join('\n')
+    
+        printSourceTable('mod_values', modifiedAverages);
+        sendToAWS('editor');
+    
+        const osrFile = withCommma.replace(/,/g, '    ')
+        uploadOsrFile(osrFile)
+    }
+    
+}
+
+async function printSourceTable(id, arrays){
+    let htmlTable = document.getElementById(id);
+    // htmlTable.innerHTML = '';
+
+    arrays.forEach(array => {
+        let row = document.createElement('tr');
+
+        array.forEach(data => {
+            let cell = document.createElement('td');
+            cell.style.textAlign = "right";
+            cell.style.border = "1px solid #000";
+            cell.style.padding = "2px 10px";
+            cell.textContent = data;
+            row.appendChild(cell);
+        });
+
+        htmlTable.appendChild(row);    
+    });
+}
+
+async function sendToAWS(element) {
+    var htmlElement = document.getElementById(element);
+    var docEl = document.getElementById("document");
+    var orientation = docEl.getAttribute('data-orientation');
+    var imgPecat = document.getElementById("pecat");
+
+    if(orientation !== "portrait" && orientation !== "landscape" && orientation == null) {
+        orientation = "portrait"; // default orijentacija na portrait
+    }
+
+    let docWidth, windowWidth;
+    if(orientation === "portrait"){
+        docWidth = 210; windowWidth = 795;
+    }
+    if(orientation === "landscape"){
+        docWidth = 297; windowWidth = 1128;
+    }
+
+    let jsPdf = new jspdf.jsPDF({
+        orientation: orientation,
+        unit: 'mm',
+        format: 'A4',
+        setLineHeightFactor: 1,
+    });
+
+    const fontArray = [
+        ['TIMES.TTF', 'Times New Roman', 'normal'],
+        ['TIMESBD.TTF', 'Times New Roman', 'bold'],
+        ['TIMESI.TTF', 'Times New Roman', 'italic'],
+        ['TIMESBI.TTF', 'Times New Roman', 'bolditalic']
+    ];
+
+    let fontPromises = fontArray.map(font => getBase64Data('/static/fonts/' + font[0]));
+
+    Promise.all(fontPromises)
+    .then(fontsData => {
+        fontsData.forEach((data, index) => {
+        jsPdf.addFileToVFS('/static/fonts/' + fontArray[index][0], data);
+        jsPdf.addFont('/static/fonts/' + fontArray[index][0], fontArray[index][1], fontArray[index][2]);
+        });
+
+        const opt = {
+        autoPaging: true,
+        html2canvas: {
+            logging: false,
+        },
+        x: 0,
+        y: 0,
+        width: docWidth,
+        windowWidth: windowWidth,
+        };
+
+        return jsPdf.html(htmlElement, opt);
+    })
+    .then(() => {
+        var blob = jsPdf.output('blob');
+        var formData = new FormData();
+        console.log(blob);
+        const pk = "{{subject.id}}";
+        formData.append('pdf', blob);
+        formData.append('pk', pk)
+        console.log(formData);
+        return fetch('/main/upload-grider-osr-pdf-to-bucket', {
+        method: 'POST',
+        headers: {
+                'X-CSRFToken': csrfToken
+            },
+        body: formData
+        });
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.log('Error:', error);
+    });
+}
+
+async function getBase64Data(url){
+        return new Promise((resolve, reject) => {
+            fetch(url)
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not OK');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64Data = reader.result.split(',')[1];
+                    resolve(base64Data);
+                };
+                reader.onerror = () => {
+                    reject(new Error('Error reading the font file'));
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+async function uploadOsrFile(osrFile) {
+    pk="{{subject.id}}"
+    let str = osrName.trim()
+    let lastIndex = str.lastIndexOf('/')
+    osrName = osrName.slice(lastIndex + 1)
+    osrName = osrName.replace(/\./g, '-osr' + '.')
+    const formData = new FormData();
+    const blob = new Blob([osrFile], { type: 'text/plain' });
+    formData.append("file", blob, osrName);
+    formData.append("pk", pk);
+
+    try {
+        const response = await fetch("/main/upload-grider-osr-file-to-bucket", {
+            method: "POST",
+            headers: {
+            'X-CSRFToken': csrfToken
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            console.log("File uploaded successfully.");
+            //location.reload()
+        } else {
+            console.error("Error uploading file.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+async function etrfgk7() {
+    let spinner = document.querySelector('.spinner');
+    spinner.classList.remove('hidden');
+    messageContainer.innerHTML = ''
+    messageContainer.classList.add('hidden')
+    pk="{{subject.id}}"
+    let checkedRadio = document.querySelector('.radio-group2 input[type="radio"]:checked');
+    const formData = new FormData();
+    formData.append("file", osrName);
+    formData.append("pk", pk);
+    formData.append("tip", checkedRadio.value)
+    try {
+        const response = await fetch("/main/grider-etrf2000-gk7", {
+            method: "POST",
+            headers: {
+            'X-CSRFToken': csrfToken
+            },
+            body: formData
+        });
+        const data = await response.json()
+        if (data.message == 'ok'){
+            spinner.classList.add('hidden');
+            messageContainer.classList.remove('hidden')
+            let message = localStorage.setItem('message', 'Uspešna transformacija')
+            location.reload()
+        }else{
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        spinner.classList.add('hidden');
+        messageContainer.classList.remove('hidden')
+        messageContainer.innerText = error.message
+    }
+}
+
+async function gk7etrf() {
+    let spinner = document.querySelector('.spinner');
+    spinner.classList.remove('hidden');
+    messageContainer.innerHTML = ''
+    messageContainer.classList.add('hidden')
+    pk="{{subject.id}}"
+    let checkedRadio = document.querySelector('.radio-group2 input[type="radio"]:checked');
+    const formData = new FormData();
+    formData.append("file", osrName);
+    formData.append("pk", pk);
+    formData.append("tip", checkedRadio.value)
+    try {
+        const response = await fetch("/main/grider-gk7-etrf2000", {
+            method: "POST",
+            headers: {
+            'X-CSRFToken': csrfToken
+            },
+            body: formData
+        });
+        const data = await response.json()
+        if (data.message == 'ok'){
+            spinner.classList.add('hidden');
+            messageContainer.classList.remove('hidden')
+            let message = localStorage.setItem('message', 'Uspešna transformacija')
+            location.reload()
+        }else{
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        spinner.classList.add('hidden');
+        messageContainer.classList.remove('hidden')
+        messageContainer.innerText = error.message
+    }
+}
+
+async function trst2nv2() {
+    let spinner = document.querySelector('.spinner');
+    spinner.classList.remove('hidden');
+    messageContainer.innerHTML = ''
+    messageContainer.classList.add('hidden')
+    pk="{{subject.id}}"
+    const formData = new FormData();
+    formData.append("file", osrName);
+    formData.append("pk", pk);
+    try {
+        const response = await fetch("/main/grider-trst-nvt2", {
+            method: "POST",
+            headers: {
+            'X-CSRFToken': csrfToken
+            },
+            body: formData
+        });
+        const data = await response.json()
+        if (data.message == 'ok'){
+            spinner.classList.add('hidden');
+            messageContainer.classList.remove('hidden')
+            let message = localStorage.setItem('message', 'Uspešna transformacija')
+            location.reload()
+        }else{
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        spinner.classList.add('hidden');
+        messageContainer.classList.remove('hidden')
+        messageContainer.innerText = error.message
+    }
+}
+
+async function nvt2trst() {
+    let spinner = document.querySelector('.spinner');
+    spinner.classList.remove('hidden');
+    messageContainer.innerHTML = ''
+    messageContainer.classList.add('hidden')
+    pk="{{subject.id}}"
+    const formData = new FormData();
+    formData.append("file", osrName);
+    formData.append("pk", pk);
+    try {
+        const response = await fetch("/main/grider-nvt2-trst", {
+            method: "POST",
+            headers: {
+            'X-CSRFToken': csrfToken
+            },
+            body: formData
+        });
+        const data = await response.json()
+        if (data.message == 'ok'){
+            spinner.classList.add('hidden');
+            messageContainer.classList.remove('hidden')
+            let message = localStorage.setItem('message', 'Uspešna transformacija')
+            location.reload()
+        }else{
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        spinner.classList.add('hidden');
+        messageContainer.classList.remove('hidden')
+        messageContainer.innerText = error.message
+    }
+}
+
+async function deleteFile(button) {
+    linkName = button.dataset.linkName
+    console.log(linkName)
+    const formData = new FormData();
+    formData.append("data", linkName);
+    try {
+        const response = await fetch("/main/delete-grider-file", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrfToken
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+        console.log("Response from Django:", data);
+        location.reload()
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+function detectDelimiter(data) {
+    if (data.includes(',')) {
+        return ',';
+    } else if (data.includes('\t')) {
+        return '\t';
+    } else if (data.includes(' ')) {
+        return ' ';
+    }
+    throw new Error('Unknown delimiter.');
+}
+
+async function insertLogo() {
+        let csrfToken = getCookie('csrftoken');
+        let bucket = 'autopilot-kancelarija-'+'{{user.company.id}}';
+        let data = "OpstiDokumenti/logo.png";
+        try {
+            const response = await fetch ('/main/return-aws-png', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({bucket: bucket, link: data})
+            })
+            if (response.ok) {
+                const result = await response
+                const blob = await result.blob()
+                const blobUrl = URL.createObjectURL(blob);
+                let logo = document.getElementById('logo');
+                if(logo){
+                    logo.src = blobUrl;
+                }
+            } else {
+                Swal.fire({
+                    title: 'Greška!',
+                    text: 'Učitavanje slike za logo firme nije uspelo!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Greška!',
+                text: 'Učitavanje logoa firme nije uspelo!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        insertLogo();
+        mesto = document.getElementById("mesto")
+        if(mesto){ mesto.innerText = mesto.innerText.split(',')[0] }
+
+        const theme = localStorage.getItem('theme');
+        if(theme == 'dark'){
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    });
+
+</script>
+{% endblock script %}

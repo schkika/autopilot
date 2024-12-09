@@ -1,0 +1,149 @@
+<div
+    style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;" id="document" data-orientation="portrait">
+    <p class="text-right">Прилог 18</p>
+    <div class="flex justify-between items-start pt-5">
+        <div>
+            <p>РЕПУБЛИКА СРБИЈА</p>
+            <p>ОПШТИНА
+                <span style="
+              width: 200px;
+              border-bottom: 1px solid black;
+              display: inline-block;
+              overflow: hidden;
+            " contenteditable="true">{{ subject.municipality }}</span>
+            </p>
+            <p>КО
+                <span style="
+              width: 200px;
+              border-bottom: 1px solid black;
+              display: inline-block;
+              overflow: hidden;
+            " contenteditable="true">{{ subject.cadastral_municipality }}</span>
+            </p>
+        </div>
+        <div>
+            <p>Предмет број:
+                <span style="
+              width: 200px;
+              border-bottom: 1px solid black;
+              display: inline-block;
+              overflow: hidden;
+            " contenteditable="true">{{ subject.id }}</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="text-center pt-5">
+        <p class="font-bold" style="font-size: 14pt">СКИЦА ОРЖАВАЊА КАТАСТРА НЕПОКРЕТНОСТИ</p>
+        <p>Врста промене:
+            <span style="
+          width: 50%;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"></span>
+        </p>
+        <p>Приближна размера 1:
+            <span style="
+          width: 15%;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+        " contenteditable="true"></span>
+        </p>
+    </div>
+    <div class="w-full mt-5" style="height: 500px;border:2px dashed rgb(173, 172, 172)">
+
+    </div>
+    <div class="pt-5">
+        <p>Геодетска метода мерења:
+            <span style="
+          width: 200px;
+          border-bottom: 1px solid black;
+          display: inline-block;
+          overflow: hidden;
+            " contenteditable="true"></span>
+        </p>
+        <div class="w-1/2 flex justify-start items-center ">
+          <p class="flex text-center">Датум:</p>
+          <div id="datePickerContainer" style="border-bottom: 1px solid black;" class="relative p-2 w-full ">
+              <input type="text" id="dateInput" readonly />
+              <div id="calendar" class="hidden absolute top-[100%] left-0 w-[209px] bg-white z-10">
+            
+              </div>
+            </div>
+         
+      </div>
+        <!-- <p>Датум израде:
+             <span style="
+              width: 200px;
+              border-bottom: 1px solid black;
+              display: inline-block;
+              overflow: hidden;
+            "contenteditable="true"></span></p> -->
+    </div>
+
+    <div class="flex justify-between items-start pt-5">
+        <div>
+            <p class="text-center">
+                <span class="font-bold"> Скицу израдио: </span> <br />
+                <span
+                  style="
+                    width: 200px;
+                    border-bottom: 1px solid black;
+                    display: inline-block;
+                    overflow: hidden;
+                  "
+                  contenteditable="true"
+                ></span>
+                <br />
+                <span class="italic">(име и презиме)</span>
+                <br />
+                <span
+                  style="
+                    width: 200px;
+                    border-bottom: 1px solid black;
+                    display: inline-block;
+                    overflow: hidden;
+                  "
+                  contenteditable="true"
+                ></span>
+                <br />
+                <span class="italic">(потпис)</span>
+              </p> 
+        </div>
+        <div>
+            <p class="text-center">
+                <span class="font-bold"> Одговорно лице:</span> <br />
+                <span
+                  style="
+                    width: 200px;
+                    border-bottom: 1px solid black;
+                    display: inline-block;
+                    overflow: hidden;
+                  "
+                  contenteditable="true"
+                ></span>
+                <br />
+                <span class="italic">(име и презиме)</span>
+            </p>
+            <p class="text-center">
+                <span
+                style="
+                  width: 200px;
+                  border-bottom: 1px solid black;
+                  display: inline-block;
+                  overflow: hidden;
+                "
+                contenteditable="true"
+              ></span>
+              <br />
+                <span class="italic">(потпис)</span>
+            </p>
+        </div>
+    </div>
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 902px; left: 111px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="111" ypos="902" class="h-[30mm]">
+<img id="potpis-ovlasceni" style="position: absolute; top: 882px; left: 57px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="57" ypos="882" class="h-[30mm]">
+<img id="pecat-odgovorni" style="position: absolute; top: 920px; left: 572px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="572" ypos="920" class="h-[30mm]">
+<img id="potpis-odgovorni" style="position: absolute; top: 883px; left: 504px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="504" ypos="883" class="h-[30mm]">

@@ -1,0 +1,253 @@
+<div
+  style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;" id="document" data-orientation="portrait">
+  <p class="text-right">
+    <span>Прилог 17</span>
+  </p>
+
+  <div style="text-align: left">
+    <div style="
+        display: inline-block;
+        width: 300px;
+        border-bottom: 1px solid black;
+      " contenteditable="true">{{ user.company }}
+    </div>
+    <br>
+    <span style="display: inline-block;" class="italic">(назив извођача радова)</span>
+  </div>
+  <div>
+    <div style="
+        display: inline-block;
+        width: 300px;
+        border-bottom: 1px solid black;
+      " contenteditable="true"><script>document.write(lat2cyr("{{ user.company.address }}, {{ user.company.city }}"))</script>
+    </div>
+    <br>
+    <span style="display: inline-block;" class="italic">(седиште извођача радова)</span>
+  </div>
+
+  <p class="text-center font-bold pt-5" style="font-size: 14pt;">
+    ЗАПИСНИК О ИЗВРШЕНОМ УВИЂАЈУ
+  </p>
+
+
+  <!-- start -->
+
+  <div style="line-height: 23px; padding-top: 10px;">
+    <span>Увиђај на лицу места извршен је у КО&nbsp;</span><span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.cadastral_municipality|title }}"))</script></span>
+    <span>на парцели број&nbsp;</span><span class="w-full whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true">
+      {% if subject.lot_set.all %}
+      {% for lot in subject.lot_set.all %}
+        {% if forloop.last %}
+          {{ lot }}
+        {% else %}
+          {{ lot }},&nbsp;
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    </span>
+    <span>дана&nbsp;</span>
+    <span class="w-1/2 whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true">{{ subject.field_lookup_date }}</span> од <span style="border-bottom: 1px solid #000;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> до
+    <span style="border-bottom: 1px solid #000;" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>часова
+    <span>од стране лица</span>
+    <span style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></span>
+    <span> по предмету број </span><span style="border-bottom: 1px solid #000;" contenteditable="true">{{ subject.cadastral_number }}, </span>
+    <span>подносилац захтева </span><span style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all|first }}"))</script></span>
+    <span> за геодетске радове </span><span style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.service_type }}"))</script>.</span>
+  </div>
+  <br>
+  <p class="pt-3">
+    <span>ПРИСУТНЕ СТРАНКЕ:</span>
+  </p>
+
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <div>
+      <div>
+        <span style="display: inline-block;">1.</span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.0 }}"))</script>
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">2.</span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.1 }}"))</script>
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">3.</span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.2 }}"))</script>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <span style="display: inline-block;">4.</span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.3 }}"))</script>
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">5.</span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.4 }}"))</script>
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">6.</span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.all.5 }}"))</script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="pt-3">
+    <span>УТВРЂЕНО ЧИЊЕНИЧНО СТАЊЕ НА ЛИЦУ МЕСТА:</span>
+  </p>
+  <div name="" id="" class="w-full h-[280px] mt-4" style="resize:none;" contenteditable="true">
+    <span>На катастарској парцели бр.</span>
+    <span class="mx-1">
+      {% if subject.lot_set.all %}
+        {% for lot in subject.lot_set.all %}
+          {% if forloop.last %}
+            {{ lot }}
+          {% else %}
+            {{ lot }},&nbsp;
+          {% endif %}
+        {% endfor %}
+      {% endif %}  
+    </span>
+    <span>у К.О. <script>document.write(lat2cyr("{{ subject.cadastral_municipality|title }}"))</script></span>
+    <span> извршено је снимање новоизграђеног стамбеног објекта бр. 1, спратности Пр+т, површине 126 m<sup>2</sup>.</span>
+    <span>Снимање је извршено поларном методом, инструментом </span>
+      <span contenteditable="true">{% for device in subject.company.gpsdevice_set.all %}
+                                      {% if device.type == 'total' %}
+                                        {{ device.manufacturer }} {{ device.model }}
+                                      {% endif %}
+                                    {% endfor %}</span>
+    <span> са привремено обележених и стабилизованих помоћних тачака ознака SP1, SP2 и Sp3. </span>
+    <span>Помоћне тачке су одређене ГПС методом ГНСС инструментом </span>
+      <span contenteditable="true">{% for device in subject.company.gpsdevice_set.all %}
+                                      {% if device.type == 'gps' %}
+                                        {{ device.manufacturer }} {{ device.model }}
+                                      {% endif %}
+                                    {% endfor %}.</span>
+  </div>
+
+  <p class="pt-3">
+    <span>Записник је прочитан свим странкама које су присуствовале увиђају.</span>
+  </p>
+  <p><span>Стављене су следеће примедбе:</span></p>
+  <div style="display: inline-block; width: 100%; border-bottom: 1px solid black" contenteditable="true">Hema.
+  </div>
+  <div style="display: inline-block; width: 100%; border-bottom: 1px solid black" contenteditable="true">
+  </div>
+  <p class="flex whitespace-nowrap">&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"></span></p>
+
+  <div class="flex justify-between items-center pt-5">
+    <div>
+      <p><span>Потписи странака:</span></p>
+      <div>
+        <span style="display: inline-block;">1.</span>
+        <div style="
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">2.</span>
+        <div style="
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">3.</span>
+        <div style="
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">4.</span>
+        <div style="
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">5.</span>
+        <div style="
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+      </div>
+      <div>
+        <span style="display: inline-block;">6.</span>
+        <div style="
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="text-align: left">
+        <p class="text-center font-bold">Увиђај извршио и записник сачинио:</p>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+            text-align: center;
+            padding-block: 5px;
+          " contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker|title }}"))</script>
+        </div>
+        <p class="text-center">(име и презиме)</p>
+      </div>
+
+      <div style="text-align: left">
+        <span style="display: inline-block;"> </span>
+        <div style="
+            display: inline-block;
+            width: 300px;
+            border-bottom: 1px solid black;
+          " contenteditable="true">
+        </div>
+        <p class="text-center">(потпис)</p>
+      </div>
+    </div>
+  </div>
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 990px; left: 280px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="280" ypos="990">
+<img id="pecat-odgovorni" style="position: absolute; top: 960px; left: 480px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="480" ypos="960">
+<img id="potpis-odgovorni" style="position: absolute; top: 980px; left: 500px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="500" ypos="980">

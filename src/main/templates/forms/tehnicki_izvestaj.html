@@ -1,0 +1,71 @@
+{%load static%}
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+    id="document" data-orientation="portrait">
+
+    {% include 'forms/zaglavlje_logo.html' %}
+    <div class="pt-20">
+        <h2 class="text-center font-bold text-xl">ТЕХНИЧКИ ИЗВЕШТАЈ</h2>
+    </div>
+
+    <div class="w-full pt-20" style="line-height: 25px;">
+        <!-- <p class="flex inline-block">За потребе инвститора&nbsp;<span class="w-[150px] "
+            style="border-bottom: 1px solid #000;" contenteditable="true"></span>
+        из места<span class="w-[150px] "
+        style="border-bottom: 1px solid #000;" contenteditable="true"></span>
+        улица 
+        </p> -->
+        <p class="flex whitespace-nowrap">За потребе инвститора&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.first }}"));</script></span> из места&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.first.city }}"))</script></span></p>
+        <p class="flex whitespace-nowrap">улица&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.clients.first.address }}"));</script></span>&nbsp;било је потребно обавити геодетске радове&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden" style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.service_type }}"))</script></span>.</p>
+        <p class="flex whitespace-nowrap">Увидом у техничку документацију константовано је постојање грађевинске дозволе
+            бр. &nbsp;</p>
+        <p class="flex whitespace-nowrap"><span class="w-[300px] whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"></span>и грађевинско-
+            архитектонски пројекат број</p>
+        <p class="flex whitespace-nowrap"><span class="w-[200px] whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"></span>од <span class="w-[200px] whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"></span>израђен од стране    <span class="w-1/2 whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"></span>.</p>
+
+    </div>
+
+    <div>
+        <h2 class="text-center font-bold text-xl pt-20">ОВАЈ ЕЛАБОРАТ СЕ РАДИ ИСКЉУЧИВО У СВРХУ ИЗДАВАЊА
+            УПОТРЕБНЕ ДОЗВОЛЕ ИНВЕСТИТОРУ.</h2>
+    </div>
+
+
+    <div class="w-full flex justify-start items-center pt-[150px]">
+        <p class="flex py-4"><span id="mesto" class="w-full whitespace-nowrap overflow-hidden"
+            contenteditable="true">
+            {% if subject.company.department %}
+            <script>document.write(lat2cyr("{{ subject.company.department }}"))</script>
+            {% else %}
+            <script>document.write(lat2cyr("{{ subject.company.city }}"))</script>
+            {% endif %}
+        </span></p>,
+    <div class="flex justify-center items-center ">
+        <p class="flex text-center"></p>
+        <p class="flex text-center"></p>
+            <div id="datePickerContainer" class="relative p-2 w-full ">
+                <input type="text" id="dateInput" class="date-picker" data-date-format="mmmm yyyy" value="{{ subject.delivery_date | date:'F Y.' | title  }}" readonly />
+                <div id="calendar" class="hidden absolute top-[100%] left-0 right-0 bg-white z-10">
+
+                </div>
+            </div>
+
+    </div>
+</div>
+
+    <div class="w-full">
+        <p class="flex whitespace-nowrap py-4 w-1/2">Оверава:<span class="flex-grow whitespace-nowrap overflow-hidden"
+                 contenteditable="true"><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></span>
+        </p>
+    </div>
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 900px; left: 260px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="260" ypos="900">
+<img id="pecat-odgovorni" style="position: absolute; top: 880px; left: 100px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="100" ypos="880">
+<img id="potpis-odgovorni" style="position: absolute; top: 900px; left: 120px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="120" ypos="900">
+<script>
+    let inputDate = document.getElementById("dateInput")
+    inputDate.value = lat2cyr(inputDate.value)
+</script>

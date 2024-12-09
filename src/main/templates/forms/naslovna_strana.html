@@ -1,0 +1,61 @@
+{%load static%}
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+    id="document" data-orientation="portrait">
+
+    {% include 'forms/zaglavlje_logo.html' %}
+    <br>
+
+    <div class="w-full">
+        <p class="flex whitespace-nowrap py-4">&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                contenteditable="true"></span></p>
+    </div>
+
+    <div class="pt-[150px] text-center">
+        <h2 class="w-full text-center font-bold text-xl" style="letter-spacing: 0.2px;">ЕЛАБОРАТ ГЕОДЕТСКИХ РАДОВА</h2>
+        <p class="flex whitespace-nowrap py-4"><span class="flex-grow whitespace-nowrap overflow-hidden"
+                style="border-bottom: 1px solid #000;" contenteditable="true"><script>document.write(lat2cyr("{{ subject.service_type }}"))</script></span></p>
+    </div>
+
+    <!-- <div class="w-full pt-20">
+        <textarea name="" class="w-full outline outline-2  outline-offset-2 outline-cyan-500 h-[400px] text-center"></textarea>
+    </div> -->
+
+    <div class="w-full flex flex-col justify-center items-start" style="margin-top: 100px;">
+        <p class="flex">Општина:&nbsp;<span class="w-40 "
+                contenteditable="true"><script>document.write(lat2cyr("{{ subject.municipality|title }}"))</script></span></p>
+        <p class="flex py-4">K.O:&nbsp;<span
+                class="w-40 "
+                contenteditable="true"><script>document.write(lat2cyr("{{ subject.cadastral_municipality|title }}"))</script></span></p>
+        <p class="flex ">Парцела бр. :&nbsp;<span
+                class="w-40 "
+                contenteditable="true">{% for lot in subject.lot_set.all %}{{ lot }},{% endfor %}</span></p>
+        <p class="flex pt-20">Инвеститор:&nbsp;<span
+                class="w-40 " style="word-wrap: break-word;"
+                contenteditable="true">{% for client in subject.clients.all %}<script>document.write(lat2cyr("{{ client }}, "))</script> {% endfor %}</span></p>
+
+    </div>
+
+    <div class="w-full flex justify-start items-center pt-[150px]">
+            <p class="flex py-4"><span id="mesto" class="w-full" contenteditable="true">
+                {% if subject.company.department %}
+                    <script>document.write(lat2cyr("{{ subject.company.department }}"))</script>
+                {% else %}
+                    <script>document.write(lat2cyr("{{ subject.company.city }}"))</script>
+                {% endif %}
+            </span></p>,
+        <div class="flex justify-center items-center ">
+            <p class="flex text-center"></p>
+            <div id="datePickerContainer" class="relative p-2 w-full ">
+                <input type="text" id="dateInput" class="date-picker" data-date-format="mmmm yyyy" value="{{ subject.delivery_date | date:'F Y.' | title }}" readonly />
+                <div id="calendar" class="hidden absolute top-[100%] left-0 right-0 bg-white z-10">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+let inputDate = document.getElementById("dateInput")
+inputDate.value = lat2cyr(inputDate.value)
+</script>

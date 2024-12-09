@@ -1,0 +1,646 @@
+{% extends "base-home.html" %}
+{%load static%}
+{% block content %}
+
+<!-- navbar -->
+<div class="w-full bg-opacity-50 backdrop-blur-xl py-2 px-5 sticky top-0 z-10 border-b" x-data="{ open: false }">
+  <div class="flex items-center justify-between">
+    <div class="">
+      <div class="">
+        <a href="{% url 'home'%}">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100"
+            zoomAndPan="magnify" viewBox="0 0 375 374.999991" height="100" preserveAspectRatio="xMidYMid meet"
+            version="1.0">
+            <defs>
+              <g />
+              <clipPath id="10e8ec5a66">
+                <path d="M 119.621094 131 L 199 131 L 199 210.992188 L 119.621094 210.992188 Z M 119.621094 131 "
+                  clip-rule="nonzero" />
+              </clipPath>
+              <clipPath id="752df7f6d2">
+                <path
+                  d="M 176 92.90625 L 255.277344 92.90625 L 255.277344 210.992188 L 176 210.992188 Z M 176 92.90625 "
+                  clip-rule="nonzero" />
+              </clipPath>
+              <clipPath id="2c7c00e933">
+                <path d="M 119.621094 202 L 185 202 L 185 210.992188 L 119.621094 210.992188 Z M 119.621094 202 "
+                  clip-rule="nonzero" />
+              </clipPath>
+              <clipPath id="cc56203e8d">
+                <path d="M 176 110 L 255.277344 110 L 255.277344 210.992188 L 176 210.992188 Z M 176 110 "
+                  clip-rule="nonzero" />
+              </clipPath>
+              <clipPath id="931d88d468">
+                <path d="M 176 92.90625 L 188 92.90625 L 188 113 L 176 113 Z M 176 92.90625 " clip-rule="nonzero" />
+              </clipPath>
+            </defs>
+            <g clip-path="url(#10e8ec5a66)">
+              <path fill="#06b6d4"
+                d="M 187.449219 131.203125 L 165.464844 131.203125 L 119.621094 210.929688 L 185.574219 210.929688 L 198.441406 188.550781 L 189.320312 172.695312 L 187.449219 169.4375 L 185.574219 172.695312 L 174.582031 191.808594 L 152.601562 191.808594 Z M 187.449219 131.203125 "
+                fill-opacity="1" fill-rule="evenodd" />
+            </g>
+            <g clip-path="url(#752df7f6d2)">
+              <path fill="#83858c"
+                d="M 255.277344 210.929688 L 221.363281 151.949219 L 187.449219 92.972656 L 176.457031 112.089844 L 181.515625 120.886719 L 187.449219 131.203125 L 193.480469 141.691406 L 222.300781 191.808594 L 228.230469 202.128906 L 233.292969 210.929688 Z M 255.277344 210.929688 "
+                fill-opacity="1" fill-rule="evenodd" />
+            </g>
+            <path fill="#0e7490"
+              d="M 187.449219 131.203125 L 170.375 140.257812 L 134.800781 202.128906 L 152.601562 191.808594 Z M 187.449219 131.203125 "
+              fill-opacity="1" fill-rule="evenodd" />
+            <g clip-path="url(#2c7c00e933)">
+              <path fill="#0e7490"
+                d="M 134.800781 202.128906 L 119.621094 210.929688 L 184.90625 210.929688 L 180.152344 202.128906 Z M 134.800781 202.128906 "
+                fill-opacity="1" fill-rule="evenodd" />
+            </g>
+            <path fill="#0e7490"
+              d="M 174.582031 191.808594 L 180.152344 202.128906 L 185.867188 191.808594 L 188.121094 187.742188 L 187.449219 169.4375 Z M 174.582031 191.808594 "
+              fill-opacity="1" fill-rule="evenodd" />
+            <g clip-path="url(#cc56203e8d)">
+              <path fill="#68696e"
+                d="M 193.480469 141.691406 L 222.300781 191.808594 L 228.230469 202.128906 L 233.292969 210.929688 L 255.277344 210.929688 L 240.097656 202.128906 L 187.449219 110.570312 L 176.457031 112.089844 L 181.515625 120.886719 L 187.449219 131.203125 Z M 193.480469 141.691406 "
+                fill-opacity="1" fill-rule="evenodd" />
+            </g>
+            <g clip-path="url(#931d88d468)">
+              <path fill="#8b8d93"
+                d="M 187.449219 110.570312 L 187.449219 92.972656 L 176.457031 112.089844 Z M 187.449219 110.570312 "
+                fill-opacity="1" fill-rule="evenodd" />
+            </g>
+            <g fill="#06b6d4" fill-opacity="1">
+              <g transform="translate(7.521268, 266.00105)">
+                <g>
+                  <path
+                    d="M 6.75 0.203125 C 5.3125 0.0664062 3.628906 0 1.703125 0 L -0.28125 0 L 10.65625 -30.609375 C 11.132812 -31.984375 11.375 -32.785156 11.375 -33.015625 C 11.375 -33.242188 11.367188 -33.378906 11.359375 -33.421875 L 11.375 -33.484375 C 12.46875 -33.429688 13.625 -33.40625 14.84375 -33.40625 C 15.84375 -33.40625 17.046875 -33.421875 18.453125 -33.453125 L 18.484375 -33.40625 C 18.453125 -33.332031 18.4375 -33.238281 18.4375 -33.125 C 18.4375 -32.8125 18.6875 -31.96875 19.1875 -30.59375 L 30.34375 0.078125 C 30.007812 0.0546875 29.613281 0.046875 29.15625 0.046875 C 29.15625 0.046875 28.722656 0.03125 27.859375 0 C 27.429688 0 27.050781 0 26.71875 0 L 22.828125 0 L 20.46875 -7.234375 L 9.109375 -7.234375 Z M 18.515625 -13.265625 L 14.71875 -24.9375 L 11.03125 -13.265625 Z M 18.515625 -13.265625 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(50.3776, 266.00105)">
+                <g>
+                  <path
+                    d="M 23.359375 -33.53125 C 24.398438 -33.445312 25.257812 -33.40625 25.9375 -33.40625 L 28.03125 -33.40625 C 28.726562 -33.40625 29.460938 -33.472656 30.234375 -33.609375 L 30.234375 -12.828125 C 30.234375 -8.710938 28.988281 -5.40625 26.5 -2.90625 C 24.132812 -0.550781 21.171875 0.625 17.609375 0.625 C 13.703125 0.625 10.546875 -0.382812 8.140625 -2.40625 C 5.441406 -4.6875 4.09375 -7.96875 4.09375 -12.25 L 4.09375 -33.53125 C 5.476562 -33.445312 6.785156 -33.40625 8.015625 -33.40625 C 9.253906 -33.40625 10.273438 -33.472656 11.078125 -33.609375 L 11.078125 -11.9375 C 11.078125 -9.820312 11.722656 -8.175781 13.015625 -7 C 14.210938 -5.9375 15.71875 -5.40625 17.53125 -5.40625 C 20.207031 -5.40625 21.988281 -6.773438 22.875 -9.515625 C 23.195312 -10.503906 23.359375 -11.726562 23.359375 -13.1875 Z M 23.359375 -33.53125 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(97.547969, 266.00105)">
+                <g>
+                  <path
+                    d="M 16.375 0.15625 C 15.570312 0.0507812 13.503906 0 10.171875 0 L 9.375 0 L 9.375 -27.78125 L 4.390625 -27.78125 C 2.921875 -27.78125 2.050781 -27.703125 1.78125 -27.546875 C 1.507812 -27.398438 1.300781 -27.269531 1.15625 -27.15625 L 1.078125 -27.171875 L 1.078125 -33.609375 L 1.15625 -33.6875 C 1.707031 -33.5 3.195312 -33.40625 5.625 -33.40625 L 21.375 -33.40625 C 22.84375 -33.40625 23.710938 -33.476562 23.984375 -33.625 C 24.253906 -33.78125 24.460938 -33.914062 24.609375 -34.03125 L 24.6875 -34 L 24.6875 -27.578125 L 24.609375 -27.5 C 24.054688 -27.6875 22.566406 -27.78125 20.140625 -27.78125 L 16.375 -27.78125 Z M 16.375 0.15625 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(136.128748, 266.00105)">
+                <g>
+                  <path
+                    d="M 7.046875 -3.96875 C 5.523438 -5.425781 4.328125 -7.175781 3.453125 -9.21875 C 2.578125 -11.257812 2.140625 -13.5 2.140625 -15.9375 C 2.140625 -18.375 2.546875 -20.679688 3.359375 -22.859375 C 4.179688 -25.035156 5.351562 -26.953125 6.875 -28.609375 C 8.40625 -30.265625 10.25 -31.582031 12.40625 -32.5625 C 14.5625 -33.539062 16.984375 -34.03125 19.671875 -34.03125 C 24.285156 -34.03125 28.175781 -32.570312 31.34375 -29.65625 C 34.726562 -26.539062 36.421875 -22.335938 36.421875 -17.046875 C 36.421875 -11.929688 34.675781 -7.671875 31.1875 -4.265625 C 29.050781 -2.171875 26.5 -0.734375 23.53125 0.046875 C 22.070312 0.429688 20.367188 0.625 18.421875 0.625 C 16.472656 0.625 14.472656 0.222656 12.421875 -0.578125 C 10.367188 -1.378906 8.578125 -2.507812 7.046875 -3.96875 Z M 9.109375 -16.28125 C 9.109375 -14.71875 9.367188 -13.28125 9.890625 -11.96875 C 10.410156 -10.664062 11.132812 -9.546875 12.0625 -8.609375 C 14.019531 -6.640625 16.535156 -5.65625 19.609375 -5.65625 C 22.546875 -5.65625 24.898438 -6.597656 26.671875 -8.484375 C 28.484375 -10.441406 29.390625 -13.113281 29.390625 -16.5 C 29.390625 -19.675781 28.523438 -22.332031 26.796875 -24.46875 C 24.941406 -26.738281 22.394531 -27.875 19.15625 -27.875 C 16.03125 -27.875 13.546875 -26.71875 11.703125 -24.40625 C 9.972656 -22.25 9.109375 -19.539062 9.109375 -16.28125 Z M 9.109375 -16.28125 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(187.493455, 266.00105)">
+                <g>
+                  <path
+                    d="M 3.84375 -33.578125 C 6.164062 -33.878906 8.550781 -34.03125 11 -34.03125 C 15.550781 -34.03125 19.007812 -32.960938 21.375 -30.828125 C 23.75 -28.691406 24.9375 -25.5 24.9375 -21.25 C 24.9375 -17.445312 23.640625 -14.441406 21.046875 -12.234375 C 18.617188 -10.148438 15.492188 -9.109375 11.671875 -9.109375 C 11.242188 -9.109375 10.769531 -9.132812 10.25 -9.1875 L 10.25 0 L 3.84375 0 Z M 11.75 -27.984375 C 11.25 -27.984375 10.75 -27.960938 10.25 -27.921875 L 10.25 -14.71875 C 10.78125 -14.65625 11.429688 -14.625 12.203125 -14.625 C 12.972656 -14.625 13.773438 -14.785156 14.609375 -15.109375 C 15.453125 -15.429688 16.160156 -15.882812 16.734375 -16.46875 C 17.921875 -17.695312 18.515625 -19.304688 18.515625 -21.296875 C 18.515625 -25.753906 16.257812 -27.984375 11.75 -27.984375 Z M 11.75 -27.984375 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#06b6d4" fill-opacity="1">
+              <g transform="translate(226.069608, 266.00105)">
+                <g>
+                  <path
+                    d="M 5.09375 -33.5 C 6.769531 -33.4375 7.785156 -33.40625 8.140625 -33.40625 L 9.953125 -33.40625 C 10.835938 -33.40625 11.546875 -33.472656 12.078125 -33.609375 L 12.0625 0 L 5.09375 0 Z M 5.09375 -33.5 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(256.054811, 266.00105)">
+                <g>
+                  <path
+                    d="M 9.21875 0 C 6.757812 0 5.125 0.0507812 4.3125 0.15625 L 4.3125 -33.5625 C 4.71875 -33.457031 5.550781 -33.40625 6.8125 -33.40625 C 8.082031 -33.40625 9.554688 -33.4375 11.234375 -33.5 L 11.234375 -6.03125 L 16.421875 -6.03125 C 17.929688 -6.03125 19.140625 -6.078125 20.046875 -6.171875 C 19.921875 -2.253906 19.859375 -0.222656 19.859375 -0.078125 L 19.859375 0.171875 C 18.222656 0.0546875 15.472656 0 11.609375 0 Z M 9.21875 0 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(290.340795, 266.00105)">
+                <g>
+                  <path
+                    d="M 7.046875 -3.96875 C 5.523438 -5.425781 4.328125 -7.175781 3.453125 -9.21875 C 2.578125 -11.257812 2.140625 -13.5 2.140625 -15.9375 C 2.140625 -18.375 2.546875 -20.679688 3.359375 -22.859375 C 4.179688 -25.035156 5.351562 -26.953125 6.875 -28.609375 C 8.40625 -30.265625 10.25 -31.582031 12.40625 -32.5625 C 14.5625 -33.539062 16.984375 -34.03125 19.671875 -34.03125 C 24.285156 -34.03125 28.175781 -32.570312 31.34375 -29.65625 C 34.726562 -26.539062 36.421875 -22.335938 36.421875 -17.046875 C 36.421875 -11.929688 34.675781 -7.671875 31.1875 -4.265625 C 29.050781 -2.171875 26.5 -0.734375 23.53125 0.046875 C 22.070312 0.429688 20.367188 0.625 18.421875 0.625 C 16.472656 0.625 14.472656 0.222656 12.421875 -0.578125 C 10.367188 -1.378906 8.578125 -2.507812 7.046875 -3.96875 Z M 9.109375 -16.28125 C 9.109375 -14.71875 9.367188 -13.28125 9.890625 -11.96875 C 10.410156 -10.664062 11.132812 -9.546875 12.0625 -8.609375 C 14.019531 -6.640625 16.535156 -5.65625 19.609375 -5.65625 C 22.546875 -5.65625 24.898438 -6.597656 26.671875 -8.484375 C 28.484375 -10.441406 29.390625 -13.113281 29.390625 -16.5 C 29.390625 -19.675781 28.523438 -22.332031 26.796875 -24.46875 C 24.941406 -26.738281 22.394531 -27.875 19.15625 -27.875 C 16.03125 -27.875 13.546875 -26.71875 11.703125 -24.40625 C 9.972656 -22.25 9.109375 -19.539062 9.109375 -16.28125 Z M 9.109375 -16.28125 " />
+                </g>
+              </g>
+            </g>
+            <g fill="#68696e" fill-opacity="1">
+              <g transform="translate(341.705497, 266.00105)">
+                <g>
+                  <path
+                    d="M 16.375 0.15625 C 15.570312 0.0507812 13.503906 0 10.171875 0 L 9.375 0 L 9.375 -27.78125 L 4.390625 -27.78125 C 2.921875 -27.78125 2.050781 -27.703125 1.78125 -27.546875 C 1.507812 -27.398438 1.300781 -27.269531 1.15625 -27.15625 L 1.078125 -27.171875 L 1.078125 -33.609375 L 1.15625 -33.6875 C 1.707031 -33.5 3.195312 -33.40625 5.625 -33.40625 L 21.375 -33.40625 C 22.84375 -33.40625 23.710938 -33.476562 23.984375 -33.625 C 24.253906 -33.78125 24.460938 -33.914062 24.609375 -34.03125 L 24.6875 -34 L 24.6875 -27.578125 L 24.609375 -27.5 C 24.054688 -27.6875 22.566406 -27.78125 20.140625 -27.78125 L 16.375 -27.78125 Z M 16.375 0.15625 " />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+    <div class="hidden md:flex">
+      {% if user.is_authenticated %}
+      <a href="{% url 'accounts:logout' %}"
+        class="text-white m-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 font-bold">Odjavite
+        se</a>
+      <a href="{% url 'main:index' %}"
+        class="text-white m-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 font-bold">Panel</a>
+      {% else %}
+      <a href="{% url 'accounts:register' %}"
+        class="text-white m-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 font-bold">Registrujte
+        kancelariju</a>
+      <a href="{% url 'accounts:login' %}"
+        class="text-white m-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 font-bold">Prijavite
+        se</a>
+      {% endif %}
+    </div>
+
+
+    <div class="md:hidden">
+      <button @click="open = !open" class="text-cyan-500">
+        <svg class="fill-current text-cyan-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="30"
+          height="30">
+          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300 transform"
+    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-95" class="md:hidden flex flex-col justify-start items-start gap-3">
+    {% if user.is_authenticated %}
+    <a href="{% url 'accounts:logout' %}"
+      class="text-white mt-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 text-white font-bold">Odjavite
+      se</a>
+    <a href="{% url 'main:index' %}"
+      class="text-white mt-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 text-white font-bold">Panel</a>
+    {% else %}
+    <a href="{% url 'accounts:register' %}"
+      class="text-white mt-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 text-white font-bold">Registrujte
+      kancelariju</a>
+    <a href="{% url 'accounts:login' %}"
+      class="text-white mt-4 px-6 py-2 bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-800 rounded-xl hover:from-gray-900 hover:to-cyan-700 text-white font-bold">Prijavite
+      se</a>
+    {% endif %}
+  </div>
+</div>
+<!-- navbar end -->
+
+
+<section class="w-full min-h-screen flex justify-between items-stretch flex-col md:flex-row ">
+  <div class="w-full md:w-1/2">
+    <img src="{%static 'img/robot.jpeg'%}" alt="" class="w-full h-full">
+  </div>
+  <div
+    class="w-full h-screen md:w-1/2 px-6 xl:text-end flex flex-col justify-center items-center md:items-end overflow-hidden">
+    <h1 id="main-heading"
+      class="text-white text-center md:text-end font-bold text-[48px] sm:text-[40px] md:text-[65px]">
+      Tehnološka rešenja <br> za geodetsku <br> automatizaciju
+    </h1>
+    <p class="pt-10 text-white font-bold text-[20px] md:text-[25px]">Vaše vreme nema cenu.
+    </p>
+  </div>
+  <!-- <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"
+    class="absolute bottom-[-170px] left-0 hidden md:block">
+    <path
+      d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+      fill="#fff"></path>
+  </svg> -->
+</section>
+
+
+<!-- video example -->
+
+<section class="w-full py-6 flex justify-between items-center flex-col min-h-full px-6 gap-8 bg-white" id="about">
+  <div class="w-full flex flex-col justify-between items-start gap-8">
+    <p class="text-[#0F1522] xl:text-[24px] rounded-lg shadow-xl p-2" id="text-one">
+      Ovaj video pruža uvid u raznovrsne funkcionalnosti našeg softvera koji će vam olakšati svakodnevne zadatke i
+      poboljšati vaš radni učinak. Upoznajte se s ključnim mogućnostima i otkrijte kako ih možete iskoristiti kako biste
+      optimizovali svoje poslovanje.
+    </p>
+
+  </div>
+  <div class="w-full shadow-xl" id="fadeImg">
+    <video controls class="rounded-lg">
+      <source src="{%static 'img/introVideo.mp4'%}" type="video/mp4">
+    </video>
+  </div>
+  <a href="{%url 'download-elaborat-primer'%}" id="text-two" download
+    class="shadow-xl mt-4 text-[25px] text-white text-center font-bold bg-cyan-500 py-2 px-4 rounded-lg ease-out duration-300 hover:text-cyan-500 hover:bg-white">Preuzmite
+    primer elaborata izrađenog preko naše platforme</a>
+</section>
+
+
+<!-- about -->
+<div class="w-full min-h-full flex flex-col justify-start items-center lg:flex-row" id="o-nama">
+
+  <div
+    class="text-white px-6  w-full xl:w-1/2 transform transition-all duration-1000 ease-in-out -translate-x-full opacity-0"
+    x-data="{ show: false, observer: null }" x-init="
+     observer = new IntersectionObserver((entries) => {
+       if (entries[0].isIntersecting) {
+         setTimeout(() => {
+           show = true;
+         }, 1000);
+         observer.disconnect();
+       }
+     }, { threshold: 0 });
+     observer.observe($el);
+   " x-bind:class="{'translate-x-0 opacity-100': show, '-translate-x-full opacity-0': !show}">
+
+    <h2 class="text-[55px] text-start p-5 font-bold" style="-webkit-text-stroke: 1px #06b6d4;
+          -webkit-text-fill-color: transparent;
+            font-weight: 900;">O NAMA</h2>
+    <div class="text-start">
+      <p class="p-5 leading-7 text-[18px] md:text-[20px]">
+        Naša kompanija je posvećena unapređenju efikasnosti i produktivnosti u geodetskoj industriji putem
+        inovativnih
+        rešenja automatizacije. Razumemo koliko je važno imati precizne, brze i pouzdane procese u geodetskim
+        biroima
+        kako bismo osigurali tačne geoprostorne podatke i podržali vašu misiju.
+      </p>
+      <p class="p-5 leading-7 text-[18px] md:text-[20px]">Naša misija je da vam omogućimo da ostvarite svoje ciljeve
+        efikasno,
+        tačno
+        i pouzdano. Bez obzira da li vam je potrebna automatizacija digitalizacije dokumenata, procesiranje
+        geoprostornih podataka, integrisanje sistema ili bilo koji drugi aspekt geodetskog rada, AutoPilot je
+        vaš odgovor.
+        Pridružite se našem rastućem broju zadovoljnih klijenata i dozvolite nam da vam pokažemo kako automatizacija
+        može transformisati vaše geodetske usluge. Kontaktirajte nas danas da bismo započeli saradnju.
+        Vaš napredak je naš prioritet.</p>
+    </div>
+  </div>
+  <div class="w-full md:w-1/2 relative h-screen md:mt-20">
+    <img src="{%static 'img/aboutAutopilot.png'%}" alt=""
+      class="hidden md:block w-[400px] h-[500px] object-cover absolute top-[80px] left-[50%] translate-x-[-10%] md:border-white border-8">
+    <img src="{%static 'img/proba.png'%}" alt=""
+      class="w-[400px] h-[500px] object-cover absolute top-0 left-[50%] translate-x-[-50%] md:border-white border-8">
+
+  </div>
+
+</div>
+
+
+<!-- intro -->
+<div class="w-full min-h-screen bg-white">
+
+  <h2 class="text-black text-center font-bold text-[35px] py-10 px-5 md:px-10">Upoznajte AutoPilot <br> Revolucionarni
+    softver za automatizaciju vodjenja predmeta u geodetskim biroima!</h2>
+
+  <div class="container mx-auto px-4 md:px-8 lg:px-16 xl:px-20">
+    <div class="relative wrap overflow-hidden p-4 md:p-10">
+      <div class="hidden md:block md:absolute md:border-opacity-20 md:border-gray-700 md:h-full md:border"
+        style="left: 50%"></div>
+
+      <!-- right timeline -->
+      <div
+        class="mb-4 md:mb-8 flex justify-between flex-row-reverse items-center w-full md:right-timeline transform transition-all duration-1000 ease-in-out -translate-x-full opacity-0"
+        x-data="{ show: false, observer: null }" x-init="
+        observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setTimeout(() => {
+                    show = true;
+                }, 1000);
+                observer.disconnect();
+            }
+        }, { threshold: 0 });
+        observer.observe($el);"
+        x-bind:class="{ 'translate-x-0 opacity-100 ease-out duration-300': show, 'translate-x-full opacity-0 ease-in duration-200': !show }"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-full opacity-0">
+        <div class="order-1 w-1/12 md:w-5/12"></div>
+        <div class="hidden md:flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+          <h3 class="mx-auto font-semibold text-lg text-white">1</h3>
+        </div>
+        <div class="order-1 bg-white rounded-lg shadow-xl w-11/12 md:w-5/12 px-6 py-4">
+          <h3 class="mb-3 font-bold text-gray-800 text-xl">Potpuna automatizacija vođenja predmeta</h3>
+          <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">AutoPIlot nudi potpunu
+            automatizaciju vođenja predmeta u vašem geodetskom birou. Od praćenja statusa predmeta do automatizacije
+            unosa i obrade podataka, ovaj softver olakšava svaki korak u procesu. Sve vaše informacije o predmetima i
+            dokumentima su dostupne na jednom mestu, što omogućava brži i efikasniji rad.</p>
+        </div>
+      </div>
+
+      <!-- left timeline -->
+      <div
+        class="mb-4 md:mb-8 flex justify-between  items-center w-full md:left-timeline transform transition-all duration-1000 ease-in-out -translate-x-full opacity-0"
+        x-data="{ show: false, observer: null }" x-init="
+        observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            setTimeout(() => {
+              show = true;
+            }, 1000);
+            observer.disconnect();
+          }
+        }, { threshold: 0 });
+        observer.observe($el);
+      " x-bind:class="{'translate-x-0 opacity-100': show, '-translate-x-full opacity-0': !show}">
+        <div class="order-1 w-1/12 md:w-5/12"></div>
+        <div class="hidden md:flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+          <h3 class="mx-auto text-white font-semibold text-lg">2</h3>
+        </div>
+        <div class="order-1 bg-cyan-500 rounded-lg shadow-xl w-11/12 md:w-5/12 px-6 py-4">
+          <h3 class="mb-3 font-bold text-white text-xl">Brz pristup informacijama</h3>
+          <p class="text-sm font-medium leading-snug tracking-wide text-white text-opacity-100">AutoPIlot omogućava
+            brz pristup informacijama o predmetima, parcelama i objektima. Nema više gubljenja vremena u traženju
+            podataka - sve je jednostavno dostupno u nekoliko klikova. Ova funkcionalnost omogućava vašem timu da radi
+            efikasnije i da bolje organizuje radne zadatke.</p>
+        </div>
+      </div>
+
+      <!-- right timeline -->
+      <div
+        class="mb-4 md:mb-8 flex justify-between flex-row-reverse items-center w-full md:right-timeline transform transition-all duration-1000 ease-in-out -translate-x-full opacity-0"
+        x-data="{ show: false, observer: null }" x-init="
+        observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setTimeout(() => {
+                    show = true;
+                }, 1000);
+                observer.disconnect();
+            }
+        }, { threshold: 0 });
+        observer.observe($el);"
+        x-bind:class="{ 'translate-x-0 opacity-100 ease-out duration-300': show, 'translate-x-full opacity-0 ease-in duration-200': !show }"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-full opacity-0">
+        <div class="order-1 w-1/12 md:w-5/12"></div>
+        <div class="hidden md:flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+          <h3 class="mx-auto font-semibold text-lg text-white">3</h3>
+        </div>
+        <div class="order-1 bg-white rounded-lg shadow-xl w-11/12 md:w-5/12 px-6 py-4">
+          <h3 class="mb-3 font-bold text-gray-800 text-xl">Pravljenje izveštaja po izboru</h3>
+          <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Softver vam omogućava da
+            generišete izveštaje po vašim željama i potrebama. Bez obzira da li su izveštaji namenjeni firmi,
+            zaposlenima ili klijentima, AutoPIlot će vam omogućiti da ih brzo kreirate i delite. To pomaže u efikasnom
+            praćenju napretka projekata i pružanju informacija klijentima na zahtev.</p>
+        </div>
+      </div>
+
+      <!-- left timeline -->
+      <!-- <div
+          class="mb-4 md:mb-8 flex justify-between items-center w-full md:left-timeline transform transition-all duration-1000 ease-in-out -translate-x-full opacity-0"
+          x-data="{ show: false, observer: null }" x-init="
+        observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            setTimeout(() => {
+              show = true;
+            }, 1000);
+            observer.disconnect();
+          }
+        }, { threshold: 0 });
+        observer.observe($el);
+      " x-bind:class="{'translate-x-0 opacity-100': show, '-translate-x-full opacity-0': !show}">
+          <div class="order-1 w-1/12 md:w-5/12"></div>
+          <div class="hidden md:flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+            <h3 class="mx-auto text-white font-semibold text-lg">4</h3>
+          </div>
+          <div class="order-1 bg-cyan-500 rounded-lg shadow-xl w-11/12 md:w-5/12 px-6 py-4">
+            <h3 class="mb-3 font-bold text-white text-xl">Podrška kroz chat</h3>
+            <p class="text-sm font-medium leading-snug tracking-wide text-white text-opacity-100">AutoPIlot nudi i
+              napredan chat bot specijalizovan za geodeziju i aplikaciju. Uz ovu podršku, možete dobiti brze odgovore na
+              sva vaša pitanja, bilo da se odnose na tehničke aspekte softvera ili geodetska pitanja. Naš tim stručnjaka
+              stoji vam na raspolaganju 24/7 kako biste osigurali besprekoran rad i brzo rešavanje svih nedoumica.</p>
+          </div>
+        </div> -->
+
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+
+<!-- explane -->
+
+
+<div class="w-full min-h-full flex flex-col justify-center items-center py-10"
+  style="background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)), url('../../static/img/vision.jpg');background-size: cover;background-position: center;">
+  <div
+    class="md:w-[80%] w-full text-white text-center md:text-left flex flex-col justify-center items-center p-5 py-10 gap-4">
+    <p class="text-white text-[30px] md:text-5xl font-bold text-center" id="fadeElement">
+      Softver koji preuzima 80% posla:
+      <span class=""> budućnost efikasnog poslovanja </span>
+    </p>
+
+    <h2 class="text-[25px] md:text-4xl font-bold py-6">
+      Omogućeno korisnicima da pristupe softveru prema svojim ulogama
+    </h2>
+    <div class="h-6"></div>
+    <p class="text-[18px] md:text-xl md:pr-10 py-6">
+      Naš softver za automatizaciju poslovanja omogućava vam jednostavno korišćenje sa tri različite strane,
+      prilagođeno vašoj ulozi u poslovanju.
+    </p>
+
+    <a href="{% url 'accounts:register' %}"
+      class="mt-4 text-xl text-[25px] font-bold bg-cyan-500 py-2 px-4 rounded-lg ease-out duration-300 hover:text-cyan-500 hover:bg-white">
+      Napravite profil
+    </a>
+
+    <div class="mt-8 flex flex-col md:flex-row justify-between items-center gap-2" id="explane">
+      <div id="slide1"
+        class="block  rounded-lg  bg-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:border-success-300 dark:bg-neutral-600 p-4"
+        style="box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+           -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+           -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);">
+        <div class="border-b-2 border-cyan-500 px-6 py-3 text-white font-bold">
+          Klijenti:
+        </div>
+        <div class="p-6">
+
+          <p class="text-base text-white">
+            Kao klijent, pratite tok rešavanja vaših predmeta kroz sve faze na transparentan način. Naš softver
+            omogućava vam da u svakom trenutku pratite u kojoj se fazi vaš predmet nalazi i pruža vam relevantne
+            informacije o napretku. Na taj način imate potpunu kontrolu i uvid u proces, što vam omogućava da donosite
+            informisane odluke.
+          </p>
+        </div>
+      </div>
+
+      <div id="slide2"
+        class="block  rounded-lg  bg-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:border-success-300 dark:bg-neutral-600 p-4"
+        style="box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+           -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+           -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);">
+        <div class="border-b-2 border-cyan-500 px-6 py-3 text-white font-bold">
+          Saradnici:
+        </div>
+        <div class="p-6">
+
+          <p class="text-base text-white">
+            Saradnici, kao što su advokati ili arhitekte, takođe će imati pristup softveru, ali sa određenim
+            ograničenjima, u skladu sa njihovom saradničkom ulogom. Na ovaj način, biće u mogućnosti da pruže svoj
+            doprinos i prate relevantne predmete na kojima rade, bez ometanja drugih delova poslovanja. Osim toga,
+            mogućnost komunikacije unutar tima olakšava proces saradnje.
+          </p>
+        </div>
+      </div>
+
+      <div id="slide3"
+        class="block  rounded-lg  bg-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:border-success-300 dark:bg-neutral-600 p-4"
+        style="box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+           -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+           -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);">
+        <div class="border-b-2 border-cyan-500 px-6 py-3 text-white font-bold">
+          Firme:
+        </div>
+        <div class="p-6">
+
+          <p class="text-base text-white">
+            Rukovodioci i menadžeri imaju poseban pristup softveru koji im omogućava da imaju pregled nad svim
+            predmetima, kao i nad radom svojih zaposlenih. Ova opcija će im omogućiti bolje upravljanje, optimizaciju
+            resursa i ubrzanje ključnih procesa. Ovaj alat postaje ključan za postizanje efikasnosti i uspeha u
+            svakodnevnom poslovanju.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="h-[100px]"></div>
+
+
+
+<!-- footer -->
+
+<div class="flex flex-col justify-evenly items-center w-full py-5  text-center">
+  <div class="flex flex-col justify-evenly items-center w-full md:flex-row">
+    <ul class="space-y-1 text-gray-400 pb-4">
+      <li class=" font-bold text-cyan-500">Društvene mreže</li>
+      <li>
+        <a href="#" class="hover:underline underline-offset-8 decoration-cyan-500">Linkedin</a>
+      </li>
+      <li>
+        <a href="#" class="hover:underline underline-offset-8 decoration-cyan-500">Facebook</a>
+      </li>
+      <li>
+        <a href="#" class="hover:underline underline-offset-8 decoration-cyan-500">Instagram</a>
+      </li>
+    </ul>
+    <ul class="space-y-1 text-gray-400 pb-4">
+      <li class=" font-bold text-cyan-500">Prijavite se</li>
+      <li>
+        <a href="{% url 'accounts:login' %}" class="hover:underline underline-offset-8 decoration-cyan-500">Log in</a>
+      </li>
+      <li>
+        <a href="{% url 'accounts:register' %}"
+          class="hover:underline underline-offset-8 decoration-cyan-500">Registracija</a>
+      </li>
+      <li>
+        <a href="#" class="hover:underline underline-offset-8 decoration-cyan-500">Prijava preko
+          Google-a</a>
+      </li>
+    </ul>
+    <ul class="space-y-1 text-gray-400 pb-4 flex flex-col justify-start items-center">
+      <li class=" font-bold text-cyan-500">
+        <a href="https://luxco.group">
+          Luxco Group
+        </a>
+      </li>
+
+      <li>
+        <a href="#o-nama" class="hover:underline underline-offset-8 decoration-cyan-500">O nama</a>
+      </li>
+      <li>
+        <a href="#vizija" class="hover:underline underline-offset-8 decoration-cyan-500">Naša vizija</a>
+      </li>
+    </ul>
+    <div class="flex flex-col">
+      <a href="https://luxco.group">
+        <img class="mx-auto w-[200px]" src="{% static 'img/resiz.png'%}" alt="logo" />
+      </a>
+    </div>
+  </div>
+  <div class="h-12"></div>
+  <div class="text-center text-white mb-2">
+    <small class="">© 2023 Luxco Group. Sva prava zadržana.</small>
+  </div>
+</div>
+<div x-data="{ showButton: false }" @scroll.window="showButton = (window.scrollY > 100)">
+  <button x-show="showButton" @click="scrollToTop()"
+    class="fixed right-4 bottom-4 p-3  rounded-full text-white shadow-lg cursor-pointer">
+    <img src="{%static 'img/icons8-top-64.png'%}" alt="">
+  </button>
+</div>
+</div>
+
+
+<script>
+
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+
+
+
+  console.clear();
+
+  function animateHeading() {
+    const headingElement = document.getElementById('main-heading');
+
+    gsap.from(headingElement, {
+      opacity: 0,
+      x: '100%', // Počinje od -100% (izlazi iz levo)
+      duration: 1.5
+    });
+  }
+
+  const section = document.getElementById('about');
+  const firstText = document.getElementById('text-one');
+  const secondText = document.getElementById('text-two');
+  const fadeImage = document.getElementById('fadeImage');
+
+
+  gsap.set(firstText, { y: 50, opacity: 0 });
+  gsap.set(secondText, { y: 50, opacity: 0 });
+  gsap.set(fadeImage, { y: 50, opacity: 0 })
+
+  window.addEventListener('load', () => {
+    animateHeading();
+  });
+
+
+  // Function to check if 10% of section is in the viewport
+  const isInViewport = () => {
+    const rect = section.getBoundingClientRect();
+    const sectionHeight = rect.height;
+    const tenPercentOfSection = sectionHeight * 0.5;
+    return (
+      rect.top + tenPercentOfSection <= window.innerHeight &&
+      rect.bottom >= 0
+    );
+  };
+
+
+  // Scroll event listener
+  document.addEventListener("scroll", () => {
+    if (isInViewport()) {
+      // GSAP animation
+      const tl = gsap.timeline();
+      tl.to(firstText, { duration: 0.5, y: 0, opacity: 1 })  // Slower animation with duration 2 seconds
+        .to(secondText, { duration: 0.5, y: 0, opacity: 1 })  // Slower animation with duration 2 seconds
+        .to(fadeImage, { duration: 0.5, x: 0, opacity: 1 });
+    }
+
+
+  });
+
+</script>
+
+{% endblock content%}

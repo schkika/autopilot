@@ -1,0 +1,94 @@
+{%load static%}
+
+<div style="width: 210mm; height: 295mm; background-color: #fff; padding: 20mm; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 14pt;"
+    id="document" data-orientation="portrait">
+
+    {% include 'forms/zaglavlje_logo.html' %}
+    <br>
+    
+
+    <div class="w-full pt-4">
+        <p class="flex whitespace-nowrap">Општина:&nbsp;<span
+                class="flex-grow whitespace-nowrap overflow-hidden"
+                contenteditable="true"><script>document.write(lat2cyr("{{ subject.municipality|title }}"))</script></span></p>
+        <p class="flex whitespace-nowrap">Служба катастра непокретности:&nbsp;<span
+                class="flex-grow whitespace-nowrap overflow-hidden"
+                contenteditable="true">
+                {% if subject.cadastral_municipality.office %}
+                    <script>document.write(lat2cyr("{{ subject.cadastral_municipality.office|title }}"))</script></span>
+                {% else %}
+                    <script>document.write(lat2cyr("{{ subject.municipality|title }}"))</script></span>
+                {% endif %}
+                </span></p>
+        <p class="flex whitespace-nowrap">Предмет број:&nbsp;<span
+                class="flex-grow whitespace-nowrap overflow-hidden" 
+                contenteditable="true">{{ subject.cadastral_number }}</span></p>
+        <p class="flex whitespace-nowrap">Парцела број:&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                 contenteditable="true">
+                 {% for lot in subject.lot_set.all %}
+                    {% if forloop.last %}
+                        {{ lot }}
+                    {% else %}
+                        {{ lot }},
+                 {% endif %} 
+                {% endfor %}
+                </span></p>
+        <p class="flex whitespace-nowrap">К.О.:&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                contenteditable="true"><script>document.write(lat2cyr("{{ subject.cadastral_municipality|title }}"))</script></span></p>
+        <p class="flex whitespace-nowrap">Корисничко име за Веком:&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+              contenteditable="true"></span></p>
+    </div>
+
+    <div class="pt-10">
+        <h2 class="text-center font-bold text-xl">ТЕХНИЧКИ ИЗВЕШТАЈ
+            <br>
+            СНИМАЊЕ ДЕТАЉА ГПС РТК МЕТОДОМ ПОЗИЦИОНИРАЊА <br>
+            
+            ЗА СНИМАЊЕ ОБЈЕКАТА</h2>
+    </div>
+
+    <div class="w-full pt-10">
+        <h3 class="font-bold pb-4">Извештај садржи:</h3>
+        <p>Рачунање координата РТК метода <br>
+                Извештај оригиналних ГПС мерења <br>
+                Трансформације координата и висина у координатном систему Гаус Кригерове
+                пројекције</p>
+    </div>
+
+    <div class="w-full flex justify-between items-center gap-4 pt-20">
+        <div class="w-1/2">
+            <!-- <p class="flex whitespace-nowrap my-8">Снимио дана:&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                 contenteditable="true"></span></p> -->
+
+                 <div class="flex justify-start items-center w-full">
+                        <p class="my-8 w-[150px]">Снимио дана:&nbsp;</p>
+                        <div id="datePickerContainer" class="relative w-full">
+                            <input type="text" class="date-picker" id="dateInput" readonly />
+                            <div id="calendar" class="hidden absolute top-[100%] left-0 right-0 bg-white z-10" >
+                
+                            </div>
+                            
+                        </div>
+                    </div>
+    
+                    <p><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></p>
+
+                    <p class="flex whitespace-nowrap mt-8">&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                        style="border-bottom: 1px solid #000;" contenteditable="true"></span></p>
+        </div>
+
+        <div class="w-1/2">
+            <p class="my-8 text-center">Извештај саставио:&nbsp;</p>
+
+            <p class="text-center"><script>document.write(lat2cyr("{{ subject.responsible_worker }}"))</script></p>
+    
+                <p class="flex whitespace-nowrap mt-8">&nbsp;<span class="flex-grow whitespace-nowrap overflow-hidden"
+                    style="border-bottom: 1px solid #000;" contenteditable="true"></span></p>
+        </div>
+    </div>
+
+</div>
+<img id="pecat-ovlasceni" style="position: absolute; top: 770px; left: 110px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="110" ypos="770">
+<img id="potpis-odgovorni" style="position: absolute; top: 770px; left: 150px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="150" ypos="770">
+<img id="pecat-odgovorni" style="position: absolute; top: 760px; left: 490px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="490" ypos="760">
+<img id="potpis-odgovorni2" style="position: absolute; top: 770px; left: 510px; cursor: move;" draggable="true" onmousedown="handleMouseDown(this, event)" ontouchstart="handleMouseDown(this, event)" xpos="510" ypos="770">

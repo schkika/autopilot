@@ -1,0 +1,188 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block link %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock link %}
+
+
+{% block leftnavlink %}
+<div class="h-full p-4 mt-5">
+  <div class="flex pl-10 items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="cyan" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+      </svg>       
+      <p class="py-2 ml-2"><a href="{% url 'main:subjects' %}">Nazad na predmete</a></p>
+  </div>
+</div>
+{% endblock leftnavlink %}
+
+
+{% block mainpanel %}
+<div class="h-full flex flex-col p-4">
+    <div class="head-card">
+        <p class="text-lg">Statistika za kancelariju {{ user.company }}</p>
+    </div>
+    <div class="grow grid gap-4 mt-3 grid-rows-4 sm:grid-rows-2 sm:grid-cols-2">
+        <div class="card"><canvas id="myChart3"></canvas></div>
+        <div class="card"><canvas id="myChart4"></canvas></div>
+        <div class="card"><canvas id="myChart2"></canvas></div>
+        <div class="card"><canvas id="myChart"></canvas></div>
+    </div>
+</div>
+{% endblock mainpanel %}
+
+
+{% block script %}
+<script>
+
+    let monthNames = JSON.parse('{{ month_names|escapejs }}')
+    let monthValues = JSON.parse('{{ month_values|escapejs }}')
+
+    let ctx = document.getElementById('myChart').getContext('2d');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: monthNames,
+        datasets: [{
+          label: 'Predmeta otvoreno',
+          data: monthValues,
+          //backgroundColor: ['IndianRed', 'orange', 'RebeccaPurple', 'Blue', 'Green'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+              legend: {
+                display: false, // Set this to false to hide the legend
+            },
+            title: {
+                display: true,
+                text: 'Predmeta otvoreno u zadnjih 6 meseci'
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    let subjectLengths = JSON.parse('{{ subjects_lengths|escapejs }}')
+    let subjectIds = JSON.parse('{{ subjects_ids|escapejs }}')
+
+    let ctx2 = document.getElementById('myChart2').getContext('2d');  
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: subjectIds,
+        datasets: [{
+          label: 'Dana u izradi',
+          data: subjectLengths,
+          backgroundColor: ['LightCoral', 'Lightblue'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+              legend: {
+                display: false, // Set this to false to hide the legend
+            },
+            title: {
+                display: true,
+                text: '10 predmeta najduže u izradi'
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+            display: true,
+            text: 'Dana u izradi'
+            }
+          },
+          x: {
+            title: {
+            display: true,
+            text: 'Broj predmeta'
+            }
+          }
+        }
+      }
+    });
+
+    let users = JSON.parse('{{ users|escapejs }}')
+    let userSubjects = JSON.parse('{{ user_subjects|escapejs }}')
+
+    let ctx3 = document.getElementById('myChart3').getContext('2d');
+    new Chart(ctx3, {
+      type: 'pie',
+      data: {
+        labels: users,
+        datasets: [{
+          label: 'Angažovan na',
+          data: userSubjects,
+          // backgroundColor: ['IndianRed', 'orange', 'RebeccaPurple', 'Blue', 'Green'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Broj predmeta po zaposlenom'
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    let subjectTypes = JSON.parse('{{ subject_types|escapejs }}')
+    let typesNumber = JSON.parse('{{ types_number|escapejs }}')
+
+    let ctx4 = document.getElementById('myChart4').getContext('2d');
+    new Chart(ctx4, {
+      type: 'pie',
+      data: {
+        labels: subjectTypes,
+        datasets: [{
+          label: 'Predmeta',
+          data: typesNumber,
+          // backgroundColor: ['IndianRed', 'orange', 'RebeccaPurple', 'Blue', 'Green'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: false, // Set this to false to hide the legend
+            },
+            title: {
+                display: true,
+                text: 'Predmeti po tipu posla'
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+  </script>
+{% endblock script %}
